@@ -1,0 +1,44 @@
+import type { Metadata } from "next";
+import { glosarium } from "@/content/glosarium";
+import { Container, SectionHeading } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Glosarium Istilah KPR",
+  description:
+    "Kamus istilah KPR dan properti dalam bahasa sederhana: plafon, tenor, BPHTB, PPJB, AJB, SHM, take over, dan lainnya.",
+};
+
+export default function GlosariumPage() {
+  const terurut = [...glosarium].sort((a, b) => a.istilah.localeCompare(b.istilah, "id"));
+  return (
+    <>
+      <section className="border-b border-line bg-surface">
+        <Container className="py-14 sm:py-20">
+          <SectionHeading
+            eyebrow="Kamus"
+            title="Glosarium istilah KPR"
+            description="Saat petugas bank bicara 'plafon' atau 'appraisal', kamu langsung paham. Cari istilah yang belum kamu kenal."
+            align="center"
+          />
+        </Container>
+      </section>
+      <section className="mt-12">
+        <Container className="mx-auto max-w-4xl">
+          <dl className="grid gap-4 sm:grid-cols-2">
+            {terurut.map((g) => (
+              <div
+                key={g.istilah}
+                className="rounded-3xl border border-line bg-surface p-6 shadow-sm transition hover:border-primary/40"
+              >
+                <dt className="font-display text-base font-semibold text-primary-deep">
+                  {g.istilah}
+                </dt>
+                <dd className="mt-2 text-sm leading-relaxed text-ink-soft">{g.definisi}</dd>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+    </>
+  );
+}
