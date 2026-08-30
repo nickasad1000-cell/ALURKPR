@@ -14,6 +14,7 @@ type Status =
 export function HubungiForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
   const [form, setForm] = useState({ nama: "", email: "", pesan: "" });
+  const [website, setWebsite] = useState("");
 
   async function kirim(e: React.FormEvent) {
     e.preventDefault();
@@ -22,7 +23,7 @@ export function HubungiForm() {
       const res = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -39,6 +40,17 @@ export function HubungiForm() {
 
   return (
     <form onSubmit={kirim} className="rounded-3xl border border-line bg-surface p-7 shadow-sm sm:p-8">
+      {/* honeypot anti-bot: disembunyikan dari manusia, diisi bot */}
+      <input
+        type="text"
+        name="website"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block">
           <span className="text-sm font-bold">Nama</span>
