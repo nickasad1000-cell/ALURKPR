@@ -114,6 +114,7 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
             step={1_000_000}
             value={harga}
             onChange={(e) => setHarga(Number(e.target.value))}
+            aria-valuetext={formatRupiah(harga)}
             className="mt-3 w-full"
           />
           <div className="mt-1 flex justify-between text-[11px] font-semibold text-ink-soft">
@@ -137,6 +138,7 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
             step={1}
             value={dpPct}
             onChange={(e) => setDpPct(Number(e.target.value))}
+            aria-valuetext={`${dpPct} persen dari harga rumah`}
             className="mt-3 w-full"
           />
           <div className="mt-2 flex flex-wrap gap-1.5">
@@ -180,6 +182,7 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
             step={1}
             value={tenor}
             onChange={(e) => setTenor(Number(e.target.value))}
+            aria-valuetext={`${tenorEfektif} tahun`}
             className="mt-3 w-full"
           />
           {tenorTerpotong ? (
@@ -225,7 +228,7 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
               Plafon {formatRupiah(hasil.plafon)}
             </span>
           </div>
-          <p className="mt-2 font-display text-4xl font-semibold tabular-nums text-primary sm:text-5xl">
+          <p className="mt-2 font-display text-4xl font-semibold tabular-nums text-primary sm:text-5xl" aria-live="polite">
             {formatRupiah(hasil.angsuran)}
           </p>
           {hasil.angsuranFloating ? (
@@ -298,15 +301,18 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
             <span aria-hidden="true">{lihatAmortisasi ? "−" : "+"}</span>
           </button>
           {tabel ? (
-            <div className="mt-3 max-h-96 overflow-auto rounded-2xl border border-line">
+            <div className="mt-3 max-h-96 overflow-auto rounded-2xl border border-line" role="region" aria-label="Jadwal angsuran">
               <table className="w-full text-left text-sm">
+                <caption className="sr-only">
+                  Ringkasan jadwal angsuran 12 bulan pertama dan 12 bulan terakhir
+                </caption>
                 <thead className="sticky top-0 bg-paper text-xs font-bold uppercase tracking-wider text-ink-soft">
                   <tr>
-                    <th className="px-4 py-3">Bulan</th>
-                    <th className="px-4 py-3 text-right">Angsuran</th>
-                    <th className="px-4 py-3 text-right">Pokok</th>
-                    <th className="px-4 py-3 text-right">Bunga</th>
-                    <th className="px-4 py-3 text-right">Sisa</th>
+                    <th scope="col" className="px-4 py-3">Bulan</th>
+                    <th scope="col" className="px-4 py-3 text-right">Angsuran</th>
+                    <th scope="col" className="px-4 py-3 text-right">Pokok</th>
+                    <th scope="col" className="px-4 py-3 text-right">Bunga</th>
+                    <th scope="col" className="px-4 py-3 text-right">Sisa</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white">
