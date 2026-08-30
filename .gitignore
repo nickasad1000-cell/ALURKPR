@@ -45,3 +45,6 @@ next-env.d.ts
 
 # sumber gambar mentah (optimasi via npm run images)
 assets-src/
+
+# supabase cli
+supabase/.temp/
