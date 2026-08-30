@@ -1,94 +1,179 @@
 import Link from "next/link";
-import { ArrowRight, KeyRound, Clock } from "lucide-react";
+import type { CSSProperties } from "react";
+import { Clock, KeyRound } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
+import { Container, SectionHeading, btnSecondary } from "@/components/ui";
 
-type Fase = { nama: string; awal: number; akhir: number };
+const BARIS = ["12%", "37%", "62%", "87%"] as const;
+const INDEKS_BARIS = [0, 0, 1, 1, 2, 2, 3, 3] as const;
+const SISI = ["L", "R", "R", "L", "L", "R", "R", "L"] as const;
 
-const fase: Fase[] = [
-  { nama: "Persiapan", awal: 1, akhir: 3 },
-  { nama: "Transaksi & proses kredit", awal: 4, akhir: 6 },
-  { nama: "Penutupan & pasca", awal: 7, akhir: 8 },
-];
+const ROAD = "absolute hidden rounded-full bg-primary-deep lg:block";
+const DASH_H =
+  "absolute inset-x-3 top-1/2 h-0.5 -translate-y-1/2 bg-[repeating-linear-gradient(90deg,transparent_0_8px,#c99a3c_8px_16px)]";
+const DASH_V =
+  "absolute inset-y-3 left-1/2 w-0.5 -translate-x-1/2 bg-[repeating-linear-gradient(180deg,transparent_0_8px,#c99a3c_8px_16px)]";
 
 export function AlurJalur() {
   return (
-    <div className="rounded-[2.5rem] border border-line bg-surface p-7 shadow-sm sm:p-10">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-            Jalur menuju kunci
-          </p>
-          <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            8 tahap, dari cek keuangan sampai kunci di tangan
-          </h2>
+    <section className="mt-20 sm:mt-24">
+      <Container>
+        <SectionHeading
+          eyebrow="Alur pengajuan KPR"
+          title="Jalur menuju kunci"
+          description="Delapan tahap perjalanan dari cek keuangan sampai kunci di tangan. Ikuti jalurnya satu per satu, setiap pemberhentian terhubung ke panduan lengkapnya."
+        />
+
+        <ol className="relative mx-auto mt-12 max-w-6xl pb-2 lg:h-[46rem]">
+          <div
+            className="absolute bottom-2 left-[17px] top-2 w-2.5 rounded-full bg-primary-deep lg:hidden"
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+
+          <div
+            className={`${ROAD} left-[26%] top-0 h-[12%] w-2.5 -translate-x-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[12%] h-2.5 w-[48%] -translate-y-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_H} />
+          </div>
+          <div
+            className={`${ROAD} left-[74%] top-[12%] h-[25%] w-2.5 -translate-x-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[37%] h-2.5 w-[48%] -translate-y-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_H} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[37%] h-[25%] w-2.5 -translate-x-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[62%] h-2.5 w-[48%] -translate-y-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_H} />
+          </div>
+          <div
+            className={`${ROAD} left-[74%] top-[62%] h-[25%] w-2.5 -translate-x-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[87%] h-2.5 w-[48%] -translate-y-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_H} />
+          </div>
+          <div
+            className={`${ROAD} left-[26%] top-[87%] h-[13%] w-2.5 -translate-x-1/2`}
+            aria-hidden="true"
+          >
+            <div className={DASH_V} />
+          </div>
+          <div
+            className="absolute right-[calc(26%-5px)] top-[12%] hidden size-10 -translate-y-[5px] rounded-tr-full border-r-[10px] border-t-[10px] border-primary-deep lg:block"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute left-[calc(26%-5px)] top-[37%] hidden size-10 -translate-y-[5px] rounded-tl-full border-l-[10px] border-t-[10px] border-primary-deep lg:block"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute right-[calc(26%-5px)] top-[62%] hidden size-10 -translate-y-[5px] rounded-tr-full border-r-[10px] border-t-[10px] border-primary-deep lg:block"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute left-[calc(26%-5px)] top-[87%] hidden size-10 -translate-y-[5px] rounded-tl-full border-l-[10px] border-t-[10px] border-primary-deep lg:block"
+            aria-hidden="true"
+          />
+          <span
+            className="absolute left-[26%] top-0 hidden size-3 -translate-x-1/2 rounded-full bg-accent lg:block"
+            aria-hidden="true"
+          />
+          <span
+            className="absolute bottom-0 left-[26%] hidden size-9 -translate-x-1/2 translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-md ring-4 ring-paper lg:grid"
+            aria-hidden="true"
+          >
+            <KeyRound className="size-4" />
+          </span>
+
+          {tahapKpr.map((t, i) => {
+            const baris = BARIS[INDEKS_BARIS[i]];
+            const kiri = SISI[i] === "L";
+            const vars = {
+              "--top": baris,
+              "--left": kiri ? "1%" : "76%",
+              "--lebar": "23%",
+              "--nx": kiri ? "26%" : "74%",
+            } as CSSProperties;
+            return (
+              <li
+                key={t.nomor}
+                style={vars}
+                className="relative pb-8 pl-14 last:pb-0 lg:absolute lg:top-[var(--top)] lg:left-[var(--left)] lg:w-[var(--lebar)] lg:-translate-y-1/2 lg:p-0"
+              >
+                <span
+                  className="absolute left-0 top-0 grid size-11 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white ring-4 ring-paper lg:hidden"
+                  aria-hidden="true"
+                >
+                  {t.nomor}
+                </span>
+                <span
+                  className="absolute left-[var(--nx)] top-[var(--top)] z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white shadow-md ring-4 ring-paper lg:grid"
+                  aria-hidden="true"
+                >
+                  {t.nomor}
+                  {t.nomor === 7 && (
+                    <span
+                      className="absolute -right-1.5 -top-1.5 rounded-full bg-accent p-1 text-white"
+                      aria-hidden="true"
+                    >
+                      <KeyRound className="size-3" />
+                    </span>
+                  )}
+                </span>
+                <Link
+                  href={`/panduan/${t.slug}`}
+                  className="block rounded-2xl border border-line bg-surface p-4 shadow-sm transition hover:border-primary hover:shadow-md"
+                >
+                  <h3 className="font-display text-[15px] font-semibold leading-snug line-clamp-2">
+                    {t.judulSingkat}
+                  </h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft line-clamp-3">
+                    {t.ringkasan}
+                  </p>
+                  <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
+                    <Clock className="size-3" aria-hidden="true" />
+                    {t.estimasiWaktu}
+                  </p>
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="mt-10 text-center">
+          <Link href="/panduan" className={btnSecondary}>
+            Baca detail semua tahap
+          </Link>
         </div>
-        <Link
-          href="/panduan"
-          className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"
-        >
-          Semua panduan
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
-      </div>
-
-      <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
-        Ikuti jalurnya berurutan. Tiap tahap punya daftar dokumen, perkiraan
-        waktu, dan jebakan yang sering bikin proses buntu — jangan dilewati.
-      </p>
-
-      <div className="mt-10 space-y-10">
-        {fase.map((f) => {
-          const items = tahapKpr.filter((t) => t.nomor >= f.awal && t.nomor <= f.akhir);
-          return (
-            <div key={f.nama}>
-              <p className="text-xs font-bold uppercase tracking-wider text-ink-soft">
-                {f.nama}
-              </p>
-              <ol className="mt-3 grid gap-3 lg:grid-cols-3">
-                {items.map((t) => {
-                  const puncak = t.nomor === 7;
-                  return (
-                    <li key={t.slug} className={puncak ? "lg:col-span-1" : ""}>
-                      <Link
-                        href={`/panduan/${t.slug}`}
-                        className="group relative flex h-full flex-col rounded-3xl border border-line bg-paper p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span
-                            className={`grid size-10 place-items-center rounded-2xl font-display text-lg font-semibold tabular-nums ${
-                              puncak
-                                ? "bg-accent text-white"
-                                : "bg-primary text-white"
-                            }`}
-                          >
-                            {t.nomor}
-                          </span>
-                          {puncak ? (
-                            <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
-                              <KeyRound className="size-3.5" aria-hidden="true" />
-                              Kunci di tangan
-                            </span>
-                          ) : null}
-                        </div>
-                        <h3 className="mt-4 font-display text-base font-semibold leading-snug group-hover:text-primary">
-                          {t.judulSingkat}
-                        </h3>
-                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-soft">
-                          {t.ringkasan}
-                        </p>
-                        <p className="mt-auto flex items-center gap-1.5 pt-4 text-xs font-semibold text-ink-soft">
-                          <Clock className="size-3.5" aria-hidden="true" />
-                          {t.estimasiWaktu}
-                        </p>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }
