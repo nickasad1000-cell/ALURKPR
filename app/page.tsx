@@ -11,7 +11,12 @@ import {
   ShieldCheck,
   Wallet,
 } from "lucide-react";
-import { angsuranBulanan, formatRupiah, totalPembayaran } from "@/lib/finance";
+import {
+  angsuranBulanan,
+  biayaAwal,
+  formatRupiah,
+  totalPembayaran,
+} from "@/lib/finance";
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
@@ -30,6 +35,7 @@ const HERO_TENOR = 20;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
 const heroAngsuran = angsuranBulanan(heroPlafon, 5, HERO_TENOR);
 const heroTotal = totalPembayaran(heroPlafon, 5, HERO_TENOR);
+const heroBiayaAwal = biayaAwal(HERO_HARGA, HERO_DP).total;
 
 const fitur = [
   {
@@ -151,6 +157,12 @@ export default function Home() {
                   </dd>
                 </div>
               </dl>
+              <p className="mt-5 flex flex-wrap items-baseline gap-x-2 rounded-xl bg-primary-soft/60 px-4 py-3 text-sm">
+                <span className="font-semibold text-primary-deep">Biaya awal (DP + biaya)</span>
+                <span className="font-display text-lg font-semibold tabular-nums text-ink">
+                  ± {formatRupiah(heroBiayaAwal)}
+                </span>
+              </p>
               <Link
                 href="/kalkulator"
                 className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-sm font-bold text-white transition hover:bg-primary-deep"
@@ -158,14 +170,6 @@ export default function Home() {
                 Simulasikan milikmu
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-            </div>
-            <div className="absolute -bottom-5 -left-3 hidden rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:block">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-soft">
-                Biaya awal perkiraan
-              </p>
-              <p className="font-display text-lg font-semibold tabular-nums text-ink">
-                DP + biaya &gt; Rp31&nbsp;jt
-              </p>
             </div>
           </div>
         </Container>
