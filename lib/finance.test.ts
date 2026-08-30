@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   angsuranBulanan,
   biayaAwal,
+  bulanUntukMenabung,
   hargaMaksimalMampu,
   jadwalAmortisasi,
   plafondMaksimal,
+  tabunganBulananUntuk,
   totalPembayaran,
 } from "./finance";
 
@@ -104,5 +106,29 @@ describe("hargaMaksimalMampu (reverse)", () => {
       bungaTahunanPersen: 6,
     });
     expect(h.hargaMaksimal).toBe(0);
+  });
+});
+
+describe("bulanUntukMenabung", () => {
+  it("60jt dari 0 dengan 2jt/bulan → 30 bulan", () => {
+    expect(bulanUntukMenabung(60_000_000, 0, 2_000_000)).toBe(30);
+  });
+  it("tabungan awal sudah cukup → 0", () => {
+    expect(bulanUntukMenabung(60_000_000, 70_000_000, 1_000_000)).toBe(0);
+  });
+  it("setoran 0 → Infinity", () => {
+    expect(bulanUntukMenabung(60_000_000, 0, 0)).toBe(Infinity);
+  });
+});
+
+describe("tabunganBulananUntuk", () => {
+  it("kurang 40jt dalam 20 bulan → 2jt/bulan", () => {
+    expect(tabunganBulananUntuk(60_000_000, 20_000_000, 20)).toBe(2_000_000);
+  });
+  it("sudah cukup → 0", () => {
+    expect(tabunganBulananUntuk(60_000_000, 60_000_000, 12)).toBe(0);
+  });
+  it("jumlah bulan 0 → Infinity", () => {
+    expect(tabunganBulananUntuk(60_000_000, 0, 0)).toBe(Infinity);
   });
 });

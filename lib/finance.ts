@@ -142,3 +142,34 @@ export function hargaMaksimalMampu(
   const harga = Math.round(plafon / (1 - input.dpPersen / 100));
   return { angsuranMaksimal, plafonMaksimal: plafon, hargaMaksimal: harga };
 }
+
+/**
+ * Berapa bulan yang dibutuhkan untuk mencapai target tabungan (mis. DP)
+ * dengan tabungan awal dan setoran bulanan tetap. 0 = sudah tercapai,
+ * Infinity = tidak akan tercapai karena setoran 0.
+ */
+export function bulanUntukMenabung(
+  target: number,
+  tabunganAwal: number,
+  perBulan: number,
+): number {
+  const sisa = Math.max(0, target - tabunganAwal);
+  if (sisa <= 0) return 0;
+  if (perBulan <= 0) return Infinity;
+  return Math.ceil(sisa / perBulan);
+}
+
+/**
+ * Kebutuhan tabungan bulanan agar target tercapai dalam jumlah bulan tertentu.
+ * 0 = sudah tercapai sejak awal. Infinity = target waktu tidak valid.
+ */
+export function tabunganBulananUntuk(
+  target: number,
+  tabunganAwal: number,
+  jumlahBulan: number,
+): number {
+  const sisa = Math.max(0, target - tabunganAwal);
+  if (sisa <= 0) return 0;
+  if (jumlahBulan <= 0) return Infinity;
+  return Math.ceil(sisa / jumlahBulan);
+}

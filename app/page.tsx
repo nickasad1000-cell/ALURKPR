@@ -217,6 +217,61 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* Alat perencanaan */}
+      <section className="mt-20 sm:mt-24">
+        <Container>
+          <SectionHeading
+            eyebrow="Alat perencanaan gratis"
+            title="Empat alat untuk mulai merencanakan"
+            description="Gunakan sesuai urutan: tahu kemampuan beli, kumpulkan DP, hitung angsuran, lalu dapatkan rekomendasi skema."
+          />
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                href: "/mampu-beli",
+                icon: Percent,
+                judul: "Kemampuan beli",
+                teks: "Hitung harga rumah yang mampu kamu beli dari penghasilan.",
+              },
+              {
+                href: "/planner-dp",
+                icon: Wallet,
+                judul: "Planner tabungan DP",
+                teks: "Beres waktu menabung DP dan setoran bulanan yang dibutuhkan.",
+              },
+              {
+                href: "/kalkulator",
+                icon: Calculator,
+                judul: "Kalkulator KPR",
+                teks: "Simulasi angsuran, total bayar, dan biaya awal sebelum akad.",
+              },
+              {
+                href: "/profil-kamu",
+                icon: Landmark,
+                judul: "Profil Kamu",
+                teks: "Rekomendasi skema subsidi atau komersial dalam 5 pertanyaan.",
+              },
+            ].map((t) => (
+              <Link
+                key={t.href}
+                href={t.href}
+                className="group flex flex-col rounded-3xl border border-line bg-surface p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+              >
+                <t.icon className="size-6 text-primary" aria-hidden="true" />
+                <h3 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
+                  {t.judul}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{t.teks}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+                  Buka alat
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* Tahap panduan */}
       <section className="mt-20 sm:mt-24">
         <Container>
