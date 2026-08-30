@@ -1,4 +1,5 @@
 import type { ElementType, ReactNode } from "react";
+import Link from "next/link";
 
 export function Container({
   children,
@@ -74,3 +75,39 @@ export const inputCls =
 
 export const btnWhatsApp =
   `inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-[#1faf56] active:scale-[0.98] ${btnFocus}`;
+
+export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
+  return (
+    <nav aria-label="Breadcrumb" className="mb-6">
+      <ol className="flex flex-wrap items-center gap-1.5 text-sm">
+        {items.map((item, i) => {
+          const last = i === items.length - 1;
+          return (
+            <li key={i} className="flex items-center gap-1.5">
+              {item.href && !last ? (
+                <Link
+                  href={item.href}
+                  className="font-semibold text-primary hover:text-primary-deep hover:underline"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  aria-current={last ? "page" : undefined}
+                  className="font-semibold text-ink-soft"
+                >
+                  {item.label}
+                </span>
+              )}
+              {i < items.length - 1 ? (
+                <span className="text-line" aria-hidden="true">
+                  /
+                </span>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}

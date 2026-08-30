@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Building2,
+  Calculator,
   CheckCircle2,
   Clock,
   FileText,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
-import { Container, Eyebrow } from "@/components/ui";
+import { Container, Eyebrow, Breadcrumb } from "@/components/ui";
 import { SITE_ORIGIN } from "@/lib/site";
 
 type Params = Promise<{ slug: string }>;
@@ -80,6 +81,32 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_ORIGIN },
+              { "@type": "ListItem", position: 2, name: "Panduan", item: `${SITE_ORIGIN}/panduan` },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: artikel.judul,
+                item: `${SITE_ORIGIN}/panduan/${artikel.slug}`,
+              },
+            ],
+          }),
+        }}
+      />
+      <Breadcrumb
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Panduan", href: "/panduan" },
+          { label: artikel.judul },
+        ]}
+      />
       <Link
         href="/panduan"
         className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"
@@ -121,7 +148,52 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
           <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </nav>
+
+      <ArtikelTerkait currentSlug={artikel.slug} kategori={artikel.kategori} />
     </Container>
+  );
+}
+
+function ArtikelTerkait({
+  currentSlug,
+  kategori,
+}: {
+  currentSlug: string;
+  kategori: (typeof panduanArtikel)[number]["kategori"];
+}) {
+  const senada = panduanArtikel.filter((a) => a.kategori === kategori && a.slug !== currentSlug);
+  const lain = panduanArtikel.filter((a) => a.kategori !== kategori && a.slug !== currentSlug);
+  const terkait = [...senada, ...lain].slice(0, 3);
+  if (terkait.length === 0) return null;
+  return (
+    <section aria-labelledby="artikel-terkait" className="mx-auto mt-14 max-w-3xl">
+      <h2
+        id="artikel-terkait"
+        className="font-display text-xl font-semibold tracking-tight text-balance"
+      >
+        Artikel terkait
+      </h2>
+      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        {terkait.map((t) => (
+          <Link
+            key={t.slug}
+            href={`/panduan/${t.slug}`}
+            className="group flex flex-col justify-between rounded-2xl border border-line bg-surface p-5 transition hover:border-primary/40"
+          >
+            <span className="text-xs font-bold uppercase tracking-wider text-accent-ink">
+              {t.kategori}
+            </span>
+            <span className="mt-2 text-sm font-semibold leading-snug transition group-hover:text-primary">
+              {t.judul}
+            </span>
+            <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-primary">
+              Baca
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -133,6 +205,13 @@ function TahapView({ slug }: { slug: string }) {
 
   return (
     <Container className="py-14 sm:py-20">
+      <Breadcrumb
+        items={[
+          { label: "Beranda", href: "/" },
+          { label: "Panduan", href: "/panduan" },
+          { label: tahap.judulSingkat },
+        ]}
+      />
       <Link
         href="/panduan"
         className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"
@@ -250,6 +329,42 @@ function TahapView({ slug }: { slug: string }) {
           <p className="mt-4 text-sm leading-relaxed sm:text-base">{tahap.perbedaanSubsidi}</p>
         </section>
       </article>
+
+      <section aria-labelledby="alat-bantu" className="mx-auto mt-12 max-w-3xl rounded-3xl bg-primary-soft p-7">
+        <h2 id="alat-bantu" className="flex items-center gap-2.5 font-display text-xl font-semibold text-primary-deep">
+          <Calculator className="size-5 text-primary" aria-hidden="true" />
+          Alat bantu terkait tahap ini
+        </h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Link
+            href="/kalkulator"
+            className="rounded-2xl border border-primary/20 bg-surface p-4 transition hover:border-primary/40"
+          >
+            <p className="text-sm font-bold">Hitung angsuran</p>
+            <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+              Simulasi plafon, tenor & biaya awal.
+            </p>
+          </Link>
+          <Link
+            href="/mampu-beli"
+            className="rounded-2xl border border-primary/20 bg-surface p-4 transition hover:border-primary/40"
+          >
+            <p className="text-sm font-bold">Kemampuan beli</p>
+            <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+              Harga rumah yang mampu kamu beli.
+            </p>
+          </Link>
+          <Link
+            href="/profil-kamu"
+            className="rounded-2xl border border-primary/20 bg-surface p-4 transition hover:border-primary/40"
+          >
+            <p className="text-sm font-bold">Profil KPR</p>
+            <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+              Rekomendasi skema dalam 5 pertanyaan.
+            </p>
+          </Link>
+        </div>
+      </section>
 
       <nav className="mx-auto mt-12 grid max-w-3xl gap-3 sm:grid-cols-2">
         {prev ? (
