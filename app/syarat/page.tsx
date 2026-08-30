@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { ArrowRight, Info, Landmark, ShieldCheck } from "lucide-react";
-import Link from "next/link";
-import { getBankRates } from "@/lib/bank-rates";
-import { seedBankRates } from "@/lib/bank-rates";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import { getBankRates, seedBankRates } from "@/lib/bank-rates";
 import { KelayakanForm } from "@/components/kelayakan-form";
-import { Container, SectionHeading, btnPrimary } from "@/components/ui";
+import { BandingKanBank } from "@/components/banding-kan-bank";
+import { Container, SectionHeading } from "@/components/ui";
 
 export const revalidate = 3600;
 
@@ -27,8 +26,6 @@ const syaratUmum = [
 
 export default async function SyaratPage() {
   const rates = await getBankRates();
-  const subsidi = rates.filter((r) => r.kpr_type === "subsidi");
-  const komersial = rates.filter((r) => r.kpr_type === "komersial");
 
   return (
     <>
@@ -81,69 +78,14 @@ export default async function SyaratPage() {
         <Container>
           <SectionHeading
             eyebrow="Perbandingan"
-            title="Skema bank penyalur (indikatif)"
-            description="Garis besar tawaran bank yang umum muncul — bunga, jangka waktu fixed, DP minimum, dan tenor maksimum."
+            title="Bandingkan skema bank penyalur"
+            description="Filter subsidi atau komersial, urutkan dari bunga terendah, dan lihat mana yang paling ringan DP-nya."
             align="center"
           />
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {[
-              { judul: "KPR Subsidi (FLPP)", data: subsidi, soft: true },
-              { judul: "KPR Komersial", data: komersial, soft: false },
-            ].map(({ judul, data, soft }) => (
-              <div key={judul} className="overflow-hidden rounded-3xl border border-line bg-surface shadow-sm">
-                <div className={`px-7 py-5 ${soft ? "bg-primary-soft" : "bg-paper"}`}>
-                  <h2 className="flex items-center gap-2.5 font-display text-lg font-semibold">
-                    <Landmark className="size-5 text-primary" aria-hidden="true" />
-                    {judul}
-                  </h2>
-                </div>
-                <ul className="divide-y divide-line">
-                  {(data.length > 0 ? data : seedBankRates.filter((r) => r.kpr_type === (soft ? "subsidi" : "komersial"))).map(
-                    (b) => (
-                      <li key={b.id} className="px-7 py-4">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <p className="font-bold">{b.bank_name}</p>
-                          <p className="text-sm font-bold tabular-nums text-primary">
-                            {b.fixed_rate}%{b.floating_rate ? ` → ${b.floating_rate}%` : ""}
-                          </p>
-                        </div>
-                        <p className="mt-1 text-xs text-ink-soft">{b.notes}</p>
-                        <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-ink-soft">
-                          <div className="flex gap-1.5">
-                            <dt className="font-bold">Fixed:</dt>
-                            <dd>{b.fixed_years} th</dd>
-                          </div>
-                          <div className="flex gap-1.5">
-                            <dt className="font-bold">DP min:</dt>
-                            <dd>{b.min_dp_percent}%</dd>
-                          </div>
-                          <div className="flex gap-1.5">
-                            <dt className="font-bold">Tenor:</dt>
-                            <dd>s.d. {b.max_tenor_years} th</dd>
-                          </div>
-                        </dl>
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col items-center gap-4 rounded-3xl border border-line bg-surface p-8 text-center sm:flex-row sm:text-left">
-            <Info className="size-8 shrink-0 text-primary" aria-hidden="true" />
-            <div className="flex-1">
-              <p className="font-display text-base font-semibold">
-                Angka-angka di atas adalah indikasi pasar, bukan penawaran resmi.
-              </p>
-              <p className="mt-1 text-sm text-ink-soft">
-                Suku bunga dan ketentuan berbeda antar wilayah, waktu, dan profil
-                debitur. Bawa hasil kalkulator ke bank sebagai bahan negosiasi.
-              </p>
-            </div>
-            <Link href="/kalkulator" className={btnPrimary}>
-              Simulasikan
-            </Link>
+          <div className="mt-10">
+            <BandingKanBank
+              banks={rates.length > 0 ? rates : seedBankRates}
+            />
           </div>
         </Container>
       </section>
