@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Minus, Plus } from "lucide-react";
 import { faq } from "@/content/faq";
 import { Container, SectionHeading } from "@/components/ui";
@@ -23,7 +22,7 @@ export default function FaqPage() {
 
   return (
     <>
-      <Script
+      <script
         id="faq-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -31,15 +30,16 @@ export default function FaqPage() {
       <section className="border-b border-line bg-surface">
         <Container className="py-14 sm:py-20">
           <SectionHeading
+            as="h1"
             eyebrow="FAQ"
             title="Pertanyaan yang paling sering diajukan"
-            description="Kumpulan jawaban ringkas. Kalau belum terjawab, gunakan pencarian hukum atau hubungi kami."
+            description="Kumpulan jawaban ringkas seputar KPR. Kalau belum terjawab, hubungi kami lewat halaman kontak."
             align="center"
           />
         </Container>
       </section>
       <section className="mt-12">
-        <Container className="mx-auto max-w-4xl">
+        <Container size="narrow">
           <div className="space-y-3">
             {faq.map((f, i) => (
               <details
@@ -48,7 +48,7 @@ export default function FaqPage() {
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
                   <h2 className="font-display text-base font-semibold leading-snug sm:text-lg">
-                    <span className="mr-2 text-primary/50 tabular-nums">
+                    <span className="mr-2 text-ink-soft tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {f.pertanyaan}

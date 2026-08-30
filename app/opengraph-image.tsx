@@ -15,8 +15,8 @@ export default function OgImage() {
           height: "100%",
           width: "100%",
           display: "flex",
-          backgroundColor: "#faf6ef",
-          color: "#1c1917",
+          backgroundColor: "#f7f4ee",
+          color: "#14171b",
         }}
       >
         <div
@@ -34,7 +34,7 @@ export default function OgImage() {
                 width: "60px",
                 height: "60px",
                 borderRadius: "18px",
-                backgroundColor: "#0f766e",
+                backgroundColor: "#0b6b4f",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -46,7 +46,7 @@ export default function OgImage() {
               </svg>
             </div>
             <span>
-              Alur<span style={{ color: "#0f766e" }}>KPR</span>
+              Alur<span style={{ color: "#0b6b4f" }}>KPR</span>
             </span>
           </div>
 
@@ -66,10 +66,10 @@ export default function OgImage() {
                 style={{
                   borderRadius: "999px",
                   backgroundColor: "#ffffff",
-                  border: "1px solid #e7e0d5",
+                  border: "1px solid #e5dccb",
                   padding: "14px 26px",
                   fontSize: "24px",
-                  color: "#0f766e",
+                  color: "#0b6b4f",
                   fontWeight: 600,
                 }}
               >

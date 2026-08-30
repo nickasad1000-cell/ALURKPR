@@ -9,19 +9,19 @@ import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
 
-const RAW = join(process.cwd(), "public", "images", "raw");
+const RAW = join(process.cwd(), "assets-src", "images");
 const OUT = join(process.cwd(), "public", "images");
 const WIDTHS = [720, 1080, 1600, 2048];
 
 async function main() {
   if (!existsSync(RAW)) {
-    console.log("Tidak ada folder public/images/raw — tidak ada yang dioptimasi.");
+    console.log("Tidak ada folder assets-src/images — tidak ada yang dioptimasi.");
     return;
   }
   mkdirSync(OUT, { recursive: true });
   const files = readdirSync(RAW).filter((f) => /\.(png|jpe?g)$/i.test(f));
   if (files.length === 0) {
-    console.log("public/images/raw kosong.");
+    console.log("assets-src/images kosong.");
     return;
   }
 

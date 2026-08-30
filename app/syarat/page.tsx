@@ -34,6 +34,7 @@ export default async function SyaratPage() {
       <section className="border-b border-line bg-surface">
         <Container className="py-14 sm:py-20">
           <SectionHeading
+            as="h1"
             eyebrow="Syarat & skema"
             title="Layak atau belum? Cek di sini dulu"
             description="Periksa kelayakan KPR subsidi dalam hitungan detik, selaraskan syarat umum pengajuan, lalu bandingkan skema yang tersedia."
@@ -66,7 +67,7 @@ export default async function SyaratPage() {
               lalu konfirmasi ke bank penyalur & data Kementerian PUPR.
               <a
                 href="/faq"
-                className="mt-3 inline-flex items-center gap-1.5 font-bold text-accent"
+                className="mt-3 inline-flex items-center gap-1.5 font-bold text-accent-ink"
               >
                 Lihat FAQ terkait <ArrowRight className="size-4" aria-hidden="true" />
               </a>

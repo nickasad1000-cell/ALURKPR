@@ -14,6 +14,7 @@ import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 import { TahapCard } from "@/components/tahap-card";
+import { ProfilKamu } from "@/components/profil-kamu";
 
 const HERO_HARGA = 240_000_000;
 const HERO_DP = 10;
@@ -59,7 +60,7 @@ export default function Home() {
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(60rem 30rem at 80% -10%, rgba(15,118,110,0.12), transparent), radial-gradient(40rem 24rem at 10% 110%, rgba(217,119,6,0.10), transparent)",
+              "radial-gradient(60rem 30rem at 80% -10%, rgba(11,107,79,0.12), transparent), radial-gradient(40rem 24rem at 10% 110%, rgba(201,154,60,0.10), transparent)",
           }}
         />
         <Container className="relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -179,6 +180,38 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* Profil Kamu */}
+      <section className="mt-20 sm:mt-24">
+        <Container>
+          <div className="grid gap-10 rounded-[2.5rem] border border-line bg-surface p-7 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <Eyebrow>Rekomendasi personal</Eyebrow>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+                Tidak yakin mulai dari subsidi atau komersial?
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
+                5 pertanyaan singkat cukup untuk mengarahkanmu ke skema yang
+                paling sesuai penghasilan dan tujuanmu — lalu dapat langkah
+                selanjutnya yang jelas.
+              </p>
+              <Link
+                href="/profil-kamu"
+                className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-white shadow-sm transition hover:bg-primary-deep"
+              >
+                Kenali profil KPR-mu
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <p className="mt-3 text-xs text-ink-soft">
+                Simulasi kilat — tanpa daftar akun, tanpa data pribadi diminta.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
+              <ProfilKamu />
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Tahap panduan */}
       <section className="mt-20 sm:mt-24">
         <Container>
@@ -246,7 +279,7 @@ export default function Home() {
               aria-hidden="true"
               style={{
                 background:
-                  "radial-gradient(36rem 24rem at 85% -20%, rgba(15,118,110,0.9), transparent), radial-gradient(24rem 20rem at 0% 120%, rgba(217,119,6,0.35), transparent)",
+                  "radial-gradient(36rem 24rem at 85% -20%, rgba(11,107,79,0.9), transparent), radial-gradient(24rem 20rem at 0% 120%, rgba(201,154,60,0.35), transparent)",
               }}
             />
             <div className="relative grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">

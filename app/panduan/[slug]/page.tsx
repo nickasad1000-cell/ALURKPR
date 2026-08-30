@@ -64,7 +64,7 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
         Semua panduan
       </Link>
       <article className="mx-auto mt-8 max-w-3xl">
-        <span className="rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+        <span className="rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
           {artikel.kategori}
         </span>
         <h1 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-4xl">
@@ -180,7 +180,7 @@ function TahapView({ slug }: { slug: string }) {
             <ul className="mt-5 space-y-2.5">
               {tahap.biayaTerkait.map((b) => (
                 <li key={b} className="flex items-start gap-2.5 text-sm leading-relaxed sm:text-base">
-                  <Wallet className="mt-0.5 size-4.5 shrink-0 text-accent" aria-hidden="true" />
+                  <Wallet className="mt-0.5 size-4.5 shrink-0 text-accent-ink" aria-hidden="true" />
                   {b}
                 </li>
               ))}
@@ -205,13 +205,13 @@ function TahapView({ slug }: { slug: string }) {
 
         <section className="mt-6 rounded-3xl bg-accent-soft/70 p-7">
           <h2 className="flex items-center gap-2.5 font-display text-xl font-semibold text-ink">
-            <AlertTriangle className="size-5 text-accent" aria-hidden="true" />
+            <AlertTriangle className="size-5 text-accent-ink" aria-hidden="true" />
             Kesalahan umum
           </h2>
           <ul className="mt-5 space-y-3">
             {tahap.kesalahanUmum.map((k) => (
               <li key={k} className="flex items-start gap-2.5 text-sm leading-relaxed sm:text-base">
-                <AlertTriangle className="mt-0.5 size-4.5 shrink-0 text-accent" aria-hidden="true" />
+                <AlertTriangle className="mt-0.5 size-4.5 shrink-0 text-accent-ink" aria-hidden="true" />
                 {k}
               </li>
             ))}

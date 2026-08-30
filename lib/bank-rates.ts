@@ -1,3 +1,4 @@
+import "server-only";
 import type { BankRate } from "./types";
 import { getSupabase } from "./supabase";
 

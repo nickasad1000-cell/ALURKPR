@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import Link from "next/link";
+import { AlertTriangle, CheckCircle2, MessageCircle, XCircle } from "lucide-react";
 import { cekKelayakan } from "@/lib/eligibility";
 import type { KelayakanResult } from "@/lib/types";
-import { inputCls } from "./ui";
+import { inputCls, btnPrimary } from "./ui";
+import { waUrl } from "@/lib/brand";
 
 export function KelayakanForm() {
   const [penghasilan, setPenghasilan] = useState("5000000");
@@ -149,6 +151,35 @@ export function KelayakanForm() {
               </li>
             ))}
           </ul>
+
+          {hasil.layak ? (
+            <div className="mt-5 grid gap-2.5">
+              <Link href="/kalkulator" className={btnPrimary}>
+                Hitung angsuran lanjutan
+              </Link>
+              <a
+                href={waUrl(
+                  `Halo Syahfalah Group, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin diskusi unit & proses selanjutnya.`,
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                <MessageCircle className="size-4" aria-hidden="true" />
+                Diskusi via WhatsApp
+              </a>
+            </div>
+          ) : (
+            <div className="mt-5 grid gap-2.5">
+              <Link href={waUrl(`Halo Syahfalah Group, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya bisa diajak diskusi.`)} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                <MessageCircle className="size-4" aria-hidden="true" />
+                Tanya strategi lainnya
+              </Link>
+              <Link href="/panduan/tahap-1-cek-keuangan-dan-kelayakan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
+                Baca langkah memperbaiki kelayakan
+              </Link>
+            </div>
+          )}
         </div>
       ) : null}
     </form>

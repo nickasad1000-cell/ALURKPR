@@ -14,6 +14,7 @@ export default function HubungiPage() {
     <section className="py-14 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Hubungi kami"
           title="Ada yang belum jelas?"
           description="Pertanyaan, koreksi data, atau ide topik panduan — kirim lewat form di bawah. Kami baca setiap pesan."

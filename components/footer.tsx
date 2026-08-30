@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import { Logo } from "./logo";
 import { Container } from "./ui";
+import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY, waUrl } from "@/lib/brand";
 
 const kolomPanduan = [
   { href: "/panduan", label: "Semua panduan" },
@@ -11,6 +13,7 @@ const kolomPanduan = [
 ];
 
 const kolomAlat = [
+  { href: "/profil-kamu", label: "Profil Kamu · rekomendasi" },
   { href: "/kalkulator", label: "Kalkulator KPR" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/syarat#bank", label: "Perbandingan bank" },
@@ -36,6 +39,26 @@ export function Footer() {
               Panduan Indonesia untuk membeli rumah pertama dengan KPR — dari
               cek kelayakan sampai kunci di tangan.
             </p>
+            <dl className="mt-5 space-y-2 text-sm">
+              <div className="flex items-start gap-2">
+                <dt className="sr-only">WhatsApp</dt>
+                <dd>
+                  <a
+                    href={waUrl("Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-bold text-primary hover:text-primary-deep"
+                  >
+                    <MessageCircle className="size-4" aria-hidden="true" />
+                    {WHATSAPP_DISPLAY}
+                  </a>
+                </dd>
+              </div>
+              <div className="flex items-start gap-2">
+                <dt className="sr-only">Alamat</dt>
+                <dd className="text-ink-soft">{ALAMAT}</dd>
+              </div>
+            </dl>
           </div>
 
           {[
@@ -44,13 +67,13 @@ export function Footer() {
             { judul: "Informasi", items: kolomInfo },
           ].map((kol) => (
             <nav key={kol.judul} aria-label={kol.judul}>
-              <h3 className="text-sm font-bold text-ink">{kol.judul}</h3>
-              <ul className="mt-4 space-y-2.5">
+              <h2 className="text-sm font-bold text-ink">{kol.judul}</h2>
+              <ul className="mt-4 space-y-2">
                 {kol.items.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-sm text-ink-soft transition hover:text-primary"
+                      className="inline-block py-1.5 text-sm text-ink-soft transition-colors hover:text-primary"
                     >
                       {item.label}
                     </Link>
@@ -69,8 +92,8 @@ export function Footer() {
             dan bank penyalur sebelum pengajuan.
           </p>
           <p className="mt-3 text-xs text-ink-soft">
-            © {new Date().getFullYear()} AlurKPR. Dibuat dengan semangat literasi
-            perumahan.
+            © {new Date().getFullYear()} AlurKPR · {BRAND_NAME}. Dibuat dengan
+            semangat literasi perumahan.
           </p>
         </div>
       </Container>

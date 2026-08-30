@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import type { BankRate } from "@/lib/types";
 import {
   angsuranBulanan,
@@ -10,6 +12,10 @@ import {
   plafondMaksimal,
   totalPembayaran,
 } from "@/lib/finance";
+import { waUrl } from "@/lib/brand";
+import { btnSecondary } from "./ui";
+
+const btnSecondaryClass = btnSecondary;
 
 type PilihanBank = {
   id: string;
@@ -319,6 +325,32 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
           Nilai aktual (bunga, LTV, provisi, asuransi, bebannya) ditetapkan bank
           saat akad — jadikan ini acuan awal untuk bernegosiasi, bukan janji
           final.
+        </div>
+
+        <div className="rounded-3xl border border-primary/25 bg-primary-soft/60 p-6">
+          <p className="font-display text-base font-semibold text-primary-deep">
+            Sudah paham angsuranmu? Lanjutkan supaya tidak mentok.
+          </p>
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            <Link href="/syarat" className={btnSecondaryClass}>
+              Cek kelayakan FLPP
+            </Link>
+            <a
+              href={waUrl(
+                `Halo Syahfalah Group, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`,
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+              Tanya via WhatsApp
+            </a>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-ink-soft">
+            Konsultasi gratis seputar skema, plafon, dan unit rumah di area
+            Lumajang.
+          </p>
         </div>
       </div>
     </div>

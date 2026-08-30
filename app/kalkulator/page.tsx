@@ -17,6 +17,7 @@ export default async function KalkulatorPage() {
     <section className="py-12 sm:py-16">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Simulasi"
           title="Kalkulator KPR & biaya awal"
           description="Geser angka kebutuhanmu dan lihat angsuran, total bayar, bunga keseluruhan, sampai perkiraan dana awal yang harus disiapkan."

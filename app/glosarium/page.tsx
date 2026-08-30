@@ -15,6 +15,7 @@ export default function GlosariumPage() {
       <section className="border-b border-line bg-surface">
         <Container className="py-14 sm:py-20">
           <SectionHeading
+            as="h1"
             eyebrow="Kamus"
             title="Glosarium istilah KPR"
             description="Saat petugas bank bicara 'plafon' atau 'appraisal', kamu langsung paham. Cari istilah yang belum kamu kenal."
@@ -23,7 +24,7 @@ export default function GlosariumPage() {
         </Container>
       </section>
       <section className="mt-12">
-        <Container className="mx-auto max-w-4xl">
+        <Container size="narrow">
           <dl className="grid gap-4 sm:grid-cols-2">
             {terurut.map((g) => (
               <div

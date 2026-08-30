@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf6ef;
-  --foreground: #1c1917;
+  --background: #f7f4ee;
+  --foreground: #14171b;
 }
 
 @theme inline {
@@ -10,17 +10,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-plusjakarta);
   --font-display: var(--font-fraunces);
-  --color-paper: #faf6ef;
+  --color-paper: #f7f4ee;
   --color-surface: #ffffff;
-  --color-ink: #1c1917;
+  --color-ink: #14171b;
   --color-ink-soft: #57534e;
-  --color-primary: #0f766e;
-  --color-primary-deep: #134e4a;
-  --color-primary-soft: #ccfbf1;
-  --color-line: #e7e0d5;
-  --color-accent: #d97706;
-  --color-accent-soft: #fef3c7;
-  --color-danger: #b91c1c;
+  --color-primary: #0b6b4f;
+  --color-primary-deep: #07543c;
+  --color-primary-soft: #d9ede4;
+  --color-accent: #c99a3c;
+  --color-accent-ink: #8a641f;
+  --color-accent-soft: #f3e8cd;
+  --color-line: #e5dccb;
+  --color-danger: #b4443c;
 }
 
 ::selection {
@@ -28,8 +29,21 @@
   color: #fff;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
@@ -41,4 +55,15 @@ body {
 
 input[type="range"] {
   accent-color: var(--color-primary);
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
 }

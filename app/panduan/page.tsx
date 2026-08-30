@@ -17,6 +17,7 @@ export default function PanduanPage() {
       <section className="border-b border-line bg-surface">
         <Container className="py-14 sm:py-20">
           <SectionHeading
+            as="h1"
             eyebrow="Perpustakaan panduan"
             title="Dari cek keuangan sampai kunci di tangan"
             description="Mulai dari alur 8 tahap yang runtut, lalu perdalam topik yang relevan dengan situasimu."
@@ -67,7 +68,7 @@ export default function PanduanPage() {
                 className="group flex flex-col rounded-3xl border border-line bg-surface p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
               >
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+                  <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
                     {a.kategori}
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs font-semibold text-ink-soft">
@@ -90,7 +91,7 @@ export default function PanduanPage() {
           </div>
 
           <div className="mt-10 flex items-start gap-3 rounded-3xl border border-line bg-accent-soft/60 p-6 text-sm leading-relaxed text-ink-soft">
-            <Clock className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden="true" />
+            <Clock className="mt-0.5 size-5 shrink-0 text-accent-ink" aria-hidden="true" />
             <p>
               Angka bunga, plafon subsidi, dan batas penghasilan dapat berubah
               mengikuti kebijakan. Jadikan panduan ini titik awal belajar, lalu

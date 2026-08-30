@@ -23,7 +23,7 @@ export const tahapKpr: Tahap[] = [
       "Siapkan buffer minimal 10% di atas target biaya awal — selalu ada biaya yang muncul di luar rencana.",
     ],
     kesalahanUmum: [
-      "Menyamakan limit cicilan bank dengan kemampuan finansial nyata — bank menilai oleh bank, kamu yang menanggung bulanannya.",
+      "Menyamakan limit cicilan bank dengan kemampuan finansial nyata — bank menilai berdasarkan data, kamu yang menjalani angsuran bulanannya.",
       "Lupa menghitung biaya awal di luar DP sehingga dana jebol di tengah proses.",
       "Tidak mengecek status subsidi terlebih dahulu, kemudian kecewa karena tidak lolos MBR.",
     ],
@@ -40,7 +40,7 @@ export const tahapKpr: Tahap[] = [
     penjelasan: [
       "Buat daftar prioritas: radius kerja, akses transportasi, sekolah, rumah sakit, pasar, dan arah pengembangan kota. Lokasi memengaruhi harga, kenaikan nilai, dan kualitas hidup jangka panjang.",
       "Tentukan spesifikasi rumah: tipe 36, 45, atau lebih, jumlah kamar, tanah kavling, dan rencana renovasi. Sesuaikan dengan budget yang dihitung di tahap 1.",
-      "Kunjungi minimal 3–5 pilihan: situs properti, pameran, dan tour langsung ke lokasi. Cek legalitas proyek: SHM/imbangan, perizinan PSU (prasarana, sarana, utilitas), dan reputasi pengembang.",
+      "Kunjungi minimal 3–5 pilihan: situs properti, pameran, dan tour langsung ke lokasi. Cek legalitas proyek: SHM/IMB, perizinan PSU (prasarana, sarana, utilitas), dan reputasi pengembang.",
       "Bandingkan juga bedanya beli dari pengembang (harga bundling, PPJB) vs rumah sekunder / second (negosiasi lebih leluasa tapi cek legalitas lebih teliti).",
     ],
     dokumen: ["Tidak ada dokumen khusus — bawa catatan kebutuhan & budget"],
@@ -112,7 +112,7 @@ export const tahapKpr: Tahap[] = [
     kesalahanUmum: [
       "Membayar booking fee ke pengembang tanpa cek legalitas proyek dan rekening resmi.",
       "Tidak membaca klausul refund — kerugian besar saat batal deal.",
-      "Booking unit yang masih dalam tanda merah (belum plafonidasi) tanpa verifikasi.",
+      "Booking unit yang masih berstatus SP2 tanpa verifikasi — pastikan proyeknya lancar dan pengembang terdaftar.",
     ],
     perbedaanSubsidi:
       "Booking unit subsidi umumnya disertai verifikasi MBR oleh sistem PUPR sebelum unit benar-benar terkunci; komersial tidak ada tahap verifikasi MBR.",

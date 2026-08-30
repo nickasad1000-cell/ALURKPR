@@ -1,11 +1,13 @@
 /** Kalkulasi keuangan KPR. Semua angka dalam Rupiah penuh. */
 
+const formatterRupiah = new Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
+  maximumFractionDigits: 0,
+});
+
 export function formatRupiah(n: number): string {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  }).format(Math.round(n));
+  return formatterRupiah.format(Math.round(n));
 }
 
 /** Plafon pinjaman = harga rumah dikurangi uang muka. */
