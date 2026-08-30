@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Syarat, Kelayakan & Perbandingan Bank",
   description:
     "Cek kelayakan KPR subsidi FLPP secara cepat, lihat syarat umum pengajuan, dan bandingkan suku bunga indikatif bank penyalur.",
+  alternates: { canonical: "/syarat" },
 };
 
 const syaratUmum = [

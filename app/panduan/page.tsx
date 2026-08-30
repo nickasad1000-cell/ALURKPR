@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Panduan KPR",
   description:
     "Panduan 8 tahap membeli rumah dengan KPR ditambah artikel mendalam tentang subsidi FLPP, KPR komersial, biaya awal, dan manajemen keuangan.",
+  alternates: { canonical: "/panduan" },
 };
 
 export default function PanduanPage() {

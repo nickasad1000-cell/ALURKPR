@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Glosarium Istilah KPR",
   description:
     "Kamus istilah KPR dan properti dalam bahasa sederhana: plafon, tenor, BPHTB, PPJB, AJB, SHM, take over, dan lainnya.",
+  alternates: { canonical: "/glosarium" },
 };
 
 export default function GlosariumPage() {

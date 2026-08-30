@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Kalkulator KPR & Biaya Awal",
   description:
     "Simulasikan angsuran KPR subsidi dan komersial: plafon, angsuran, total pembayaran, hingga rincian biaya awal sebelum akad.",
+  alternates: { canonical: "/kalkulator" },
 };
 
 export default async function KalkulatorPage() {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   BookOpen,
@@ -15,6 +16,10 @@ import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 import { TahapCard } from "@/components/tahap-card";
 import { ProfilKamu } from "@/components/profil-kamu";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const HERO_HARGA = 240_000_000;
 const HERO_DP = 10;

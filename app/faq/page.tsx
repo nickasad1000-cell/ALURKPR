@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Pertanyaan yang Sering Diajukan (FAQ)",
   description:
     "Jawaban atas pertanyaan umum seputar KPR: subsidi FLPP, DP, biaya awal, take over, gagal bayar, dan cara memakai kalkulator.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {

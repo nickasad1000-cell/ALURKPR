@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Tentang AlurKPR",
   description:
     "AlurKPR adalah proyek literasi keuangan perumahan: membimbing calon pemilik rumah pertama memahami alur KPR subsidi dan komersial dengan jujur dan jelas.",
+  alternates: { canonical: "/tentang" },
 };
 
 const nilai = [

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Profil Kamu — Rekomendasi KPR dalam 5 Pertanyaan",
   description:
     "Jawab 5 pertanyaan singkat soal penghasilan, pekerjaan, dan target. Dapat rekomendasi skema KPR subsidi atau komersial yang cocok, plus langkah berikutnya.",
+  alternates: { canonical: "/profil-kamu" },
 };
 
 export default function ProfilKamuPage() {

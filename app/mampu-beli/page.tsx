@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Kalkulator Kemampuan Beli Rumah",
   description:
     "Hitung berapa harga rumah yang mampu kamu beli berdasarkan penghasilan, cicilan lain, DP, tenor, dan bunga. Acuan indikatif untuk merencanakan KPR.",
+  alternates: { canonical: "/mampu-beli" },
 };
 
 export default function MampuBeliPage() {

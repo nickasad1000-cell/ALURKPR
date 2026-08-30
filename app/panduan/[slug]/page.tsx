@@ -15,6 +15,7 @@ import {
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow } from "@/components/ui";
+import { SITE_ORIGIN } from "@/lib/site";
 
 type Params = Promise<{ slug: string }>;
 
@@ -38,7 +39,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const konten = cariKonten(slug);
   if (!konten) return { title: "Panduan tidak ditemukan" };
   const data = konten.data as { judul: string; ringkasan: string };
-  return { title: data.judul, description: data.ringkasan };
+  return {
+    title: data.judul,
+    description: data.ringkasan,
+    alternates: { canonical: `/panduan/${slug}` },
+  };
 }
 
 export default async function PanduanDetailPage({ params }: { params: Params }) {
@@ -54,8 +59,27 @@ export default async function PanduanDetailPage({ params }: { params: Params }) 
 }
 
 function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: artikel.judul,
+    description: artikel.ringkasan,
+    datePublished: "2026-08-30",
+    dateModified: "2026-08-30",
+    inLanguage: "id-ID",
+    author: { "@type": "Organization", name: "AlurKPR" },
+    publisher: { "@type": "Organization", name: "AlurKPR", url: SITE_ORIGIN },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_ORIGIN}/panduan/${artikel.slug}`,
+    },
+  };
   return (
     <Container className="py-14 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/panduan"
         className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"

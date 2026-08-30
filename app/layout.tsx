@@ -45,12 +45,25 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "AlurKPR",
+    url: SITE_ORIGIN,
+    inLanguage: "id-ID",
+    description: "Panduan KPR rumah pertama di Indonesia.",
+    publisher: { "@type": "Organization", name: "AlurKPR", url: SITE_ORIGIN },
+  };
   return (
     <html
       lang="id"
       className={`${fraunces.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"

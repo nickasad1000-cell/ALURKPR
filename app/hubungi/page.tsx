@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Hubungi Kami",
   description:
     "Kirim pertanyaan atau masukan seputar panduan KPR. Tim AlurKPR membalas pesan yang kamu kirim melalui formulir atau WhatsApp.",
+  alternates: { canonical: "/hubungi" },
 };
 
 export default function HubungiPage() {
