@@ -12,8 +12,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/kalkulator" },
 };
 
-export default async function KalkulatorPage() {
+export default async function KalkulatorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ dp?: string }>;
+}) {
   const rates = await getBankRates();
+  const { dp } = await searchParams;
+  const initialDp = Math.min(50, Math.max(0, Number(dp) || 10));
   return (
     <section className="py-12 sm:py-16">
       <Container>
@@ -25,7 +31,7 @@ export default async function KalkulatorPage() {
           align="center"
         />
         <div className="mt-10">
-          <Kalkulator rates={rates} />
+          <Kalkulator rates={rates} initialDp={initialDp} />
         </div>
       </Container>
     </section>

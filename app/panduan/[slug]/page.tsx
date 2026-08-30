@@ -267,7 +267,7 @@ function TahapView({ slug }: { slug: string }) {
           <ul className="mt-5 space-y-2.5">
             {tahap.dokumen.map((d) => (
               <li key={d} className="flex items-start gap-2.5 text-sm leading-relaxed sm:text-base">
-                <CheckCircle2 className="mt-0.5 size-4.5 shrink-0 text-primary" aria-hidden="true" />
+                <CheckCircle2 className="mt-0.5 size-[18px] shrink-0 text-primary" aria-hidden="true" />
                 {d}
               </li>
             ))}
@@ -283,7 +283,7 @@ function TahapView({ slug }: { slug: string }) {
             <ul className="mt-5 space-y-2.5">
               {tahap.biayaTerkait.map((b) => (
                 <li key={b} className="flex items-start gap-2.5 text-sm leading-relaxed sm:text-base">
-                  <Wallet className="mt-0.5 size-4.5 shrink-0 text-accent-ink" aria-hidden="true" />
+                  <Wallet className="mt-0.5 size-[18px] shrink-0 text-accent-ink" aria-hidden="true" />
                   {b}
                 </li>
               ))}
@@ -314,7 +314,7 @@ function TahapView({ slug }: { slug: string }) {
           <ul className="mt-5 space-y-3">
             {tahap.kesalahanUmum.map((k) => (
               <li key={k} className="flex items-start gap-2.5 text-sm leading-relaxed sm:text-base">
-                <AlertTriangle className="mt-0.5 size-4.5 shrink-0 text-accent-ink" aria-hidden="true" />
+                <AlertTriangle className="mt-0.5 size-[18px] shrink-0 text-accent-ink" aria-hidden="true" />
                 {k}
               </li>
             ))}

@@ -17,6 +17,8 @@ import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 import { TahapCard } from "@/components/tahap-card";
 import { ProfilKamu } from "@/components/profil-kamu";
+import { AlurJalur } from "@/components/alur-jalur";
+import { BlokDemografis } from "@/components/blok-demografis";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -223,8 +225,8 @@ export default function Home() {
         <Container>
           <SectionHeading
             eyebrow="Alat perencanaan gratis"
-            title="Empat alat untuk mulai merencanakan"
-            description="Gunakan sesuai urutan: tahu kemampuan beli, kumpulkan DP, hitung angsuran, lalu dapatkan rekomendasi skema."
+            title="Lima alat untuk mulai merencanakan"
+            description="Gunakan sesuai urutan: tahu kemampuan beli, bandingkan sewa vs beli, kumpulkan DP, hitung angsuran, lalu dapatkan rekomendasi skema."
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
@@ -301,6 +303,20 @@ export default function Home() {
               <TahapCard key={t.slug} tahap={t} />
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* Jalur menuju kunci — diagram alur 8 tahap */}
+      <section className="mt-20 sm:mt-24">
+        <Container>
+          <AlurJalur />
+        </Container>
+      </section>
+
+      {/* Demografis & fakta KPR */}
+      <section className="mt-20 sm:mt-24">
+        <Container>
+          <BlokDemografis />
         </Container>
       </section>
 

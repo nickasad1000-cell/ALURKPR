@@ -128,7 +128,7 @@ export function HubungiForm() {
 
       {status.state === "done" ? (
         <p role="status" className="mt-5 flex items-start gap-2 text-sm font-semibold text-primary">
-          <CheckCircle2 className="mt-0.5 size-4.5 shrink-0" aria-hidden="true" />
+          <CheckCircle2 className="mt-0.5 size-[18px] shrink-0" aria-hidden="true" />
           {status.pesan}
         </p>
       ) : null}

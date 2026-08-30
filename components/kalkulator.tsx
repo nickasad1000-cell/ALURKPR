@@ -54,10 +54,16 @@ function buatPilihan(rates: BankRate[]): PilihanBank[] {
 
 const DP_PRESETS = [0, 1, 5, 10, 15, 20, 25, 30];
 
-export function Kalkulator({ rates }: { rates: BankRate[] }) {
+export function Kalkulator({
+  rates,
+  initialDp = 10,
+}: {
+  rates: BankRate[];
+  initialDp?: number;
+}) {
   const pilihan = useMemo(() => buatPilihan(rates), [rates]);
   const [harga, setHarga] = useState(240_000_000);
-  const [dpPct, setDpPct] = useState(10);
+  const [dpPct, setDpPct] = useState(initialDp);
   const [tenor, setTenor] = useState(20);
   const [bankId, setBankId] = useState(pilihan[0].id);
   const [lihatBiaya, setLihatBiaya] = useState(false);

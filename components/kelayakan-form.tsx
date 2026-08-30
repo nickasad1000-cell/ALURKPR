@@ -107,7 +107,7 @@ export function KelayakanForm() {
               type="checkbox"
               checked={item.value}
               onChange={(e) => item.set(e.target.checked)}
-              className="mt-0.5 size-4.5 accent-primary"
+              className="mt-0.5 size-[18px] accent-primary"
             />
             <span>{item.label}</span>
           </label>
@@ -147,9 +147,9 @@ export function KelayakanForm() {
             {hasil.syarat.map((s) => (
               <li key={s.label} className="flex items-start gap-2.5 text-sm">
                 {s.lolos ? (
-                  <CheckCircle2 className="mt-0.5 size-4.5 shrink-0 text-primary" aria-hidden="true" />
+                  <CheckCircle2 className="mt-0.5 size-[18px] shrink-0 text-primary" aria-hidden="true" />
                 ) : (
-                  <XCircle className="mt-0.5 size-4.5 shrink-0 text-danger" aria-hidden="true" />
+                  <XCircle className="mt-0.5 size-[18px] shrink-0 text-danger" aria-hidden="true" />
                 )}
                 <span>
                   <span className={s.lolos ? "" : "line-through decoration-danger/60"}>{s.label}</span>
