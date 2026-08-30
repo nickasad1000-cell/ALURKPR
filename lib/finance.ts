@@ -95,3 +95,50 @@ export function biayaAwal(harga: number, dpPercent: number): RincianBiayaAwal {
   const total = dp + provisi + admin + bphtb + notaris + asuransi;
   return { dp, provisi, admin, bphtb, notaris, asuransi, total };
 }
+
+export type InputKemampuanBeli = {
+  penghasilanBulanan: number;
+  cicilanLainBulanan?: number;
+  dbrPersen: number; // rasio maksimal angsuran terhadap penghasilan bersih
+  dpPersen: number;
+  tenorTahun: number;
+  bungaTahunanPersen: number;
+};
+
+export type HasilKemampuanBeli = {
+  angsuranMaksimal: number;
+  plafonMaksimal: number;
+  hargaMaksimal: number;
+};
+
+/**
+ * Menghitung harga rumah maksimal yang mampu dibeli (reverse calculator).
+ *
+ * Angsuran maksimal = (penghasilan − cicilan lain) × dbr%; lalu plafon
+ * maksimal diselesaikan dari formula anuitas:
+ *
+ *   angsuran = P·r·(1+r)^n / ((1+r)^n − 1)
+ *   => P = angsuran·((1+r)^n − 1) / (r·(1+r)^n)
+ *
+ * Lengkapnya harga = plafon/(1 − dp%).
+ */
+export function hargaMaksimalMampu(
+  input: InputKemampuanBeli,
+): HasilKemampuanBeli {
+  const { penghasilanBulanan, cicilanLainBulanan = 0, dbrPersen } = input;
+  const n = input.tenorTahun * 12;
+  const r = input.bungaTahunanPersen / 100 / 12;
+
+  const bersih = Math.max(0, penghasilanBulanan - cicilanLainBulanan);
+  const angsuranMaksimal = Math.round((bersih * dbrPersen) / 100);
+  if (n <= 0 || r <= 0 || angsuranMaksimal <= 0) {
+    return { angsuranMaksimal, plafonMaksimal: 0, hargaMaksimal: 0 };
+  }
+
+  const pow = Math.pow(1 + r, n);
+  const plafon = Math.round(
+    (angsuranMaksimal * (pow - 1)) / (r * pow),
+  );
+  const harga = Math.round(plafon / (1 - input.dpPersen / 100));
+  return { angsuranMaksimal, plafonMaksimal: plafon, hargaMaksimal: harga };
+}

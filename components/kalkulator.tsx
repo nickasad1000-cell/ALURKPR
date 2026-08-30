@@ -353,7 +353,11 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
           </div>
           <p className="mt-3 text-xs leading-relaxed text-ink-soft">
             Konsultasi gratis seputar skema, plafon, dan unit rumah di area
-            Lumajang.
+            Lumajang. Belum tahu kisaran kemampuannya?{" "}
+            <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
+              Cek dulu kemampuan beli
+            </Link>
+            .
           </p>
         </div>
       </div>

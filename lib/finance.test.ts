@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   angsuranBulanan,
   biayaAwal,
+  hargaMaksimalMampu,
   jadwalAmortisasi,
   plafondMaksimal,
   totalPembayaran,
@@ -61,5 +62,47 @@ describe("biayaAwal", () => {
     expect(b.bphtb).toBe(12_000_000));
   it("BPHTB tidak negatif untuk rumah murah", () => {
     expect(biayaAwal(50_000_000, 10).bphtb).toBe(0);
+  });
+});
+
+describe("hargaMaksimalMampu (reverse)", () => {
+  it("10jt/bln, DBR 40%, DP 10%, 20th, 7% → plafon sesuai angsuran", () => {
+    const h = hargaMaksimalMampu({
+      penghasilanBulanan: 10_000_000,
+      cicilanLainBulanan: 0,
+      dbrPersen: 40,
+      dpPersen: 10,
+      tenorTahun: 20,
+      bungaTahunanPersen: 7,
+    });
+    // Angsuran maks = 4jt/bln. Sesuaikan kembali dengan angsuranBulanan.
+    expect(h.angsuranMaksimal).toBe(4_000_000);
+    const angsuranUlangan = angsuranBulanan(h.plafonMaksimal, 7, 20);
+    // plafon diasuransikan ≈ 4jt (toleransi pembulatan 2.000)
+    expect(Math.abs(angsuranUlangan - h.angsuranMaksimal)).toBeLessThan(2_000);
+    // harga = plafon / (1 − 10%)
+    expect(h.hargaMaksimal).toBe(Math.round(h.plafonMaksimal / 0.9));
+  });
+  it("cicilan lain mengurangi angsuran maksimal", () => {
+    const a = hargaMaksimalMampu({
+      penghasilanBulanan: 10_000_000,
+      cicilanLainBulanan: 2_000_000,
+      dbrPersen: 30,
+      dpPersen: 10,
+      tenorTahun: 20,
+      bungaTahunanPersen: 6,
+    });
+    expect(a.angsuranMaksimal).toBe(2_400_000);
+  });
+  it("input tidak valid → harga 0", () => {
+    const h = hargaMaksimalMampu({
+      penghasilanBulanan: 0,
+      cicilanLainBulanan: 0,
+      dbrPersen: 30,
+      dpPersen: 10,
+      tenorTahun: 20,
+      bungaTahunanPersen: 6,
+    });
+    expect(h.hargaMaksimal).toBe(0);
   });
 });

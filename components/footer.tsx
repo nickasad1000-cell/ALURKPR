@@ -16,6 +16,7 @@ const kolomPanduan = [
 const kolomAlat = [
   { href: "/profil-kamu", label: "Profil Kamu · rekomendasi" },
   { href: "/kalkulator", label: "Kalkulator KPR" },
+  { href: "/mampu-beli", label: "Kemampuan beli rumah" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/syarat#bank", label: "Perbandingan bank" },
   { href: "/faq", label: "Pertanyaan umum" },
