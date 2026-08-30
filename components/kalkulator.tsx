@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
 import type { BankRate } from "@/lib/types";
 import {
   angsuranBulanan,
@@ -12,8 +11,9 @@ import {
   plafondMaksimal,
   totalPembayaran,
 } from "@/lib/finance";
-import { waUrl } from "@/lib/brand";
+import { track } from "@/lib/analytics";
 import { btnSecondary } from "./ui";
+import { WhatsAppButton } from "./whatsapp-button";
 
 const btnSecondaryClass = btnSecondary;
 
@@ -85,6 +85,11 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
     const rows = jadwalAmortisasi(hasil.plafon, bank.fixedRate, tenorEfektif);
     return [...rows.slice(0, 12), ...rows.slice(-12)];
   }, [lihatAmortisasi, hasil.plafon, bank.fixedRate, tenorEfektif]);
+
+  useEffect(() => {
+    track("calc_result_viewed", { bank: bank.id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bankId]);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
@@ -335,17 +340,10 @@ export function Kalkulator({ rates }: { rates: BankRate[] }) {
             <Link href="/syarat" className={btnSecondaryClass}>
               Cek kelayakan FLPP
             </Link>
-            <a
-              href={waUrl(
-                `Halo Syahfalah Group, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`,
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              Tanya via WhatsApp
-            </a>
+            <WhatsAppButton
+              source="kalkulator"
+              pesan={`Halo Syahfalah Group, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`}
+            />
           </div>
           <p className="mt-3 text-xs leading-relaxed text-ink-soft">
             Konsultasi gratis seputar skema, plafon, dan unit rumah di area

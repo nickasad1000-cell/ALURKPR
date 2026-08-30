@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail } from "lucide-react";
 import { HubungiForm } from "./hubungi-form";
 import { Container, SectionHeading } from "@/components/ui";
+import { WhatsAppLink } from "@/components/whatsapp-link";
+import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Hubungi Kami",
   description:
-    "Kirim pertanyaan atau masukan seputar panduan KPR. Tim AlurKPR membalas pesan yang kamu kirim melalui formulir ini.",
+    "Kirim pertanyaan atau masukan seputar panduan KPR. Tim AlurKPR membalas pesan yang kamu kirim melalui formulir atau WhatsApp.",
 };
 
 export default function HubungiPage() {
@@ -27,17 +29,25 @@ export default function HubungiPage() {
               <p className="mt-3 text-sm font-bold">Email</p>
               <p className="mt-1 text-sm text-ink-soft">halo@alurkpr.id</p>
             </div>
-            <div className="rounded-3xl border border-line bg-surface p-6">
-              <MessageCircle className="size-6 text-primary" aria-hidden="true" />
-              <p className="mt-3 text-sm font-bold">Balas dalam</p>
-              <p className="mt-1 text-sm text-ink-soft">
-                1–3 hari kerja. Untuk urusan mendesak, berkonsultasilah langsung
-                dengan bank penyalur dan pihak berwenang.
+            <div className="rounded-3xl border border-primary/25 bg-primary-soft/60 p-6">
+              <p className="text-sm font-bold">WhatsApp — balas cepat</p>
+              <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+                Konsultasi KPR & unit rumah lewat {BRAND_NAME}.
               </p>
+              <WhatsAppLink
+                source="hubungi"
+                pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah."
+                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 text-sm font-bold text-white hover:bg-[#1faf56]"
+              >
+                {WHATSAPP_DISPLAY}
+              </WhatsAppLink>
             </div>
             <p className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-6 text-xs leading-relaxed text-ink-soft">
               Kami tidak meminta data keuangan sensitif (rekening, NPWP, kata
               sandi). Jangan pernah membagikannya di formulir mana pun.
+            </p>
+            <p className="rounded-3xl border border-line bg-surface p-6 text-xs leading-relaxed text-ink-soft">
+              {ALAMAT}
             </p>
           </div>
           <HubungiForm />

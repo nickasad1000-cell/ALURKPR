@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AlertTriangle, CheckCircle2, MessageCircle, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import { cekKelayakan } from "@/lib/eligibility";
 import type { KelayakanResult } from "@/lib/types";
+import { track } from "@/lib/analytics";
 import { inputCls, btnPrimary } from "./ui";
-import { waUrl } from "@/lib/brand";
+import { WhatsAppButton } from "./whatsapp-button";
 
 export function KelayakanForm() {
   const [penghasilan, setPenghasilan] = useState("5000000");
@@ -16,21 +17,23 @@ export function KelayakanForm() {
   const [pernahSubsidi, setPernahSubsidi] = useState(false);
   const [hasil, setHasil] = useState<KelayakanResult | null>(null);
 
-  const sumbit = (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setHasil(
-      cekKelayakan({
-        penghasilan: Number(penghasilan) || 0,
-        hargaUnit: Number(hargaUnit) || 0,
-        dewasaAtauMenikah,
-        sudahPunyaRumah,
-        pernahSubsidi,
-      }),
-    );
+    const res = cekKelayakan({
+      penghasilan: Number(penghasilan) || 0,
+      hargaUnit: Number(hargaUnit) || 0,
+      dewasaAtauMenikah,
+      sudahPunyaRumah,
+      pernahSubsidi,
+    });
+    setHasil(res);
+    track(res.layak ? "eligibility_passed" : "eligibility_failed", {
+      penghasilan: Number(penghasilan) || 0,
+    });
   };
 
   return (
-    <form onSubmit={sumbit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
+    <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Cek kelayakan KPR subsidi</h2>
       <p className="mt-1 text-sm text-ink-soft">
         Berdasarkan aturan umum FLPP untuk rumah tapak — indikatif.
@@ -47,10 +50,12 @@ export function KelayakanForm() {
               type="number"
               min={0}
               step={100000}
+              name="penghasilan"
+              inputMode="numeric"
+              aria-label="Penghasilan pokok per bulan dalam Rupiah"
               value={penghasilan}
               onChange={(e) => setPenghasilan(e.target.value)}
               className={`${inputCls} rounded-l-none`}
-              aria-label="Penghasilan pokok per bulan dalam Rupiah"
             />
           </div>
         </label>
@@ -64,10 +69,12 @@ export function KelayakanForm() {
               type="number"
               min={0}
               step={1000000}
+              name="harga-unit"
+              inputMode="numeric"
+              aria-label="Harga unit rumah dalam Rupiah"
               value={hargaUnit}
               onChange={(e) => setHargaUnit(e.target.value)}
               className={`${inputCls} rounded-l-none`}
-              aria-label="Harga unit rumah dalam Rupiah"
             />
           </div>
         </label>
@@ -115,7 +122,7 @@ export function KelayakanForm() {
       </button>
 
       {hasil ? (
-        <div className={`mt-6 rounded-2xl border p-5 ${hasil.layak ? "border-primary/30 bg-primary-soft" : "border-accent/40 bg-accent-soft/60"}`}>
+        <div role="alert" className={`mt-6 rounded-2xl border p-5 ${hasil.layak ? "border-primary/30 bg-primary-soft" : "border-accent/40 bg-accent-soft/60"}`}>
           <div className="flex items-center gap-2.5">
             {hasil.layak ? (
               <CheckCircle2 className="size-6 text-primary" aria-hidden="true" />
@@ -157,24 +164,19 @@ export function KelayakanForm() {
               <Link href="/kalkulator" className={btnPrimary}>
                 Hitung angsuran lanjutan
               </Link>
-              <a
-                href={waUrl(
-                  `Halo Syahfalah Group, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin diskusi unit & proses selanjutnya.`,
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <MessageCircle className="size-4" aria-hidden="true" />
-                Diskusi via WhatsApp
-              </a>
+              <WhatsAppButton
+                source="eligibility_passed"
+                label="Diskusi via WhatsApp"
+                pesan={`Halo Syahfalah Group, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin diskusi unit & proses selanjutnya.`}
+              />
             </div>
           ) : (
             <div className="mt-5 grid gap-2.5">
-              <Link href={waUrl(`Halo Syahfalah Group, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya bisa diajak diskusi.`)} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                <MessageCircle className="size-4" aria-hidden="true" />
-                Tanya strategi lainnya
-              </Link>
+              <WhatsAppButton
+                source="eligibility_failed"
+                label="Tanya strategi lainnya"
+                pesan={`Halo Syahfalah Group, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya bisa diajak diskusi.`}
+              />
               <Link href="/panduan/tahap-1-cek-keuangan-dan-kelayakan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
                 Baca langkah memperbaiki kelayakan
               </Link>

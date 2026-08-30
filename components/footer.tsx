@@ -2,7 +2,8 @@ import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Logo } from "./logo";
 import { Container } from "./ui";
-import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY, waUrl } from "@/lib/brand";
+import { WhatsAppLink } from "./whatsapp-link";
+import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY } from "@/lib/brand";
 
 const kolomPanduan = [
   { href: "/panduan", label: "Semua panduan" },
@@ -43,15 +44,14 @@ export function Footer() {
               <div className="flex items-start gap-2">
                 <dt className="sr-only">WhatsApp</dt>
                 <dd>
-                  <a
-                    href={waUrl("Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah.")}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <WhatsAppLink
+                    source="footer"
+                    pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah."
                     className="inline-flex items-center gap-1.5 font-bold text-primary hover:text-primary-deep"
                   >
                     <MessageCircle className="size-4" aria-hidden="true" />
                     {WHATSAPP_DISPLAY}
-                  </a>
+                  </WhatsAppLink>
                 </dd>
               </div>
               <div className="flex items-start gap-2">

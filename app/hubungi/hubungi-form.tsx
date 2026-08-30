@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { inputCls } from "@/components/ui";
+import { track } from "@/lib/analytics";
 
 type Status =
   | { state: "idle" }
@@ -28,6 +29,7 @@ export function HubungiForm() {
         setStatus({ state: "error", pesan: data.error ?? "Gagal mengirim." });
         return;
       }
+      track("form_submitted", { channel: "enquiries" });
       setForm({ nama: "", email: "", pesan: "" });
       setStatus({ state: "done", pesan: data.message ?? "Terima kasih! Pesanmu terkirim." });
     } catch {
@@ -88,13 +90,13 @@ export function HubungiForm() {
       </button>
 
       {status.state === "done" ? (
-        <p className="mt-5 flex items-start gap-2 text-sm font-semibold text-primary">
+        <p role="status" className="mt-5 flex items-start gap-2 text-sm font-semibold text-primary">
           <CheckCircle2 className="mt-0.5 size-4.5 shrink-0" aria-hidden="true" />
           {status.pesan}
         </p>
       ) : null}
       {status.state === "error" ? (
-        <p className="mt-5 text-sm font-semibold text-danger">{status.pesan}</p>
+        <p role="alert" className="mt-5 text-sm font-semibold text-danger">{status.pesan}</p>
       ) : null}
     </form>
   );

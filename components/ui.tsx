@@ -71,3 +71,6 @@ export const btnSecondary =
 
 export const inputCls =
   `w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-sm text-ink outline-none transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 ${btnFocus}`;
+
+export const btnWhatsApp =
+  `inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-[#1faf56] active:scale-[0.98] ${btnFocus}`;

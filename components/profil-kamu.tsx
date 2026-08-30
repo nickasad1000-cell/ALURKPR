@@ -5,13 +5,13 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Check,
-  MessageCircle,
   RotateCcw,
   Sparkles,
   Wallet,
 } from "lucide-react";
-import { waUrl } from "@/lib/brand";
+import { track } from "@/lib/analytics";
 import { btnPrimary, btnSecondary } from "./ui";
+import { WhatsAppButton } from "./whatsapp-button";
 
 type Penghasilan = "di-bawah-4" | "4-8" | "8-12" | "di-atas-12";
 
@@ -149,6 +149,7 @@ export function ProfilKamu() {
       setStep((s) => s + 1);
     } else {
       setStep(stepCount);
+      track("profil_completed", { skema: v });
     }
   };
 
@@ -157,7 +158,6 @@ export function ProfilKamu() {
   const selesai = step >= stepCount;
 
   if (selesai) {
-    const pesanWhatsapp = `Halo Syahfalah Group, saya baru selesai mengisi "Profil Kamu" (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`;
     return (
       <div className="w-full" aria-live="polite">
         <div className="mx-auto max-w-2xl">
@@ -211,15 +211,11 @@ export function ProfilKamu() {
                 Cek kelayakan
               </Link>
             </div>
-            <a
-              href={waUrl(pesanWhatsapp)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-white transition-transform hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              Tanya lanjutan via WhatsApp
-            </a>
+            <WhatsAppButton
+              source="profil_completed"
+              label="Tanya lanjutan via WhatsApp"
+              pesan={`Halo Syahfalah Group, saya baru selesai mengisi "Profil Kamu" (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`}
+            />
             <button
               type="button"
               onClick={() => setStep(0)}
