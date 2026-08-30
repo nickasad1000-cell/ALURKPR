@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
+import { WHATSAPP_DISPLAY } from "@/lib/brand";
 
 const CIDR_PENUH = new Map<string, { count: number; reset: number }>();
 const MAX_PER_WINDOW = 5;
@@ -83,10 +84,12 @@ export async function POST(request: Request) {
   if (supabase) {
     const { error } = await supabase.from("enquiries").insert({ nama, email, pesan });
     if (error) {
-      console.error(`[enquiries] gagal simpan dari ${ip}:`, error.message);
+      console.error(`[enquiries] gagal simpan dari ${ip}:`, error.message, error.code);
       return NextResponse.json(
-        { error: "Gagal menyimpan pesan. Coba lagi nanti." },
-        { status: 500 },
+        {
+          error: `Penyimpanan pesan sedang terganggu. Agar tidak hilang, kirim langsung lewat WhatsApp ${WHATSAPP_DISPLAY}.`,
+        },
+        { status: 503 },
       );
     }
     return NextResponse.json({ message: "Terima kasih! Pesanmu terkirim." });
