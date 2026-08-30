@@ -173,3 +173,50 @@ export function tabunganBulananUntuk(
   if (jumlahBulan <= 0) return Infinity;
   return Math.ceil(sisa / jumlahBulan);
 }
+
+/** Total kumulatif biaya beli (dana awal + angsuran tetap) selama N tahun. */
+export function biayaBeliKumulatif(
+  danaAwal: number,
+  angsuranBulan: number,
+  tahun: number,
+): number {
+  return Math.max(0, danaAwal) + Math.max(0, angsuranBulan) * 12 * Math.max(0, tahun);
+}
+
+/** Total kumulatif biaya sewa selama N tahun dengan kenaikan sewa tahunan (%). */
+export function biayaSewaKumulatif(
+  sewaBulanan: number,
+  kenaikanTahunanPersen: number,
+  tahun: number,
+): number {
+  let total = 0;
+  let sewa = sewaBulanan;
+  for (let t = 0; t < Math.max(0, tahun); t++) {
+    total += sewa * 12;
+    sewa *= 1 + kenaikanTahunanPersen / 100;
+  }
+  return Math.round(total);
+}
+
+/**
+ * Tahun impas (break-even): tahun pertama saat biaya kumulatif beli sudah
+ * tidak lebih mahal dari kumulatif sewa. `null` bila beli selalu lebih mahal
+ * sampai batas horizon.
+ */
+export function tahunImpas(
+  danaAwal: number,
+  angsuranBulan: number,
+  sewaBulanan: number,
+  kenaikanTahunanPersen: number,
+  horizonTahun = 40,
+): number | null {
+  for (let t = 1; t <= horizonTahun; t++) {
+    if (
+      biayaBeliKumulatif(danaAwal, angsuranBulan, t) <=
+      biayaSewaKumulatif(sewaBulanan, kenaikanTahunanPersen, t)
+    ) {
+      return t;
+    }
+  }
+  return null;
+}

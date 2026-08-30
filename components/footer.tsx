@@ -18,6 +18,7 @@ const kolomAlat = [
   { href: "/kalkulator", label: "Kalkulator KPR" },
   { href: "/mampu-beli", label: "Kemampuan beli rumah" },
   { href: "/planner-dp", label: "Planner tabungan DP" },
+  { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/syarat#bank", label: "Perbandingan bank" },
   { href: "/faq", label: "Pertanyaan umum" },

@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kalkulator",
     "/mampu-beli",
     "/planner-dp",
+    "/sewa-vs-beli",
     "/profil-kamu",
     "/syarat",
     "/faq",

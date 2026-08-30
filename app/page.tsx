@@ -5,6 +5,7 @@ import {
   BookOpen,
   Calculator,
   CheckCircle2,
+  Home as HomeIcon,
   Landmark,
   Percent,
   ShieldCheck,
@@ -225,7 +226,7 @@ export default function Home() {
             title="Empat alat untuk mulai merencanakan"
             description="Gunakan sesuai urutan: tahu kemampuan beli, kumpulkan DP, hitung angsuran, lalu dapatkan rekomendasi skema."
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
               {
                 href: "/mampu-beli",
@@ -238,6 +239,12 @@ export default function Home() {
                 icon: Wallet,
                 judul: "Planner tabungan DP",
                 teks: "Beres waktu menabung DP dan setoran bulanan yang dibutuhkan.",
+              },
+              {
+                href: "/sewa-vs-beli",
+                icon: HomeIcon,
+                judul: "Sewa vs beli",
+                teks: "Kapan membeli mulai lebih murah daripada menyewa.",
               },
               {
                 href: "/kalkulator",

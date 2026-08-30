@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   angsuranBulanan,
   biayaAwal,
+  biayaBeliKumulatif,
+  biayaSewaKumulatif,
   bulanUntukMenabung,
   hargaMaksimalMampu,
   jadwalAmortisasi,
   plafondMaksimal,
   tabunganBulananUntuk,
+  tahunImpas,
   totalPembayaran,
 } from "./finance";
 
@@ -130,5 +133,29 @@ describe("tabunganBulananUntuk", () => {
   });
   it("jumlah bulan 0 → Infinity", () => {
     expect(tabunganBulananUntuk(60_000_000, 0, 0)).toBe(Infinity);
+  });
+});
+
+describe("biayaBeliKumulatif", () => {
+  it("dana awal 50jt + 2jt/bln selama 5 tahun → 170jt", () => {
+    expect(biayaBeliKumulatif(50_000_000, 2_000_000, 5)).toBe(170_000_000);
+  });
+});
+
+describe("biayaSewaKumulatif", () => {
+  it("1,5jt/bln tanpa kenaikan selama 2 tahun → 36jt", () => {
+    expect(biayaSewaKumulatif(1_500_000, 0, 2)).toBe(36_000_000);
+  });
+  it("kenaikan 10%/tahun → tahun pertama 18jt, tahun kedua 19,8jt", () => {
+    expect(biayaSewaKumulatif(1_500_000, 10, 2)).toBe(37_800_000);
+  });
+});
+
+describe("tahunImpas", () => {
+  it("dana awal 60jt, angsuran 2jt, sewa 3jt → impas tahun 5", () => {
+    expect(tahunImpas(60_000_000, 2_000_000, 3_000_000, 0)).toBe(5);
+  });
+  it("angsuran jauh di atas sewa → null", () => {
+    expect(tahunImpas(100_000_000, 5_000_000, 1_000_000, 0)).toBeNull();
   });
 });
