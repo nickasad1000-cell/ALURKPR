@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { inputCls } from "@/components/ui";
 import { track } from "@/lib/analytics";
 
@@ -13,7 +14,7 @@ type Status =
 
 export function HubungiForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
-  const [form, setForm] = useState({ nama: "", email: "", pesan: "" });
+  const [form, setForm] = useState({ nama: "", email: "", pesan: "", consent: false });
   const [website, setWebsite] = useState("");
 
   async function kirim(e: React.FormEvent) {
@@ -23,7 +24,13 @@ export function HubungiForm() {
       const res = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, website }),
+        body: JSON.stringify({
+          nama: form.nama,
+          email: form.email,
+          pesan: form.pesan,
+          consent: form.consent,
+          website,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -31,7 +38,7 @@ export function HubungiForm() {
         return;
       }
       track("form_submitted", { channel: "enquiries" });
-      setForm({ nama: "", email: "", pesan: "" });
+      setForm({ nama: "", email: "", pesan: "", consent: false });
       setStatus({ state: "done", pesan: data.message ?? "Terima kasih! Pesanmu terkirim." });
     } catch {
       setStatus({ state: "error", pesan: "Koneksi bermasalah. Coba lagi." });
@@ -85,6 +92,24 @@ export function HubungiForm() {
           className={`${inputCls} mt-1.5 resize-y`}
           placeholder="Ceritakan pertanyaan atau kebutuhanmu seputar KPR…"
         />
+      </label>
+
+      <label className="mt-5 flex cursor-pointer items-start gap-2.5">
+        <input
+          type="checkbox"
+          required
+          checked={form.consent}
+          onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
+          className="mt-0.5 size-4 accent-[var(--color-primary)]"
+        />
+        <span className="text-xs leading-relaxed text-ink-soft">
+          Saya setuju data nama, email, dan isi pesan diproses untuk membalas
+          pertanyaan ini, sesuai{" "}
+          <Link href="/privasi" className="font-bold text-primary hover:text-primary-deep">
+            kebijakan privasi
+          </Link>
+          . Tanpa persetujuan ini, pesan tidak dapat dikirim.
+        </span>
       </label>
 
       <button

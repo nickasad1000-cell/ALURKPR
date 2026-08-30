@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/glosarium",
     "/tentang",
     "/hubungi",
+    "/privasi",
   ].map((path) => ({
     url: `${SITE_ORIGIN}${path}`,
     lastModified: RIVISI,

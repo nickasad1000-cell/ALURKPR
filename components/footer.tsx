@@ -29,6 +29,7 @@ const kolomAlat = [
 const kolomInfo = [
   { href: "/tentang", label: "Tentang AlurKPR" },
   { href: "/hubungi", label: "Hubungi kami" },
+  { href: "/privasi", label: "Kebijakan privasi" },
   { href: "/panduan/manajemen-keuangan-sebelum-kpr", label: "Kelola keuangan" },
   { href: "/panduan/perbedaan-kpr-subsidi-dan-komersial", label: "Subsidi vs komersial" },
 ];
