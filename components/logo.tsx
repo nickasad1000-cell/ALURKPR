@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -7,20 +8,15 @@ export function Logo({ className = "" }: { className?: string }) {
       className={`flex items-center gap-2.5 ${className}`}
       aria-label="AlurKPR — Beranda"
     >
-      <span className="grid size-9 place-items-center rounded-xl bg-primary text-white shadow-sm">
-        <svg
-          viewBox="0 0 24 24"
-          className="size-5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M3 11.5 12 4l9 7.5" />
-          <path d="M5 10v9h4.5v-4.5h5V19H19v-9" />
-        </svg>
+      <span className="block size-9 shrink-0 overflow-hidden rounded-xl ring-1 ring-black/10">
+        <Image
+          src="/logo.png"
+          alt=""
+          width={36}
+          height={36}
+          className="size-full object-cover"
+          priority
+        />
       </span>
       <span className="font-display text-lg font-semibold leading-none tracking-tight">
         Alur<span className="text-primary">KPR</span>
