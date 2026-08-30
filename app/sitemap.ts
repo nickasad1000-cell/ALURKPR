@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/sewa-vs-beli",
     "/profil-kamu",
     "/syarat",
+    "/checklist",
     "/faq",
     "/glosarium",
     "/tentang",

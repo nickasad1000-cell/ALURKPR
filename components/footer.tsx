@@ -20,6 +20,7 @@ const kolomAlat = [
   { href: "/planner-dp", label: "Planner tabungan DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
+  { href: "/checklist", label: "Checklist dokumen" },
   { href: "/syarat#bank", label: "Perbandingan bank" },
   { href: "/faq", label: "Pertanyaan umum" },
   { href: "/glosarium", label: "Glosarium istilah" },
