@@ -11,6 +11,8 @@
 const GA_ID =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? process.env.NEXT_PUBLIC_GA4_ID;
 
+export { GA_ID };
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
@@ -18,7 +20,7 @@ declare global {
   }
 }
 
-function ensureGtag(): boolean {
+export function ensureGtag(): boolean {
   if (typeof window === "undefined") return false;
   if (!GA_ID) return false;
   if (window.gtag) return true;

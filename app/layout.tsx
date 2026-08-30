@@ -3,6 +3,7 @@ import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { GtagInit } from "@/components/gtag-init";
 import { SITE_ORIGIN } from "@/lib/site";
 
 const fraunces = Fraunces({
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <GtagInit />
       </body>
     </html>
   );
