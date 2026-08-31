@@ -203,8 +203,45 @@ function TahapView({ slug }: { slug: string }) {
   const prev = idx > 0 ? tahapKpr[idx - 1] : null;
   const next = idx < tahapKpr.length - 1 ? tahapKpr[idx + 1] : null;
 
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: tahap.judul,
+    description: tahap.ringkasan,
+    step: tahap.penjelasan.map((langkah, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: `Langkah ${i + 1}`,
+      text: langkah,
+    })),
+    inLanguage: "id-ID",
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_ORIGIN },
+      { "@type": "ListItem", position: 2, name: "Panduan", item: `${SITE_ORIGIN}/panduan` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: tahap.judul,
+        item: `${SITE_ORIGIN}/panduan/${tahap.slug}`,
+      },
+    ],
+  };
+
   return (
     <Container className="py-14 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Breadcrumb
         items={[
           { label: "Beranda", href: "/" },

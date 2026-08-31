@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { glosarium } from "@/content/glosarium";
 import { Container, SectionHeading } from "@/components/ui";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Glosarium Istilah KPR",
@@ -11,8 +12,40 @@ export const metadata: Metadata = {
 
 export default function GlosariumPage() {
   const terurut = [...glosarium].sort((a, b) => a.istilah.localeCompare(b.istilah, "id"));
+
+  const definedTermSetJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: "Glosarium Istilah KPR",
+    description: "Kamus istilah KPR dan properti dalam bahasa sederhana.",
+    inLanguage: "id-ID",
+    hasDefinedTerm: terurut.map((g) => ({
+      "@type": "DefinedTerm",
+      name: g.istilah,
+      description: g.definisi,
+      inLanguage: "id-ID",
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_ORIGIN },
+      { "@type": "ListItem", position: 2, name: "Glosarium", item: `${SITE_ORIGIN}/glosarium` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermSetJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="border-b border-line bg-surface">
         <Container className="py-14 sm:py-20">
           <SectionHeading
