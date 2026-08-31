@@ -16,7 +16,7 @@ import {
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, Breadcrumb } from "@/components/ui";
-import { SITE_ORIGIN } from "@/lib/site";
+import { SITE_ORIGIN, RIVISI } from "@/lib/site";
 
 type Params = Promise<{ slug: string }>;
 
@@ -66,7 +66,7 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
     headline: artikel.judul,
     description: artikel.ringkasan,
     datePublished: "2026-08-30",
-    dateModified: "2026-08-30",
+    dateModified: RIVISI,
     inLanguage: "id-ID",
     author: { "@type": "Organization", name: "AlurKPR" },
     publisher: { "@type": "Organization", name: "AlurKPR", url: SITE_ORIGIN },
@@ -120,7 +120,7 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
             {artikel.kategori}
           </span>
           <span className="text-xs font-semibold text-ink-soft">
-            Terakhir diperbarui: {new Date().toLocaleDateString("id-ID", {
+            Terakhir diperbarui: {new Date(`${RIVISI}T00:00:00`).toLocaleDateString("id-ID", {
               day: "numeric",
               month: "long",
               year: "numeric",
@@ -278,7 +278,7 @@ function TahapView({ slug }: { slug: string }) {
         <div className="flex items-center gap-3">
           <Eyebrow>Panduan · Tahap {tahap.nomor} dari 8</Eyebrow>
           <span className="text-xs font-semibold text-ink-soft">
-            · diperbarui {new Date().toLocaleDateString("id-ID", { year: "numeric" })}
+            · diperbarui {new Date(`${RIVISI}T00:00:00`).toLocaleDateString("id-ID", { year: "numeric" })}
           </span>
         </div>
         <h1 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-4xl">

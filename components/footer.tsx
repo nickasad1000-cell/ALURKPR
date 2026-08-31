@@ -51,7 +51,7 @@ export function Footer() {
                 <dd>
                   <WhatsAppLink
                     source="footer"
-                    pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah."
+                    pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / perumahan."
                     className="inline-flex items-center gap-1.5 font-bold text-primary hover:text-primary-deep"
                   >
                     <MessageCircle className="size-4" aria-hidden="true" />

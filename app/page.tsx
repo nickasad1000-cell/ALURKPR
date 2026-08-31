@@ -295,11 +295,7 @@ export default function Home() {
       </section>
 
       {/* Jalur pengajuan KPR — diagram alur 8 tahap */}
-      <section className="mt-20 sm:mt-24">
-        <Container>
-          <AlurJalur />
-        </Container>
-      </section>
+      <AlurJalur />
 
       {/* Demografis & fakta KPR */}
       <section className="mt-20 sm:mt-24">

@@ -202,15 +202,15 @@ export function ProfilKamu() {
               </ol>
             </div>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-labelledby={`pertanyaan-${step}`}>
-              <Link href="/kalkulator" className={btnPrimary}>
-                <Wallet className="size-4" aria-hidden="true" />
-                Hitung angsuran
-              </Link>
-              <Link href="/syarat" className={btnSecondary}>
-                Cek kelayakan
-              </Link>
-            </div>
+        <div className="mt-7 grid gap-3 sm:grid-cols-2">
+          <Link href="/kalkulator" className={btnPrimary}>
+            <Wallet className="size-4" aria-hidden="true" />
+            Hitung angsuran
+          </Link>
+          <Link href="/syarat" className={btnSecondary}>
+            Cek kelayakan
+          </Link>
+        </div>
             <WhatsAppButton
               source="profil_completed"
               label="Tanya lanjutan via WhatsApp"
@@ -253,7 +253,7 @@ export function ProfilKamu() {
           {pertanyaan[step].label}
         </h2>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2">
+        <div className="mt-7 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-labelledby={`pertanyaan-${step}`}>
           {options.map((o) => (
             <OptionButton
               key={o.key}

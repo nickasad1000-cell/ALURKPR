@@ -271,12 +271,13 @@ export function Kalkulator({
             onClick={() => setLihatBiaya((v) => !v)}
             className="mt-5 flex w-full items-center justify-between rounded-2xl border border-line px-5 py-3.5 text-sm font-bold transition hover:border-primary/40"
             aria-expanded={lihatBiaya}
+            aria-controls="rincian-biaya-awal"
           >
             Rincian biaya awal
             <span aria-hidden="true">{lihatBiaya ? "−" : "+"}</span>
           </button>
           {lihatBiaya ? (
-            <ul className="mt-3 space-y-2 rounded-2xl bg-paper p-5 text-sm">
+            <ul id="rincian-biaya-awal" className="mt-3 space-y-2 rounded-2xl bg-paper p-5 text-sm">
               {[
                 ["Uang muka", hasil.biaya.dp],
                 ["Provisi (1% plafon)", hasil.biaya.provisi],
@@ -302,12 +303,13 @@ export function Kalkulator({
             onClick={() => setLihatAmortisasi((v) => !v)}
             className="mt-3 flex w-full items-center justify-between rounded-2xl border border-line px-5 py-3.5 text-sm font-bold transition hover:border-primary/40"
             aria-expanded={lihatAmortisasi}
+            aria-controls="jadwal-angsuran"
           >
             Ringkasan jadwal angsuran
             <span aria-hidden="true">{lihatAmortisasi ? "−" : "+"}</span>
           </button>
           {tabel ? (
-            <div className="mt-3 max-h-96 overflow-auto rounded-2xl border border-line" role="region" aria-label="Jadwal angsuran">
+            <div id="jadwal-angsuran" className="mt-3 max-h-96 overflow-auto rounded-2xl border border-line" role="region" aria-label="Jadwal angsuran">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">
                   Ringkasan jadwal angsuran 12 bulan pertama dan 12 bulan terakhir

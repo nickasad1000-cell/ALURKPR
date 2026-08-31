@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     siteName: "AlurKPR",
+    url: "/",
   },
 };
 
@@ -68,7 +69,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       areaServed: "ID",
       availableLanguage: "Indonesian",
     },
-    sameAs: [],
   };
   return (
     <html
