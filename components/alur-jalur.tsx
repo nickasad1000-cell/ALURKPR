@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { Clock, KeyRound } from "lucide-react";
+import { BadgeCheck, Clock } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { Container, SectionHeading, btnSecondary } from "@/components/ui";
 
@@ -20,8 +20,8 @@ export function AlurJalur() {
       <Container>
         <SectionHeading
           eyebrow="Alur pengajuan KPR"
-          title="Jalur menuju kunci"
-          description="Delapan tahap perjalanan dari cek keuangan sampai kunci di tangan. Ikuti jalurnya satu per satu, setiap pemberhentian terhubung ke panduan lengkapnya."
+          title="Jalur pengajuan KPR"
+          description="Delapan tahap dari cek keuangan sampai akad dan KPR cair. Ikuti jalaurnya satu per satu, setiap pemberhentian terhubung ke panduan lengkapnya."
         />
 
         <ol className="relative mx-auto mt-12 max-w-6xl pb-2 lg:h-[46rem]">
@@ -110,7 +110,7 @@ export function AlurJalur() {
             className="absolute bottom-0 left-[26%] hidden size-9 -translate-x-1/2 translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-md ring-4 ring-paper lg:grid"
             aria-hidden="true"
           >
-            <KeyRound className="size-4" />
+            <BadgeCheck className="size-4" />
           </span>
 
           {tahapKpr.map((t, i) => {
@@ -118,24 +118,17 @@ export function AlurJalur() {
             const kiri = SISI[i] === "L";
             const vars = {
               "--top": baris,
-              "--left": kiri ? "1%" : "76%",
-              "--lebar": "23%",
-              "--nx": kiri ? "26%" : "74%",
+              "--left": kiri ? "0%" : "80%",
+              "--lebar": "20%",
             } as CSSProperties;
             return (
-              <li
-                key={t.nomor}
-                style={vars}
-                className="relative pb-8 pl-14 last:pb-0 lg:absolute lg:top-[var(--top)] lg:left-[var(--left)] lg:w-[var(--lebar)] lg:-translate-y-1/2 lg:p-0"
-              >
+              <>
                 <span
-                  className="absolute left-0 top-0 grid size-11 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white ring-4 ring-paper lg:hidden"
-                  aria-hidden="true"
-                >
-                  {t.nomor}
-                </span>
-                <span
-                  className="absolute left-[var(--nx)] top-[var(--top)] z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white shadow-md ring-4 ring-paper lg:grid"
+                  key={`num-${t.nomor}`}
+                  style={{ "--top": baris } as CSSProperties}
+                  className={`absolute top-[var(--top)] z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white shadow-md ring-4 ring-paper lg:grid ${
+                    kiri ? "left-[26%]" : "left-[74%]"
+                  }`}
                   aria-hidden="true"
                 >
                   {t.nomor}
@@ -144,26 +137,38 @@ export function AlurJalur() {
                       className="absolute -right-1.5 -top-1.5 rounded-full bg-accent p-1 text-white"
                       aria-hidden="true"
                     >
-                      <KeyRound className="size-3" />
+                      <BadgeCheck className="size-3" />
                     </span>
                   )}
                 </span>
-                <Link
-                  href={`/panduan/${t.slug}`}
-                  className="block rounded-2xl border border-line bg-surface p-4 shadow-sm transition hover:border-primary hover:shadow-md"
+                <li
+                  key={t.nomor}
+                  style={vars}
+                  className="relative pb-8 pl-14 last:pb-0 lg:absolute lg:top-[var(--top)] lg:left-[var(--left)] lg:w-[var(--lebar)] lg:-translate-y-1/2 lg:p-0"
                 >
-                  <h3 className="font-display text-[15px] font-semibold leading-snug line-clamp-2">
-                    {t.judulSingkat}
-                  </h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft line-clamp-3">
-                    {t.ringkasan}
-                  </p>
-                  <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
-                    <Clock className="size-3" aria-hidden="true" />
-                    {t.estimasiWaktu}
-                  </p>
-                </Link>
-              </li>
+                  <span
+                    className="absolute left-0 top-0 grid size-11 place-items-center rounded-full bg-primary font-display text-lg font-semibold text-white ring-4 ring-paper lg:hidden"
+                    aria-hidden="true"
+                  >
+                    {t.nomor}
+                  </span>
+                  <Link
+                    href={`/panduan/${t.slug}`}
+                    className="block rounded-2xl border border-line bg-surface p-4 shadow-sm transition hover:border-primary hover:shadow-md"
+                  >
+                    <h3 className="font-display text-[15px] font-semibold leading-snug line-clamp-2">
+                      {t.judulSingkat}
+                    </h3>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft line-clamp-3">
+                      {t.ringkasan}
+                    </p>
+                    <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
+                      <Clock className="size-3" aria-hidden="true" />
+                      {t.estimasiWaktu}
+                    </p>
+                  </Link>
+                </li>
+              </>
             );
           })}
         </ol>
