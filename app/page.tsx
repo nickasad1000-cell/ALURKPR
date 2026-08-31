@@ -71,8 +71,17 @@ export default function Home() {
           className="pointer-events-none absolute inset-0"
           aria-hidden="true"
           style={{
+            backgroundImage:
+              "linear-gradient(to right, rgb(11 107 79 / 0.045) 1px, transparent 1px), linear-gradient(to bottom, rgb(11 107 79 / 0.045) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+          style={{
             background:
-              "radial-gradient(60rem 30rem at 80% -10%, rgba(11,107,79,0.12), transparent), radial-gradient(40rem 24rem at 10% 110%, rgba(201,154,60,0.10), transparent)",
+              "radial-gradient(50rem 26rem at 85% -10%, rgba(11,107,79,0.10), transparent), radial-gradient(36rem 22rem at 5% 110%, rgba(201,154,60,0.08), transparent)",
           }}
         />
         <Container className="relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -121,7 +130,46 @@ export default function Home() {
 
           {/* Kartu simulasi hero */}
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="rounded-3xl border border-line bg-surface p-7 shadow-xl shadow-stone-900/5">
+            {/* Wireframe rumah blueprint */}
+            <svg
+              className="pointer-events-none absolute -right-8 -top-14 hidden w-64 text-primary/25 lg:block"
+              viewBox="0 0 220 170"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M30 90 L110 30 L190 90" />
+              <path d="M45 80 V155 H175 V80" />
+              <path d="M88 155 V108 H132 V155" />
+              <path d="M60 100 H82 V122 H60 Z" />
+              <path d="M138 100 H160 V122 H138 Z" />
+              <path d="M20 155 H200" strokeDasharray="6 5" />
+              <path d="M110 30 V16" strokeDasharray="3 4" />
+              <path d="M104 16 H116" />
+              <path d="M30 208" />
+              <path d="M45 168 H175" strokeDasharray="2 4" opacity="0.6" />
+              <path d="M45 164 V172 M175 164 V172" opacity="0.6" />
+            </svg>
+            <div className="relative border border-line bg-surface p-7 shadow-xl shadow-stone-900/5">
+              {/* Crosshair marks */}
+              <span className="pointer-events-none absolute left-2.5 top-2.5 text-primary/35" aria-hidden="true">
+                <svg viewBox="0 0 16 16" className="size-3" fill="none" stroke="currentColor"><path d="M8 0v16M0 8h16" /></svg>
+              </span>
+              <span className="pointer-events-none absolute right-2.5 top-2.5 text-primary/35" aria-hidden="true">
+                <svg viewBox="0 0 16 16" className="size-3" fill="none" stroke="currentColor"><path d="M8 0v16M0 8h16" /></svg>
+              </span>
+              <div className="mb-4 flex items-center gap-1.5" aria-hidden="true">
+                <span className="h-2 w-px bg-primary/40" />
+                <span className="h-px flex-1 bg-primary/20" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft/70">
+                  Spec-01
+                </span>
+                <span className="h-px w-6 bg-primary/20" />
+                <span className="h-2 w-px bg-primary/40" />
+              </div>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-bold text-ink-soft">Simulasi contoh</p>
                 <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary-deep">

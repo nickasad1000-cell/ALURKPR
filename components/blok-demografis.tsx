@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
   Users,
   Percent,
@@ -74,57 +77,123 @@ const fakta: {
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+function Crosshair({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`pointer-events-none absolute text-primary/40 ${className}`}
+    >
+      <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1">
+        <path d="M8 0v16M0 8h16" />
+      </svg>
+    </span>
+  );
+}
+
 export function BlokDemografis() {
   return (
-    <div className="rounded-[2.5rem] border border-line bg-surface p-7 shadow-sm sm:p-10">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-          Demografis & fakta
-        </p>
-        <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-          Sekilas profil dan aturan KPR
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
-          Ringkasan angka yang berlaku umum di lapangan — cocokkan dengan
-          kondisi dan skema pilihanmu.
-        </p>
+    <div className="relative border border-line bg-surface p-7 shadow-sm sm:p-10">
+      <Crosshair className="left-3 top-3" />
+      <Crosshair className="right-3 top-3" />
+      <Crosshair className="bottom-3 left-3" />
+      <Crosshair className="bottom-3 right-3" />
+
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
+            Demografis & fakta
+          </p>
+          <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+            Sekilas profil dan aturan KPR
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            Ringkasan angka yang berlaku umum di lapangan — cocokkan dengan
+            kondisi dan skema pilihanmu.
+          </p>
+        </div>
+        <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft/70 sm:block">
+          <p>Spec Sheet</p>
+          <p>Dwg No. KPR-DS</p>
+        </div>
       </div>
-      <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+      <motion.dl
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-10%" }}
+        className="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4"
+      >
         {fakta.map((f) => (
-          <div
+          <motion.div
             key={f.label}
-            className={`rounded-3xl border p-6 ${
-              f.sorot
-                ? "border-accent/40 bg-accent-soft"
-                : "border-line bg-paper"
+            variants={cardVariants}
+            className={`group relative p-6 transition-colors ${
+              f.sorot ? "bg-accent-soft" : "bg-surface hover:bg-paper"
             }`}
           >
+            {/* Garis dimensi atas */}
+            <div className="mb-4 flex items-center gap-1.5" aria-hidden="true">
+              <span className={`h-2 w-px ${f.sorot ? "bg-accent" : "bg-primary/40"}`} />
+              <span className={`h-px flex-1 ${f.sorot ? "bg-accent/50" : "bg-primary/20"}`} />
+              <span className={`h-2 w-px ${f.sorot ? "bg-accent" : "bg-primary/40"}`} />
+            </div>
+
             <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              <f.icon
-                className={`size-4 ${f.sorot ? "text-accent-ink" : "text-primary"}`}
-                aria-hidden="true"
-              />
+              <span
+                className={`grid size-7 place-items-center border ${
+                  f.sorot
+                    ? "border-accent/50 bg-accent/15 text-accent-ink"
+                    : "border-primary/25 bg-primary/5 text-primary"
+                }`}
+              >
+                <f.icon className="size-3.5" aria-hidden="true" />
+              </span>
               {f.label}
             </dt>
-            <dd className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink">
+            <dd className="mt-4 font-display text-3xl font-semibold tracking-tight text-ink">
               {f.nilai}
             </dd>
             <dd className="mt-2 text-sm leading-relaxed text-ink-soft">
               {f.catatan}
             </dd>
-          </div>
+          </motion.div>
         ))}
-      </dl>
-      <div className="mt-8 rounded-2xl bg-primary-soft/50 p-5">
-        <p className="text-sm font-bold text-primary-deep">
-          Sumber & asumsi
-        </p>
-        <p className="mt-1.5 text-xs leading-relaxed text-ink-soft">
-          Angka usia, bunga, DP, dan tenor mengacu ketentuan program FLPP
-          Kementerian PUPR per 2026. Harga rumah subsidi mengikuti ketetapan
-          pemerintah tahun berjalan. Semua bersifat indikatif — selalu verifikasi
-          angka resmi ke bank penyalur dan ketentuan pemerintah sebelum pengajuan.
-        </p>
+      </motion.dl>
+
+      {/* Catatan spesifikasi */}
+      <div className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-[auto_1fr]">
+        <div className="bg-paper p-5 sm:w-44">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft/70">
+            Catatan
+          </p>
+          <p className="mt-1 text-sm font-bold text-primary-deep">
+            Sumber & asumsi
+          </p>
+        </div>
+        <div className="bg-paper p-5">
+          <p className="text-xs leading-relaxed text-ink-soft">
+            Angka usia, bunga, DP, dan tenor mengacu ketentuan program FLPP
+            Kementerian PUPR per 2026. Harga rumah subsidi mengikuti ketetapan
+            pemerintah tahun berjalan. Semua bersifat indikatif — selalu
+            verifikasi angka resmi ke bank penyalur dan ketentuan pemerintah
+            sebelum pengajuan.
+          </p>
+        </div>
       </div>
     </div>
   );
