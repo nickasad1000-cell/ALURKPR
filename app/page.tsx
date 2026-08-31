@@ -17,10 +17,8 @@ import {
   formatRupiah,
   totalPembayaran,
 } from "@/lib/finance";
-import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
-import { TahapCard } from "@/components/tahap-card";
 import { ProfilKamu } from "@/components/profil-kamu";
 import { AlurJalur } from "@/components/alur-jalur";
 import { BlokDemografis } from "@/components/blok-demografis";
@@ -114,6 +112,11 @@ export default function Home() {
                 Gratis digunakan
               </li>
             </ul>
+            <p className="mt-6 rounded-xl border border-line bg-surface px-4 py-3 text-sm leading-relaxed text-ink-soft">
+              <span className="font-bold text-ink">Harga subsidi berganti tiap tahun kalender.</span>{" "}
+              Batas FLPP saat ini <span className="font-bold text-primary">Rp 166 jt</span> —
+              cocokkan dulu dengan budget-mu sebelum memilih rumah.
+            </p>
           </div>
 
           {/* Kartu simulasi hero */}
@@ -177,18 +180,24 @@ export default function Home() {
 
       {/* Fitur */}
       <section className="border-y border-line bg-surface">
-        <Container className="grid gap-px py-12 sm:grid-cols-2 lg:grid-cols-4">
-          {fitur.map((f) => (
-            <div key={f.judul} className="py-4 pr-6">
-              <f.icon className="size-6 text-primary" aria-hidden="true" />
-              <h3 className="mt-4 font-display text-base font-semibold">
-                {f.judul}
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                {f.teks}
-              </p>
-            </div>
-          ))}
+        <Container className="py-12 sm:py-16">
+          <SectionHeading
+            eyebrow="Kenapa AlurKPR"
+            title="Yang membedakan panduan ini"
+          />
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {fitur.map((f) => (
+              <div key={f.judul} className="rounded-3xl border border-line bg-paper p-6">
+                <f.icon className="size-6 text-primary" aria-hidden="true" />
+                <h3 className="mt-4 font-display text-base font-semibold">
+                  {f.judul}
+                </h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+                  {f.teks}
+                </p>
+              </div>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -285,32 +294,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Tahap panduan */}
-      <section className="mt-20 sm:mt-24">
-        <Container>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading
-              eyebrow="Panduan 8 tahap"
-              title="Jalan rumah pertama, dari nol sampai kunci"
-              description="Klik tiap tahap untuk baca detail: dokumen yang disiapkan, perkiraan waktu, biaya, dan kesalahan umum yang sering bikin proses buntu."
-            />
-            <Link
-              href="/panduan"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"
-            >
-              Lihat semua panduan
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {tahapKpr.map((t) => (
-              <TahapCard key={t.slug} tahap={t} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Jalur menuju kunci — diagram alur 8 tahap */}
+      {/* Jalur pengajuan KPR — diagram alur 8 tahap */}
       <section className="mt-20 sm:mt-24">
         <Container>
           <AlurJalur />
@@ -338,7 +322,7 @@ export default function Home() {
                 href={`/panduan/${a.slug}`}
                 className="group flex flex-col rounded-3xl border border-line bg-surface p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
               >
-                <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+                <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
                   {a.kategori}
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">

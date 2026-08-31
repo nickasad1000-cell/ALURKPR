@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { Logo } from "./logo";
 import { Container } from "./ui";
 import { WhatsAppLink } from "./whatsapp-link";
-import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY } from "@/lib/brand";
+import { ALAMAT, BRAND_NAME, DISCLOSURE, WHATSAPP_DISPLAY } from "@/lib/brand";
 
 const kolomPanduan = [
   { href: "/panduan", label: "Semua panduan" },
@@ -90,7 +90,8 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-line pt-6">
-          <p className="text-xs leading-relaxed text-ink-soft">
+          <p className="text-xs leading-relaxed text-ink-soft">{DISCLOSURE}</p>
+          <p className="mt-3 text-xs leading-relaxed text-ink-soft">
             Suku bunga, plafon, dan persyaratan di situs ini bersifat indikatif
             dan dapat berubah mengikuti kebijakan pemerintah/BPS maupun
             keputusan bank. Selalu konfirmasi angka resmi ke Kementerian PUPR

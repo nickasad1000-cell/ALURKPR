@@ -259,7 +259,7 @@ export function RentVsBeli() {
             <WhatsAppButton
               source="rent-vs-beli"
               label="Konsultasi via WhatsApp"
-              pesan={`Halo Syahfalah Group, saya bandingkan beli vs sewa di AlurKPR (harga ${formatRupiah(Number(harga) || 0)}, angsuran ${formatRupiah(hasil.angsuran)}/bln). Boleh dibantu?`}
+              pesan={`Halo, saya bandingkan beli vs sewa di AlurKPR (harga ${formatRupiah(Number(harga) || 0)}, angsuran ${formatRupiah(hasil.angsuran)}/bln). Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>

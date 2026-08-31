@@ -115,9 +115,18 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
         Semua panduan
       </Link>
       <article className="mx-auto mt-8 max-w-3xl">
-        <span className="rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
-          {artikel.kategori}
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
+            {artikel.kategori}
+          </span>
+          <span className="text-xs font-semibold text-ink-soft">
+            Terakhir diperbarui: {new Date().toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </span>
+        </div>
         <h1 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-4xl">
           {artikel.judul}
         </h1>
@@ -130,6 +139,14 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
               {paragraf}
             </p>
           ))}
+        </div>
+        <div className="mt-10 flex flex-wrap items-center gap-3 rounded-2xl bg-accent-soft/60 p-5 text-sm leading-relaxed text-ink-soft">
+          <AlertTriangle className="size-5 shrink-0 text-accent-ink" aria-hidden="true" />
+          <span>
+            Angka bunga, plafon, dan batas penghasilan dapat berubah mengikuti
+            kebijakan. Verifikasi ke Kementerian PUPR dan bank penyalur sebelum
+            mengajukan.
+          </span>
         </div>
       </article>
       <nav className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-between gap-4 border-t border-line pt-8">
@@ -258,7 +275,12 @@ function TahapView({ slug }: { slug: string }) {
       </Link>
 
       <article className="mx-auto mt-8 max-w-3xl">
-        <Eyebrow>Panduan · Tahap {tahap.nomor} dari 8</Eyebrow>
+        <div className="flex items-center gap-3">
+          <Eyebrow>Panduan · Tahap {tahap.nomor} dari 8</Eyebrow>
+          <span className="text-xs font-semibold text-ink-soft">
+            · diperbarui {new Date().toLocaleDateString("id-ID", { year: "numeric" })}
+          </span>
+        </div>
         <h1 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-4xl">
           {tahap.judul}
         </h1>

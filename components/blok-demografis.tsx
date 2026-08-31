@@ -115,11 +115,17 @@ export function BlokDemografis() {
           </div>
         ))}
       </dl>
-      <p className="mt-8 text-xs text-ink-soft">
-        Data & estimasi berdasarkan praktik Syahfalah Group, per 2026.
-        Bunga, DP, dan harga subsidi bisa berubah — verifikasi ke bank atau
-        ketentuan pemerintah saat pengajuan.
-      </p>
+      <div className="mt-8 rounded-2xl bg-primary-soft/50 p-5">
+        <p className="text-sm font-bold text-primary-deep">
+          Sumber & asumsi
+        </p>
+        <p className="mt-1.5 text-xs leading-relaxed text-ink-soft">
+          Angka usia, bunga, DP, dan tenor mengacu ketentuan program FLPP
+          Kementerian PUPR per 2026. Harga rumah subsidi mengikuti ketetapan
+          pemerintah tahun berjalan. Semua bersifat indikatif — selalu verifikasi
+          angka resmi ke bank penyalur dan ketentuan pemerintah sebelum pengajuan.
+        </p>
+      </div>
     </div>
   );
 }

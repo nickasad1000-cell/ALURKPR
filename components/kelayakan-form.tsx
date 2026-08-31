@@ -127,7 +127,7 @@ export function KelayakanForm() {
             {hasil.layak ? (
               <CheckCircle2 className="size-6 text-primary" aria-hidden="true" />
             ) : (
-              <AlertTriangle className="size-6 text-accent" aria-hidden="true" />
+              <AlertTriangle className="size-6 text-accent-ink" aria-hidden="true" />
             )}
             <p className="font-display text-lg font-semibold">
               {hasil.layak ? "Kelihatannya kamu memenuhi syarat!" : "Belum lolos semua syarat"}
@@ -167,7 +167,7 @@ export function KelayakanForm() {
               <WhatsAppButton
                 source="eligibility_passed"
                 label="Diskusi via WhatsApp"
-                pesan={`Halo Syahfalah Group, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin diskusi unit & proses selanjutnya.`}
+                pesan={`Halo, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin konsultasi proses selanjutnya.`}
               />
             </div>
           ) : (
@@ -175,7 +175,7 @@ export function KelayakanForm() {
               <WhatsAppButton
                 source="eligibility_failed"
                 label="Tanya strategi lainnya"
-                pesan={`Halo Syahfalah Group, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya bisa diajak diskusi.`}
+                pesan={`Halo, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya ingin konsultasi.`}
               />
               <Link href="/panduan/tahap-1-cek-keuangan-dan-kelayakan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
                 Baca langkah memperbaiki kelayakan

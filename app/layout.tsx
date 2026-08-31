@@ -9,11 +9,15 @@ import { SITE_ORIGIN } from "@/lib/site";
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plusjakarta",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,16 +28,6 @@ export const metadata: Metadata = {
   },
   description:
     "Panduan langkah demi langkah mengurus KPR subsidi & komersial di Indonesia: simulasi angsuran, cek kelayakan FLPP, perbandingan bank, biaya awal, FAQ dan glosarium.",
-  keywords: [
-    "KPR",
-    "KPR subsidi",
-    "FLPP",
-    "simulasi KPR",
-    "kredit pemilikan rumah",
-    "rumah pertama",
-    "BPHTB",
-    "perbandingan bank",
-  ],
   openGraph: {
     type: "website",
     locale: "id_ID",
@@ -46,7 +40,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  const jsonLd = {
+  const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "AlurKPR",
@@ -54,6 +48,27 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     inLanguage: "id-ID",
     description: "Panduan KPR rumah pertama di Indonesia.",
     publisher: { "@type": "Organization", name: "AlurKPR", url: SITE_ORIGIN },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_ORIGIN}/panduan?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+  const orgLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "AlurKPR",
+    url: SITE_ORIGIN,
+    logo: `${SITE_ORIGIN}/logo.png`,
+    description: "Panduan edukasi KPR rumah pertama di Indonesia — netral, gratis, tanpa bias produk.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+62-813-3337-2016",
+      contactType: "customer service",
+      areaServed: "ID",
+      availableLanguage: "Indonesian",
+    },
+    sameAs: [],
   };
   return (
     <html
@@ -63,7 +78,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
         />
         <a
           href="#main-content"

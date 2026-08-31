@@ -202,7 +202,7 @@ export function ProfilKamu() {
               </ol>
             </div>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+        <div className="mt-7 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-labelledby={`pertanyaan-${step}`}>
               <Link href="/kalkulator" className={btnPrimary}>
                 <Wallet className="size-4" aria-hidden="true" />
                 Hitung angsuran
@@ -214,7 +214,7 @@ export function ProfilKamu() {
             <WhatsAppButton
               source="profil_completed"
               label="Tanya lanjutan via WhatsApp"
-              pesan={`Halo Syahfalah Group, saya baru selesai mengisi "Profil Kamu" (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`}
+              pesan={`Halo, saya baru selesai mengisi "Profil Kamu" di AlurKPR (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`}
             />
             <button
               type="button"
@@ -245,7 +245,11 @@ export function ProfilKamu() {
         <p className="mt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
           Pertanyaan {step + 1} dari {stepCount}
         </p>
-        <h2 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+        <h2
+          id={`pertanyaan-${step}`}
+          aria-live="polite"
+          className="mt-2 font-display text-2xl font-semibold sm:text-3xl"
+        >
           {pertanyaan[step].label}
         </h2>
 
@@ -333,8 +337,9 @@ function OptionButton({
   return (
     <button
       type="button"
+      role="radio"
+      aria-checked={aktif}
       onClick={onClick}
-      aria-pressed={aktif}
       className={`group flex items-center gap-3 rounded-2xl border px-5 py-4 text-left transition ${
         aktif
           ? "border-primary bg-primary-soft"

@@ -103,7 +103,7 @@ export default function PrivasiPage() {
               <WhatsAppLink
                 source="privasi"
                 pesan="Halo, saya ingin mengajukan permintaan penghapusan data pribadi di AlurKPR. Nama saya: ..."
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 text-sm font-bold text-white hover:bg-[#1faf56]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1a7a42] px-5 text-sm font-bold text-white hover:bg-[#156535]"
               >
                 {WHATSAPP_DISPLAY}
               </WhatsAppLink>

@@ -33,12 +33,12 @@ export default function HubungiPage() {
             <div className="rounded-3xl border border-primary/25 bg-primary-soft/60 p-6">
               <p className="text-sm font-bold">WhatsApp — balas cepat</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-                Konsultasi KPR & unit rumah lewat {BRAND_NAME}.
+                Konsultasi seputar panduan & langkah pengajuan KPR — dikelola {BRAND_NAME}.
               </p>
               <WhatsAppLink
                 source="hubungi"
-                pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / unit rumah."
-                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 text-sm font-bold text-white hover:bg-[#1faf56]"
+                pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / perumahan."
+                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1a7a42] px-5 text-sm font-bold text-white hover:bg-[#156535]"
               >
                 {WHATSAPP_DISPLAY}
               </WhatsAppLink>

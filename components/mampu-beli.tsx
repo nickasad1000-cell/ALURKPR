@@ -223,7 +223,7 @@ export function MampuBeli() {
             <WhatsAppButton
               source="mampu-beli"
               label="Tanya unit di kisaran ini"
-              pesan={`Halo Syahfalah Group, saya cek kemampuan beli di AlurKPR: perkiraan harga maksimal ${formatRupiah(hasil.hargaMaksimal)}, DP ${dp}%, tenor ${tenor} th. Adakah unit yang cocok?`}
+              pesan={`Halo, saya cek kemampuan beli di AlurKPR: perkiraan harga maksimal ${formatRupiah(hasil.hargaMaksimal)}, DP ${dp}%, tenor ${tenor} th. Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>

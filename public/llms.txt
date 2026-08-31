@@ -1,0 +1,50 @@
+# AlurKPR — Panduan KPR Indonesia
+
+> Situs edukasi gratis untuk calon pemilik rumah pertama di Indonesia.
+> Menjelaskan alur pengajuan KPR subsidi (FLPP) dan komersial langkah demi langkah.
+
+## Navigasi
+
+- Beranda: /
+- Panduan 8 tahap: /panduan
+- Kalkulator KPR: /kalkulator
+- Cek kelayakan FLPP: /syarat
+- Perbandingan bank: /syarat#bank
+- Glosarium istilah KPR: /glosarium
+- FAQ: /faq
+- Profil Kamu (rekomendasi skema): /profil-kamu
+- Kemampuan beli rumah: /mampu-beli
+- Planner tabungan DP: /planner-dp
+- Sewa vs beli: /sewa-vs-beli
+- Checklist dokumen: /checklist
+- Tentang AlurKPR: /tentang
+- Hubungi kami: /hubungi
+
+## Topik Utama
+
+### 8 Tahap Pengajuan KPR
+1. Cek keuangan & kelayakan — /panduan/tahap-1-cek-keuangan-dan-kelayakan
+2. Riset kebutuhan & lokasi — /panduan/tahap-2-riset-kebutuhan-dan-lokasi
+3. Pilih skema kredit — /panduan/tahap-3-pilih-skema-kredit
+4. Pre-approval & booking — /panduan/tahap-4-preapproval-dan-booking-unit
+5. Pengajuan KPR ke bank — /panduan/tahap-5-pengajuan-kpr-ke-bank
+6. Analisis kredit & appraisal — /panduan/tahap-6-analisis-kredit-dan-appraisal
+7. Akad & serah terima — /panduan/tahap-7-akad-kredit-dan-serah-terima
+8. Kelola cicilan — /panduan/tahap-8-setelah-akad-cicilan-dan-strategi
+
+### Artikel Mendalam
+- KPR Subsidi FLPP: /panduan/kpr-subsidi-flpp
+- Perbedaan KPR Subsidi dan Komersial: /panduan/perbedaan-kpr-subsidi-dan-komersial
+- DP dan Biaya Initial KPR: /panduan/dp-dan-biaya-initial-kpr
+
+### Data Indikatif 2026
+- Harga subsidi FLPP: Rp 166.000.000 (batas per zona)
+- Bunga subsidi: 5% flat (FLPP)
+- DP subsidi: mulai 1%
+- Usia pemohon: 21–58 tahun
+- Tenor: 10–20 tahun
+
+## Catatan
+- Seluruh angka bersifat indikatif dan dapat berubah mengikuti kebijakan pemerintah.
+- Verifikasi ke Kementerian PUPR dan bank penyalur sebelum pengajuan.
+- Terakhir diperbarui: 2026

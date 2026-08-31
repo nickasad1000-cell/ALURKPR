@@ -165,7 +165,7 @@ export function Kalkulator({
             ))}
           </div>
           {dpTerlaluKecil ? (
-            <p className="mt-2 text-xs font-semibold text-accent">
+            <p className="mt-2 text-xs font-semibold text-accent-ink">
               DP minimum skema ini {bank.minDp}% — angka di bawah hanya untuk edukasi.
             </p>
           ) : null}
@@ -192,7 +192,7 @@ export function Kalkulator({
             className="mt-3 w-full"
           />
           {tenorTerpotong ? (
-            <p className="mt-2 text-xs font-semibold text-accent">
+            <p className="mt-2 text-xs font-semibold text-accent-ink">
               Skema ini maksimal {bank.maxTenor} tahun.
             </p>
           ) : null}
@@ -206,7 +206,7 @@ export function Kalkulator({
             id="bank"
             value={bankId}
             onChange={(e) => setBankId(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-line bg-white px-4 py-3 text-sm font-semibold outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+            className="mt-2 w-full rounded-xl border border-line bg-white px-4 py-3 text-sm font-semibold transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
           >
             {pilihan.map((b) => (
               <option key={b.id} value={b.id}>
@@ -254,7 +254,7 @@ export function Kalkulator({
             </div>
             <div>
               <dt className="text-ink-soft">Bunga total</dt>
-              <dd className="mt-0.5 font-bold tabular-nums text-accent">{formatRupiah(hasil.bunga)}</dd>
+              <dd className="mt-0.5 font-bold tabular-nums text-accent-ink">{formatRupiah(hasil.bunga)}</dd>
             </div>
             <div>
               <dt className="text-ink-soft">Uang muka</dt>
@@ -354,12 +354,12 @@ export function Kalkulator({
             </Link>
             <WhatsAppButton
               source="kalkulator"
-              pesan={`Halo Syahfalah Group, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`}
+              pesan={`Halo, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`}
             />
           </div>
           <p className="mt-3 text-xs leading-relaxed text-ink-soft">
-            Konsultasi gratis seputar skema, plafon, dan unit rumah di area
-            Lumajang. Belum tahu kisaran kemampuannya?{" "}
+            Konsultasi gratis seputar skema, plafon, dan langkah pengajuan.
+            Belum tahu kisaran kemampuannya?{" "}
             <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
               Cek dulu kemampuan beli
             </Link>

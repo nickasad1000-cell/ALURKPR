@@ -250,7 +250,7 @@ export function PlannerDp() {
             <WhatsAppButton
               source="planner-dp"
               label="Tanya tentang target hinggap"
-              pesan={`Halo Syahfalah Group, saya pakai planner DP di AlurKPR: target harga ${formatRupiah(Number(harga) || 0)}, DP ${dpPersen}%. Boleh dibantu?`}
+              pesan={`Halo, saya pakai planner DP di AlurKPR: target harga ${formatRupiah(Number(harga) || 0)}, DP ${dpPersen}%. Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>

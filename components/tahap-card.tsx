@@ -8,7 +8,7 @@ export function TahapCard({ tahap }: { tahap: Tahap }) {
       className="group flex flex-col rounded-3xl border border-line bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
     >
       <div className="flex items-center justify-between">
-        <span className="font-display text-4xl font-semibold tabular-nums text-primary/25 transition group-hover:text-primary">
+        <span className="font-display text-4xl font-semibold tabular-nums text-primary/20 transition group-hover:text-primary" aria-hidden="true">
           {String(tahap.nomor).padStart(2, "0")}
         </span>
         <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-deep">
