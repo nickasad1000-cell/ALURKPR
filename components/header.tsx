@@ -76,7 +76,7 @@ export function Header() {
                 alatOpen ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
               }`}
             >
-              Alat
+              Simulator
               <ChevronDown
                 className={`size-4 transition-transform ${alatOpen ? "rotate-180" : ""}`}
                 aria-hidden="true"
@@ -85,7 +85,7 @@ export function Header() {
             {alatOpen ? (
               <div
                 role="menu"
-                aria-label="Alat perhitungan"
+                aria-label="Simulator KPR"
                 className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-stone-900/5"
               >
                 {toolNav.map((t) => (
@@ -146,7 +146,7 @@ export function Header() {
               </Link>
             ))}
             <p className="mt-3 px-4 pt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              Alat
+              Simulator
             </p>
             {toolNav.map((t) => (
               <Link

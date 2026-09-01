@@ -31,6 +31,17 @@ describe("content/tahap", () => {
       expect(t.perbedaanSubsidi.trim().length).toBeGreaterThan(0);
     }
   });
+
+  it("fakta (opsional) terisi benar dan pasangan nilai+label unik antar tahap", () => {
+    const pasangan: string[] = [];
+    for (const t of tahapKpr) {
+      if (!t.fakta) continue;
+      expect(t.fakta.nilai.trim().length).toBeGreaterThan(0);
+      expect(t.fakta.label.trim().length).toBeGreaterThan(0);
+      pasangan.push(`${t.fakta.nilai} — ${t.fakta.label}`);
+    }
+    expect(new Set(pasangan).size).toBe(pasangan.length);
+  });
 });
 
 describe("content/panduan", () => {

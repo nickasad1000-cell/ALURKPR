@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getBankRates } from "@/lib/bank-rates";
-import { Kalkulator } from "@/components/kalkulator";
+import { Kalkulator, KalkulatorWithDp } from "@/components/kalkulator";
 import { Container, SectionHeading } from "@/components/ui";
 
 export const revalidate = 3600;
@@ -8,18 +9,12 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Kalkulator KPR & Biaya Awal",
   description:
-    "Simulasikan angsuran KPR subsidi dan komersial: plafon, angsuran, total pembayaran, hingga rincian biaya awal sebelum akad.",
+    "Simulasikan angsuran KPR subsidi dan komersial dari harga rumah atau dari penghasilan: plafon, angsuran, total bayar, hingga rincian biaya awal sebelum akad.",
   alternates: { canonical: "/kalkulator" },
 };
 
-export default async function KalkulatorPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ dp?: string }>;
-}) {
+export default async function KalkulatorPage() {
   const rates = await getBankRates();
-  const { dp } = await searchParams;
-  const initialDp = Math.min(50, Math.max(0, Number(dp) || 10));
   return (
     <section className="py-12 sm:py-16">
       <Container>
@@ -27,11 +22,13 @@ export default async function KalkulatorPage({
           as="h1"
           eyebrow="Simulasi"
           title="Kalkulator KPR & biaya awal"
-          description="Geser angka kebutuhanmu dan lihat angsuran, total bayar, bunga keseluruhan, sampai perkiraan dana awal yang harus disiapkan."
+          description="Mulai dari harga rumah atau dari penghasilanmu: lihat angsuran, total bayar, bunga keseluruhan, sampai perkiraan dana awal yang harus disiapkan."
           align="center"
         />
         <div className="mt-10">
-          <Kalkulator rates={rates} initialDp={initialDp} />
+          <Suspense fallback={<Kalkulator rates={rates} initialDp={10} />}>
+            <KalkulatorWithDp rates={rates} />
+          </Suspense>
         </div>
       </Container>
     </section>

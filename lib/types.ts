@@ -1,9 +1,15 @@
+export type FaktaTahap = {
+  nilai: string;
+  label: string;
+};
+
 export type Tahap = {
   nomor: number;
   slug: string;
   judul: string;
   judulSingkat: string;
   ringkasan: string;
+  fakta?: FaktaTahap;
   penjelasan: string[];
   dokumen: string[];
   estimasiWaktu: string;

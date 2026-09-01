@@ -8,6 +8,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Cek kelayakan & keuangan",
     ringkasan:
       "Hitung penghasilan, cicilan maksimal, dan pastikan kamu memenuhi syarat sebelum mulai mencari rumah.",
+    fakta: { nilai: "30–40%", label: "Batas cicilan sehat dari penghasilan" },
     penjelasan: [
       "Langkah pertama justru bukan mencari rumah, melainkan bersiap dari sisi finansial dan administrasi. Cek batas cicilan sehat: idealnya angsuran tidak lebih dari 30–40% penghasilan bersih bulanan.",
       "Hitung dana yang sudah terkumpul: uang muka (DP), biaya awal (BPHTB, provisi, administrasi, notaris, asuransi), plus dana darurat minimal 3–6 bulan pengeluaran.",
@@ -37,6 +38,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Riset rumah & lokasi",
     ringkasan:
       "Definisikan kebutuhan (jumlah kamar, akses, lingkungan) dan bandingkan beberapa pilihan sebelum diikat dengan booking fee.",
+    fakta: { nilai: "3–5 unit", label: "Survei sebelum membayar booking fee" },
     penjelasan: [
       "Buat daftar prioritas: radius kerja, akses transportasi, sekolah, rumah sakit, pasar, dan arah pengembangan kota. Lokasi memengaruhi harga, kenaikan nilai, dan kualitas hidup jangka panjang.",
       "Tentukan spesifikasi rumah: tipe 36, 45, atau lebih, jumlah kamar, tanah kavling, dan rencana renovasi. Sesuaikan dengan budget yang dihitung di tahap 1.",
@@ -66,6 +68,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Pilih skema kredit",
     ringkasan:
       "Kenali perbedaan KPR subsidi FLPP dan KPR komersial agar memilih skema yang tepat dan biaya jangka panjang terkendali.",
+    fakta: { nilai: "5%", label: "Flat hingga lunas · skema FLPP" },
     penjelasan: [
       "KPR subsidi (FLPP) menawarkan suku bunga rendah 5% flat untuk tenor hingga 20 tahun dengan DP ringan, tetapi hanya untuk MBR, rumah pertama, dan harga unit dalam batas per zona.",
       "KPR komersial (konvensional & syariah) bebas untuk semua orang, plafon lebih besar, namun bunga mengikuti pasar — bisa naik saat suku bunga acuan naik.",
@@ -95,6 +98,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Pre-approval & booking",
     ringkasan:
       "Kunci unit dengan booking fee dan lakukan pra-persetujuan kredit agar proses pengajuan selanjutnya lebih mulus.",
+    fakta: { nilai: "±Rp250rb–1jt", label: "Kisaran booking fee unit" },
     penjelasan: [
       "Pra-persetujuan kredit (pre-approval) adalah penilaian awal bank atas kemampuan kreditmu. Ini memberi 'harga diri' saat bernegosiasi dan mempercepat proses ketika unit sudah ditemukan.",
       "Saat unit ditemukan, kamu membayar booking fee (fee wajib, umumnya mulai ratusan ribu hingga jutaan) untuk mengunci unit. Booking fee biasanya dapat menjadi bagian dari DP jika deal selesai.",
@@ -124,6 +128,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Pengajuan KPR",
     ringkasan:
       "Serahkan dokumen pengajuan lengkap ke bank pilihan dan pastikan data konsisten untuk hindari penolakan karena administrasi.",
+    fakta: { nilai: "1–3 hari", label: "Kelengkapan berkas pengajuan" },
     penjelasan: [
       "Isi formulir aplikasi KPR dengan lengkap dan konsisten: identitas, penghasilan, pekerjaan, dan tanggungan. Ketidaksesuaian data adalah penyebab umum penolakan atau koreksi berkali-kali.",
       "Lampirkan seluruh dokumen sesuai kebutuhan bank: KTP & KK calon debitur dan pasangan, slip gaji/bukti penghasilan, rekening koran, NPWP, dokumen jaminan (SHM/PPJB/IMB), dan rencana anggaran bila wiraswasta.",
@@ -160,6 +165,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Analisis kredit & appraisal",
     ringkasan:
       "Bank menilai kelayakan debitur dan properti. Cek berita dan tanggapi permintaan data tambahan dengan cepat.",
+    fakta: { nilai: "1–3 minggu", label: "Analisis kredit + appraisal" },
     penjelasan: [
       "Bank melakukan analisis kredit: mengecek BI Checking (SLIK), rasio pendapatan terhadap angsuran, stabilitas pekerjaan, dan riwayat pembayaran. Hasilnya menentukan persetujuan atau penolakan.",
       "Secara paralel, bank melakukan appraisal properti — penilaian fisik dan lokasi oleh surveyor untuk memastikan unit bernilai wajar sesuai harga pengajuan (LTV).",
@@ -189,6 +195,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Akad & serah terima",
     ringkasan:
       "Tahap finalisasi: akad kredit di notaris, balik nama sertifikat, dan terima unit lengkap dengan kunci dan dokumen.",
+    fakta: { nilai: "1–4 minggu", label: "Proses akad sampai kunci" },
     penjelasan: [
       "Di hadapan notaris/PPAT, kamu menandatangani akad kredit (syariah: akad murabahah) serta PPJB/AJB dengan pengembang. Di sinilah hak dan kewajiban dikunci secara hukum.",
       "Bank membayarkan plafon kredit ke pengembang/penjual. Kamu mulai memegang cicilan sejak akad, dan pengembang menyerahkan unit beserta kunci serta dokumen (sertifikat, IMB, SHGB/SHM, bukti PBB).",
@@ -223,6 +230,7 @@ export const tahapKpr: Tahap[] = [
     judulSingkat: "Kelola cicilan & rumah",
     ringkasan:
       "Bayar cicilan tepat waktu, sisihkan dana pemeliharaan, dan rancang strategi pelunasan atau take-over bila perlu.",
+    fakta: { nilai: "1–3%", label: "Dana perawatan rumah tiap tahun" },
     penjelasan: [
       "Mulai periode cicilan bulanan. Utamakan membayar sesuai jatuh tempo untuk menjaga riwayat SLIK tetap bersih.",
       "Sisihkan dana perawatan tahunan (±1–3% nilai rumah) untuk renovasi kecil, perbaikan atap, plafon, dan PSU yang rusak.",

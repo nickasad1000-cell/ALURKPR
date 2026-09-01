@@ -249,38 +249,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Profil Kamu */}
-      <section className="mt-20 sm:mt-28">
-        <Container>
-          <div className="grid gap-10 rounded-[2.5rem] border border-line bg-surface p-7 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <Eyebrow>Rekomendasi personal</Eyebrow>
-              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                Tidak yakin mulai dari subsidi atau komersial?
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
-                5 pertanyaan singkat cukup untuk mengarahkanmu ke skema yang
-                paling sesuai penghasilan dan tujuanmu — lalu dapat langkah
-                selanjutnya yang jelas.
-              </p>
-              <Link
-                href="/profil-kamu"
-                className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-white shadow-sm transition hover:bg-primary-deep"
-              >
-                Kenali profil KPR-mu
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <p className="mt-3 text-xs text-ink-soft">
-                Simulasi kilat — tanpa daftar akun, tanpa data pribadi diminta.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
-              <ProfilKamu />
-            </div>
-          </div>
-        </Container>
-      </section>
-
       {/* Alat perencanaan */}
       <section className="mt-20 sm:mt-28">
         <Container>
@@ -313,7 +281,7 @@ export default function Home() {
                 href: "/kalkulator",
                 icon: Calculator,
                 judul: "Kalkulator KPR",
-                teks: "Simulasi angsuran, total bayar, dan biaya awal sebelum akad.",
+                teks: "Simulasi angsuran, total bayar, dan biaya awal — dari harga rumah atau penghasilanmu.",
               },
               {
                 href: "/profil-kamu",
@@ -338,6 +306,38 @@ export default function Home() {
                 </span>
               </Link>
             ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ProfilKamu — rekomendasi personal, diletakkan setelah alat */}
+      <section className="mt-20 sm:mt-28">
+        <Container>
+          <div className="grid gap-10 rounded-[2.5rem] border border-line bg-surface p-7 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <Eyebrow>Rekomendasi personal</Eyebrow>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+                Tidak yakin mulai dari subsidi atau komersial?
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
+                5 pertanyaan singkat cukup untuk mengarahkanmu ke skema yang
+                paling sesuai penghasilan dan tujuanmu — lalu dapat langkah
+                selanjutnya yang jelas.
+              </p>
+              <Link
+                href="/profil-kamu"
+                className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-white shadow-sm transition hover:bg-primary-deep"
+              >
+                Kenali profil KPR-mu
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <p className="mt-3 text-xs text-ink-soft">
+                Simulasi kilat — tanpa daftar akun, tanpa data pribadi diminta.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
+              <ProfilKamu />
+            </div>
           </div>
         </Container>
       </section>

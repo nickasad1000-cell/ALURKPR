@@ -2,17 +2,20 @@
 
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { BankRate } from "@/lib/types";
 import {
   angsuranBulanan,
   biayaAwal,
   formatRupiah,
+  hargaMaksimalMampu,
   jadwalAmortisasi,
+  parseNumberId,
   plafondMaksimal,
   totalPembayaran,
 } from "@/lib/finance";
 import { track } from "@/lib/analytics";
-import { btnSecondary } from "./ui";
+import { btnSecondary, inputCls } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 const btnSecondaryClass = btnSecondary;
@@ -54,6 +57,25 @@ function buatPilihan(rates: BankRate[]): PilihanBank[] {
 
 const DP_PRESETS = [0, 1, 5, 10, 15, 20, 25, 30];
 
+const HARGA_MIN = 50_000_000;
+const HARGA_MAX = 1_000_000_000;
+const HARGA_STEP = 1_000_000;
+const DP_MIN = 0;
+const DP_MAX = 50;
+const TENOR_MIN = 5;
+const TENOR_MAX = 30;
+
+function clampInt(n: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, Math.round(n)));
+}
+
+export function KalkulatorWithDp({ rates }: { rates: BankRate[] }) {
+  const searchParams = useSearchParams();
+  const dp = Number(searchParams.get("dp"));
+  const initialDp = Math.min(50, Math.max(0, dp || 10));
+  return <Kalkulator rates={rates} initialDp={initialDp} />;
+}
+
 export function Kalkulator({
   rates,
   initialDp = 10,
@@ -63,11 +85,58 @@ export function Kalkulator({
 }) {
   const pilihan = useMemo(() => buatPilihan(rates), [rates]);
   const [harga, setHarga] = useState(240_000_000);
+  const [draftHarga, setDraftHarga] = useState("240.000.000");
   const [dpPct, setDpPct] = useState(initialDp);
+  const [draftDp, setDraftDp] = useState(String(initialDp));
   const [tenor, setTenor] = useState(20);
+  const [draftTenor, setDraftTenor] = useState("20");
   const [bankId, setBankId] = useState(pilihan[0].id);
   const [lihatBiaya, setLihatBiaya] = useState(false);
   const [lihatAmortisasi, setLihatAmortisasi] = useState(false);
+  const [mode, setMode] = useState<"harga" | "penghasilan">("harga");
+  const [penghasilan, setPenghasilan] = useState("8000000");
+  const [cicilanLain, setCicilanLain] = useState("0");
+  const [dbr, setDbr] = useState(30);
+
+  const syncHarga = (raw: string) => {
+    setDraftHarga(raw);
+    const n = parseNumberId(raw);
+    if (raw.trim() === "" || !Number.isFinite(n)) return;
+    const terpaku = clampInt(
+      Math.round(n / HARGA_STEP) * HARGA_STEP,
+      HARGA_MIN,
+      HARGA_MAX,
+    );
+    setHarga(terpaku);
+  };
+
+  const selesaiHarga = () => setDraftHarga(harga.toLocaleString("id-ID"));
+
+  const syncDp = (raw: string) => {
+    setDraftDp(raw);
+    const n = parseNumberId(raw);
+    if (raw.trim() === "" || !Number.isFinite(n)) return;
+    setDpPct(clampInt(n, DP_MIN, DP_MAX));
+  };
+
+  const selesaiDp = () => setDraftDp(String(dpPct));
+
+  const syncTenor = (raw: string) => {
+    setDraftTenor(raw);
+    const n = parseNumberId(raw);
+    if (raw.trim() === "" || !Number.isFinite(n)) return;
+    setTenor(clampInt(n, TENOR_MIN, TENOR_MAX));
+  };
+
+  const selesaiTenor = () => setDraftTenor(String(tenor));
+
+  const formatBlurRupiah = (
+    setter: (v: string) => void,
+    raw: string,
+  ) => {
+    const n = parseNumberId(raw);
+    setter(Number.isFinite(n) ? n.toLocaleString("id-ID") : "");
+  };
 
   const bank = pilihan.find((b) => b.id === bankId) ?? pilihan[0];
   const tenorEfektif = Math.min(tenor, bank.maxTenor);
@@ -75,18 +144,39 @@ export function Kalkulator({
   const dpEfektif = Math.max(dpPct, bank.minDp);
   const dpNaikkan = dpEfektif !== dpPct;
 
+  const hargaDariPenghasilan = useMemo(() => {
+    if (mode !== "penghasilan") return null;
+    const penghasilanN = parseNumberId(penghasilan);
+    const cicilanN = parseNumberId(cicilanLain);
+    if (!Number.isFinite(penghasilanN) || penghasilanN <= 0) return 0;
+    const h = hargaMaksimalMampu({
+      penghasilanBulanan: penghasilanN,
+      cicilanLainBulanan: Number.isFinite(cicilanN) ? cicilanN : 0,
+      dbrPersen: dbr,
+      dpPersen: dpEfektif,
+      tenorTahun: tenorEfektif,
+      bungaTahunanPersen: bank.fixedRate,
+    });
+    if (!Number.isFinite(h.hargaMaksimal) || h.hargaMaksimal <= 0) return 0;
+    return h.hargaMaksimal;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, penghasilan, cicilanLain, dbr, dpEfektif, tenorEfektif, bank.id]);
+
+  const hargaEfektif =
+    mode === "penghasilan" ? (hargaDariPenghasilan ?? 0) : harga;
+
   const hasil = useMemo(() => {
-    const plafon = plafondMaksimal(harga, dpEfektif);
+    const plafon = plafondMaksimal(hargaEfektif, dpEfektif);
     const angsuran = angsuranBulanan(plafon, bank.fixedRate, tenorEfektif);
     const angsuranFloating = bank.floatingRate
       ? angsuranBulanan(plafon, bank.floatingRate, tenorEfektif)
       : null;
     const total = totalPembayaran(plafon, bank.fixedRate, tenorEfektif);
     const bunga = total - plafon;
-    const biaya = biayaAwal(harga, dpEfektif);
+    const biaya = biayaAwal(hargaEfektif, dpEfektif);
     return { plafon, angsuran, angsuranFloating, total, bunga, biaya };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [harga, dpEfektif, tenorEfektif, bank.id]);
+  }, [hargaEfektif, dpEfektif, tenorEfektif, bank.id]);
 
   const tabel = useMemo(() => {
     if (!lihatAmortisasi) return null;
@@ -105,23 +195,72 @@ export function Kalkulator({
       <div className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
         <h2 className="font-display text-lg font-semibold">Atur kebutuhanmu</h2>
 
-        <div className="mt-6">
-          <div className="flex items-baseline justify-between gap-3">
-            <label htmlFor="harga" className="text-sm font-bold">
+        <div
+          className="mt-5 grid grid-cols-2 gap-1 rounded-2xl border border-line bg-paper p-1"
+          role="group"
+          aria-label="Mode kalkulator"
+        >
+          <button
+            type="button"
+            onClick={() => setMode("harga")}
+            aria-pressed={mode === "harga"}
+            className={`min-h-10 rounded-xl px-3 text-sm font-bold transition ${
+              mode === "harga"
+                ? "bg-primary text-white shadow-sm"
+                : "text-ink-soft hover:bg-paper hover:text-ink"
+            }`}
+          >
+            Dari harga
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("penghasilan")}
+            aria-pressed={mode === "penghasilan"}
+            className={`min-h-10 rounded-xl px-3 text-sm font-bold transition ${
+              mode === "penghasilan"
+                ? "bg-primary text-white shadow-sm"
+                : "text-ink-soft hover:bg-paper hover:text-ink"
+            }`}
+          >
+            Dari penghasilan
+          </button>
+        </div>
+
+        {mode === "harga" ? (
+          <div className="mt-6">
+            <div className="flex items-baseline justify-between gap-3">
+              <label htmlFor="harga" className="text-sm font-bold">
               Harga rumah
             </label>
-            <span className="font-semibold tabular-nums text-primary">
-              {formatRupiah(harga)}
+            <span className="inline-flex items-center gap-1">
+              <span className="text-xs font-bold text-ink-soft" aria-hidden="true">
+                Rp
+              </span>
+              <input
+                id="harga"
+                type="text"
+                inputMode="numeric"
+                aria-label="Harga rumah dalam rupiah — bisa diketik langsung"
+                value={draftHarga}
+                onChange={(e) => syncHarga(e.target.value)}
+                onBlur={selesaiHarga}
+                onFocus={(e) => e.target.select()}
+                className="w-28 rounded-lg border border-line bg-white px-2.5 py-1.5 text-right text-sm font-bold tabular-nums text-primary transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:w-32"
+              />
             </span>
           </div>
           <input
-            id="harga"
             type="range"
-            min={50_000_000}
-            max={1_000_000_000}
-            step={1_000_000}
+            min={HARGA_MIN}
+            max={HARGA_MAX}
+            step={HARGA_STEP}
             value={harga}
-            onChange={(e) => setHarga(Number(e.target.value))}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              setHarga(n);
+              setDraftHarga(n.toLocaleString("id-ID"));
+            }}
+            aria-label="Harga rumah dalam rupiah (geser slider)"
             aria-valuetext={formatRupiah(harga)}
             className="mt-3 w-full"
           />
@@ -130,22 +269,121 @@ export function Kalkulator({
             <span>Rp1 M</span>
           </div>
         </div>
+        ) : (
+          <div className="mt-6 space-y-5">
+            <p className="rounded-xl bg-primary-soft/60 px-4 py-3 text-xs leading-relaxed text-ink-soft">
+              Harga rumah diturunkan dari penghasilan, DP, tenor, dan skema yang
+              kamu pilih. Penghasilan lebih tinggi atau DP lebih besar = harga
+              yang mampu lebih tinggi.
+            </p>
+
+            <label className="block">
+              <span className="text-sm font-bold">Penghasilan / bulan</span>
+              <span className="mt-2 flex items-center">
+                <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">
+                  Rp
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  name="penghasilan"
+                  aria-label="Penghasilan per bulan dalam Rupiah"
+                  value={penghasilan}
+                  onChange={(e) => setPenghasilan(e.target.value)}
+                  onBlur={() => formatBlurRupiah(setPenghasilan, penghasilan)}
+                  onFocus={(e) => e.target.select()}
+                  className={`${inputCls} rounded-l-none`}
+                />
+              </span>
+            </label>
+
+            <label className="block">
+              <span className="text-sm font-bold">
+                Cicilan lain / bulan{" "}
+                <span className="font-normal text-ink-soft">(opsional)</span>
+              </span>
+              <span className="mt-2 flex items-center">
+                <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">
+                  Rp
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  name="cicilan-lain"
+                  aria-label="Cicilan lain per bulan dalam Rupiah"
+                  value={cicilanLain}
+                  onChange={(e) => setCicilanLain(e.target.value)}
+                  onBlur={() => formatBlurRupiah(setCicilanLain, cicilanLain)}
+                  onFocus={(e) => e.target.select()}
+                  className={`${inputCls} rounded-l-none`}
+                />
+              </span>
+            </label>
+
+            <div>
+              <div className="flex items-baseline justify-between gap-3">
+                <label htmlFor="dbr" className="text-sm font-bold">
+                  Rasio angsuran (DBR)
+                </label>
+                <span className="font-semibold tabular-nums text-primary">
+                  {dbr}%
+                </span>
+              </div>
+              <input
+                id="dbr"
+                type="range"
+                min={20}
+                max={40}
+                step={1}
+                value={dbr}
+                onChange={(e) => setDbr(Number(e.target.value))}
+                aria-label="Rasio angsuran maksimal dari penghasilan bersih (geser slider)"
+                aria-valuetext={`${dbr} persen`}
+                className="mt-3 w-full"
+              />
+              <p className="mt-1 text-[11px] font-semibold text-ink-soft">
+                Bank umumnya membatasi maksimal 30%. Angka di atasnya hanya untuk
+                edukasi.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="mt-6">
           <div className="flex items-baseline justify-between gap-3">
             <label htmlFor="dp" className="text-sm font-bold">
               Uang muka (DP)
             </label>
-            <span className="font-semibold tabular-nums text-primary">{dpPct}%</span>
+            <span className="inline-flex items-center gap-1">
+              <input
+                id="dp"
+                type="text"
+                inputMode="numeric"
+                aria-label="Uang muka dalam persen — bisa diketik langsung"
+                value={draftDp}
+                onChange={(e) => syncDp(e.target.value)}
+                onBlur={selesaiDp}
+                onFocus={(e) => e.target.select()}
+                className="w-16 rounded-lg border border-line bg-white px-2.5 py-1.5 text-right text-sm font-bold tabular-nums text-primary transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+              <span className="text-xs font-bold text-ink-soft" aria-hidden="true">
+                %
+              </span>
+            </span>
           </div>
           <input
-            id="dp"
+            id="dp-slider"
             type="range"
-            min={0}
-            max={50}
+            min={DP_MIN}
+            max={DP_MAX}
             step={1}
             value={dpPct}
-            onChange={(e) => setDpPct(Number(e.target.value))}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              setDpPct(n);
+              setDraftDp(String(n));
+            }}
+            aria-label="Uang muka dalam persen (geser slider)"
             aria-valuetext={`${dpPct} persen dari harga rumah`}
             className="mt-3 w-full"
           />
@@ -154,8 +392,11 @@ export function Kalkulator({
               <button
                 key={p}
                 type="button"
-                onClick={() => setDpPct(p)}
-                className={`rounded-full border px-3 py-1 text-xs font-bold transition ${
+                onClick={() => {
+                  setDpPct(p);
+                  setDraftDp(String(p));
+                }}
+                className={`inline-flex min-h-10 items-center rounded-full border px-3 py-1 text-xs font-bold transition ${
                   dpPct === p
                     ? "border-primary bg-primary-soft text-primary-deep"
                     : "border-line text-ink-soft hover:border-primary/40"
@@ -178,24 +419,46 @@ export function Kalkulator({
             <label htmlFor="tenor" className="text-sm font-bold">
               Tenor
             </label>
-            <span className="font-semibold tabular-nums text-primary">
-              {tenorEfektif} tahun
+            <span className="inline-flex items-center gap-1">
+              <input
+                id="tenor"
+                type="text"
+                inputMode="numeric"
+                aria-label="Tenor dalam tahun — bisa diketik langsung"
+                value={draftTenor}
+                onChange={(e) => syncTenor(e.target.value)}
+                onBlur={selesaiTenor}
+                onFocus={(e) => e.target.select()}
+                className="w-16 rounded-lg border border-line bg-white px-2.5 py-1.5 text-right text-sm font-bold tabular-nums text-primary transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+              <span className="text-xs font-bold text-ink-soft" aria-hidden="true">
+                tahun
+              </span>
             </span>
           </div>
           <input
-            id="tenor"
+            id="tenor-slider"
             type="range"
-            min={5}
-            max={30}
+            min={TENOR_MIN}
+            max={TENOR_MAX}
             step={1}
             value={tenor}
-            onChange={(e) => setTenor(Number(e.target.value))}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              setTenor(n);
+              setDraftTenor(String(n));
+            }}
+            aria-label="Tenor dalam tahun (geser slider)"
             aria-valuetext={`${tenorEfektif} tahun`}
             className="mt-3 w-full"
           />
+          <div className="mt-1 flex justify-between text-[11px] font-semibold text-ink-soft">
+            <span>5 th</span>
+            <span>30 th</span>
+          </div>
           {tenorTerpotong ? (
             <p className="mt-2 text-xs font-semibold text-accent-ink">
-              Skema ini maksimal {bank.maxTenor} tahun.
+              Skema ini maksimal {bank.maxTenor} tahun — dihitung pakai {tenorEfektif} tahun.
             </p>
           ) : null}
         </div>
@@ -236,6 +499,12 @@ export function Kalkulator({
               Plafon {formatRupiah(hasil.plafon)}
             </span>
           </div>
+          {mode === "penghasilan" ? (
+            <p className="mt-3 rounded-xl border border-primary/25 bg-primary-soft/40 px-4 py-2 text-xs leading-relaxed text-primary-deep">
+              Angka di bawah dihitung dari harga yang mampu berdasarkan
+              penghasilanmu: <span className="font-bold tabular-nums">{formatRupiah(hargaEfektif)}</span>.
+            </p>
+          ) : null}
           <p className="mt-2 font-display text-4xl font-semibold tabular-nums text-primary sm:text-5xl" aria-live="polite">
             {formatRupiah(hasil.angsuran)}
           </p>
@@ -358,16 +627,28 @@ export function Kalkulator({
             </Link>
             <WhatsAppButton
               source="kalkulator"
-              pesan={`Halo, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(harga)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`}
+              pesan={`Halo, saya sudah menghitung simulasi KPR di AlurKPR: harga ${formatRupiah(hargaEfektif)}, DP ${dpPct}%, tenor ${tenorEfektif} th, perkiraan angsuran ${formatRupiah(hasil.angsuran)}/bln. Saya ingin konsultasi lanjutan.`}
             />
           </div>
           <p className="mt-3 text-xs leading-relaxed text-ink-soft">
-            Konsultasi gratis seputar skema, plafon, dan langkah pengajuan.
-            Belum tahu kisaran kemampuannya?{" "}
-            <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
-              Cek dulu kemampuan beli
-            </Link>
-            .
+            Konsultasi gratis seputar skema, plafon, dan langkah pengajuan.{" "}
+            {mode === "harga" ? (
+              <>
+                Belum tahu kisaran kemampuannya?{" "}
+                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
+                  Cek dulu kemampuan beli
+                </Link>
+                .
+              </>
+            ) : (
+              <>
+                Mau lihat perhitungan kemampuan yang lebih lengkap?{" "}
+                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
+                  Buka halaman Kemampuan beli
+                </Link>
+                .
+              </>
+            )}
           </p>
         </div>
       </div>
