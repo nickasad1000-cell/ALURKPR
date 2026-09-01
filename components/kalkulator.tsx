@@ -69,6 +69,15 @@ function clampInt(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, Math.round(n)));
 }
 
+function formatAngkaId(raw: string): string {
+  const digits = raw
+    .replace(/\D/g, "")
+    .replace(/^0+(?=\d)/, "")
+    .slice(0, 15);
+  if (!digits) return "";
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 export function KalkulatorWithDp({ rates }: { rates: BankRate[] }) {
   const searchParams = useSearchParams();
   const dp = Number(searchParams.get("dp"));
@@ -99,9 +108,10 @@ export function Kalkulator({
   const [dbr, setDbr] = useState(30);
 
   const syncHarga = (raw: string) => {
-    setDraftHarga(raw);
-    const n = parseNumberId(raw);
-    if (raw.trim() === "" || !Number.isFinite(n)) return;
+    const terformat = formatAngkaId(raw);
+    setDraftHarga(terformat);
+    const n = parseNumberId(terformat);
+    if (!terformat || !Number.isFinite(n)) return;
     const terpaku = clampInt(
       Math.round(n / HARGA_STEP) * HARGA_STEP,
       HARGA_MIN,
@@ -289,7 +299,7 @@ export function Kalkulator({
                   name="penghasilan"
                   aria-label="Penghasilan per bulan dalam Rupiah"
                   value={penghasilan}
-                  onChange={(e) => setPenghasilan(e.target.value)}
+                  onChange={(e) => setPenghasilan(formatAngkaId(e.target.value))}
                   onBlur={() => formatBlurRupiah(setPenghasilan, penghasilan)}
                   onFocus={(e) => e.target.select()}
                   className={`${inputCls} rounded-l-none`}
@@ -312,7 +322,7 @@ export function Kalkulator({
                   name="cicilan-lain"
                   aria-label="Cicilan lain per bulan dalam Rupiah"
                   value={cicilanLain}
-                  onChange={(e) => setCicilanLain(e.target.value)}
+                  onChange={(e) => setCicilanLain(formatAngkaId(e.target.value))}
                   onBlur={() => formatBlurRupiah(setCicilanLain, cicilanLain)}
                   onFocus={(e) => e.target.select()}
                   className={`${inputCls} rounded-l-none`}

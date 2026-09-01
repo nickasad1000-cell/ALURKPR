@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, SectionHeading } from "@/components/ui";
-import { PanduanSearch } from "@/components/panduan-search";
+import { DaftarPanduan } from "@/components/daftar-panduan";
 
 export const metadata: Metadata = {
   title: "Panduan KPR",
@@ -27,7 +27,7 @@ export default function PanduanPage() {
 
       <section className="mt-14">
         <Container>
-          <PanduanSearch tahap={tahapKpr} artikel={panduanArtikel} />
+          <DaftarPanduan tahap={tahapKpr} artikel={panduanArtikel} />
         </Container>
       </section>
     </>

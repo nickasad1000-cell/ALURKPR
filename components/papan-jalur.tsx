@@ -1,9 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, MotionConfig, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BadgeCheck, Check, ChevronDown, Clock } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  Check,
+  ChevronDown,
+  Clock,
+  Pause,
+  Play,
+  RotateCcw,
+} from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { IconKunci, TAHAP_ICONS } from "@/components/blueprint-icons";
 import {
@@ -17,9 +27,14 @@ const TOTAL = tahapKpr.length;
 const POIN_JALUR = koordinatJalur(KOLOM, TOTAL);
 const POLYLINE = POIN_JALUR.map((p) => `${p.x},${p.y}`).join(" ");
 const POSISI = tahapKpr.map((_, i) => koordinatToken(i, KOLOM, TOTAL));
+const pad = (n: number) => String(n).padStart(2, "0");
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-2 rounded-[2px] border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40";
+const playBtn =
+  "inline-flex min-h-11 items-center gap-2 rounded-[2px] bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-primary-deep active:scale-[0.98]";
+const iconBtn =
+  "grid size-11 place-items-center rounded-[2px] border border-line bg-surface text-ink transition-colors hover:border-primary/40 hover:text-primary";
 
 function Tanda({ className = "" }: { className?: string }) {
   return (
@@ -41,6 +56,7 @@ function Tile({
   buka,
   order,
   onToggle,
+  reduce,
 }: {
   t: (typeof tahapKpr)[number];
   i: number;
@@ -48,6 +64,7 @@ function Tile({
   buka: boolean;
   order: number;
   onToggle: () => void;
+  reduce: boolean;
 }) {
   const Icon = TAHAP_ICONS[i];
   const isFinal = i === TOTAL - 1;
@@ -60,14 +77,22 @@ function Tile({
         aria-expanded={buka}
         aria-controls={`panel-${t.nomor}`}
         aria-current={aktif ? "step" : undefined}
-        className={`relative w-full min-h-24 rounded-[2px] border bg-surface p-5 text-left shadow-sm transition-colors duration-200 hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary sm:min-h-28 sm:p-6 ${
-          aktif ? "border-primary ring-1 ring-primary/30" : "border-line"
+        className={`relative w-full min-h-24 rounded-[2px] border bg-surface p-5 text-left shadow-sm transition-[border-color,box-shadow,transform,background-color] duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary sm:min-h-28 sm:p-6 ${
+          aktif
+            ? "border-primary bg-paper ring-2 ring-primary/30 shadow-[0_14px_30px_-14px_rgb(11_107_79/0.55)]"
+            : "border-line"
         }`}
       >
         <Tanda className="left-2 top-2" />
         <Tanda className="right-2 top-2" />
         <Tanda className="bottom-2 left-2" />
         <Tanda className="bottom-2 right-2" />
+
+        {aktif ? (
+          <span className="absolute right-2 top-2 z-10 hidden rounded-sm bg-accent px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-white sm:inline-block">
+            kamu&nbsp;di&nbsp;sini
+          </span>
+        ) : null}
 
         <span className="absolute left-0 top-0 grid min-w-9 place-items-center bg-primary px-1.5 py-1 font-mono text-[11px] font-bold text-white">
           {String(t.nomor).padStart(2, "0")}
@@ -127,9 +152,9 @@ function Tile({
         aria-labelledby={`tile-${t.nomor}`}
         aria-hidden={!buka}
         inert={!buka}
-        initial={{ height: 0 }}
+        initial={false}
         animate={{ height: buka ? "auto" : 0 }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        transition={reduce ? { duration: 0 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden"
       >
         <div className="border-x border-b border-dashed border-line bg-paper/70 p-5 sm:p-6">
@@ -180,6 +205,16 @@ export function PapanJalur() {
   const reduce = useReducedMotion();
   const [kunci, setKunci] = useState(0);
   const [terbuka, setTerbuka] = useState<ReadonlySet<number>>(new Set());
+  const [berjalan, setBerjalan] = useState(false);
+
+  useEffect(() => {
+    if (!berjalan || kunci >= TOTAL - 1) return;
+    const id = window.setTimeout(
+      () => setKunci((k) => Math.min(TOTAL - 1, k + 1)),
+      1150,
+    );
+    return () => window.clearTimeout(id);
+  }, [berjalan, kunci]);
 
   const toggle = (i: number) =>
     setTerbuka((prev) => {
@@ -192,10 +227,40 @@ export function PapanJalur() {
       return next;
     });
 
-  const pindah = (delta: number) =>
+  const pindah = (delta: number) => {
+    setBerjalan(false);
     setKunci((k) => Math.min(TOTAL - 1, Math.max(0, k + delta)));
+  };
+
+  const tahuKlik = (i: number) => {
+    setBerjalan(false);
+    setKunci(i);
+    toggle(i);
+  };
+
+  const sedangDemo = berjalan && kunci < TOTAL - 1;
+
+  const toggleDemo = () => {
+    if (sedangDemo) {
+      setBerjalan(false);
+      return;
+    }
+    if (kunci === TOTAL - 1) {
+      setKunci(0);
+      setTerbuka(new Set());
+    }
+    setBerjalan(true);
+  };
+
+  const mulaiUlang = () => {
+    setKunci(0);
+    setTerbuka(new Set());
+    setBerjalan(true);
+  };
 
   const p = POSISI[kunci];
+  const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
+  const selesai = kunci === TOTAL - 1;
 
   return (
     <div className="relative">
@@ -216,7 +281,22 @@ export function PapanJalur() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={1.5}
-            className="stroke-primary/25"
+            className="stroke-primary/20"
+          />
+          <polyline
+            points={POLYLINE}
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+            pathLength={1}
+            strokeDasharray="1"
+            strokeDashoffset={1 - progres}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2.5}
+            className="stroke-primary"
+            style={{
+              transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
+            }}
           />
         </svg>
       </div>
@@ -232,23 +312,63 @@ export function PapanJalur() {
             : { type: "spring", stiffness: 300, damping: 26 }
         }
       >
-        <div className="grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
-          <IconKunci className="size-5" />
-        </div>
+        {selesai ? (
+          <div className="grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-[0_0_0_6px_rgb(123_91_27/0.15)]">
+            <BadgeCheck className="size-6" />
+          </div>
+        ) : (
+          <div className="grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
+            <IconKunci className="size-5" />
+          </div>
+        )}
       </motion.div>
 
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
         <p
           role="status"
           aria-live="polite"
           className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft"
         >
-          Posisi kamu —{" "}
-          <span className="font-bold text-primary">
-            Tahap {String(kunci + 1).padStart(2, "0")} dari {TOTAL}
-          </span>
+          {selesai ? (
+            <>
+              Finish —{" "}
+              <span className="font-bold text-accent">kunci di tangan</span>
+            </>
+          ) : (
+            <>
+              Posisi kamu —{" "}
+              <span className="font-bold text-primary">
+                Tahap {pad(kunci + 1)} dari {TOTAL}
+              </span>
+            </>
+          )}
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            className={playBtn}
+            onClick={toggleDemo}
+            aria-pressed={sedangDemo}
+          >
+            {sedangDemo ? (
+              <Pause className="size-4" aria-hidden="true" />
+            ) : (
+              <Play className="size-4" aria-hidden="true" />
+            )}
+            {sedangDemo
+              ? "Jeda"
+              : selesai
+                ? "Ulangi demo"
+                : "Mainkan demo"}
+          </button>
+          <button
+            type="button"
+            className={iconBtn}
+            onClick={mulaiUlang}
+            aria-label="Mulai ulang demo dari tahap 1"
+          >
+            <RotateCcw className="size-4" aria-hidden="true" />
+          </button>
           <button
             type="button"
             className={navBtn}
@@ -272,6 +392,32 @@ export function PapanJalur() {
         </div>
       </div>
 
+      <ol className="mb-6 flex items-center gap-1" aria-label="Tahapan KPR">
+        {tahapKpr.map((t, i) => (
+          <li key={t.nomor} className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                setBerjalan(false);
+                setKunci(i);
+              }}
+              aria-current={kunci === i ? "step" : undefined}
+              aria-label={`Menuju tahap ${t.nomor}: ${t.judulSingkat}`}
+              className={`grid size-8 place-items-center rounded-[2px] border font-mono text-[10px] font-bold transition-colors sm:size-9 ${
+                kunci === i
+                  ? "border-primary bg-primary text-white shadow-sm"
+                  : "border-line bg-paper text-ink-soft hover:border-primary/40 hover:text-primary"
+              }`}
+            >
+              {pad(t.nomor)}
+            </button>
+            {i < TOTAL - 1 && (
+              <span aria-hidden="true" className="hidden h-px w-3 bg-line sm:block sm:w-4" />
+            )}
+          </li>
+        ))}
+      </ol>
+
       <MotionConfig reducedMotion="user">
         <div
           className="grid grid-cols-1 gap-y-2 gap-x-6 lg:grid-cols-2 lg:gap-y-4"
@@ -293,10 +439,8 @@ export function PapanJalur() {
               aktif={kunci === i}
               buka={terbuka.has(i)}
               order={urutanPapan(i, KOLOM)}
-              onToggle={() => {
-                toggle(i);
-                setKunci(i);
-              }}
+              reduce={!!reduce}
+              onToggle={() => tahuKlik(i)}
             />
           ))}
         </div>

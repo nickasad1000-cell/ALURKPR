@@ -29,9 +29,26 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [alatOpen, setAlatOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const alatRef = useRef<HTMLDivElement>(null);
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
+
+  const tutupMenu = () => {
+    setOpen(false);
+    setAlatOpen(false);
+  };
+
+  useEffect(() => {
+    if (!alatOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (alatRef.current && !alatRef.current.contains(e.target as Node)) {
+        setAlatOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [alatOpen]);
 
   useEffect(() => {
     if (!open && !alatOpen) return;
@@ -49,13 +66,16 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-paper/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Logo />
+        <span onClick={tutupMenu}>
+          <Logo />
+        </span>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              onClick={tutupMenu}
               aria-current={isActive(item.href) ? "page" : undefined}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition-[background-color,color] ${btnFocus} ${
                 isActive(item.href)
@@ -66,7 +86,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <div className="relative">
+          <div ref={alatRef} className="relative">
             <button
               type="button"
               onClick={() => setAlatOpen((v) => !v)}
@@ -104,6 +124,7 @@ export function Header() {
           </div>
           <Link
             href="/syarat"
+            onClick={tutupMenu}
             className={`ml-2 inline-flex h-10 items-center rounded-full bg-primary px-5 text-sm font-bold text-white shadow-sm transition-[background-color,transform] hover:bg-primary-deep active:scale-[0.98] ${btnFocus}`}
           >
             Cek Kelayakan
