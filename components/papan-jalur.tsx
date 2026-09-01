@@ -10,12 +10,9 @@ import {
   Check,
   ChevronDown,
   Clock,
-  Pause,
-  Play,
-  RotateCcw,
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
-import { IconKunci, TAHAP_ICONS } from "@/components/blueprint-icons";
+import { PelatTahap } from "@/components/blueprint-icons";
 import {
   koordinatJalur,
   koordinatToken,
@@ -28,13 +25,10 @@ const POIN_JALUR = koordinatJalur(KOLOM, TOTAL);
 const POLYLINE = POIN_JALUR.map((p) => `${p.x},${p.y}`).join(" ");
 const POSISI = tahapKpr.map((_, i) => koordinatToken(i, KOLOM, TOTAL));
 const pad = (n: number) => String(n).padStart(2, "0");
+const DELAY_AUTO = 2400;
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-2 rounded-[2px] border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40";
-const playBtn =
-  "inline-flex min-h-11 items-center gap-2 rounded-[2px] bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-primary-deep active:scale-[0.98]";
-const iconBtn =
-  "grid size-11 place-items-center rounded-[2px] border border-line bg-surface text-ink transition-colors hover:border-primary/40 hover:text-primary";
 
 function Tanda({ className = "" }: { className?: string }) {
   return (
@@ -66,7 +60,6 @@ function Tile({
   onToggle: () => void;
   reduce: boolean;
 }) {
-  const Icon = TAHAP_ICONS[i];
   const isFinal = i === TOTAL - 1;
 
   return (
@@ -77,7 +70,7 @@ function Tile({
         aria-expanded={buka}
         aria-controls={`panel-${t.nomor}`}
         aria-current={aktif ? "step" : undefined}
-        className={`relative w-full min-h-24 rounded-[2px] border bg-surface p-5 text-left shadow-sm transition-[border-color,box-shadow,transform,background-color] duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary sm:min-h-28 sm:p-6 ${
+        className={`relative w-full rounded-[2px] border bg-surface p-5 text-left shadow-sm transition-[border-color,box-shadow,transform,background-color] duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary ${
           aktif
             ? "border-primary bg-paper ring-2 ring-primary/30 shadow-[0_14px_30px_-14px_rgb(11_107_79/0.55)]"
             : "border-line"
@@ -88,7 +81,7 @@ function Tile({
         <Tanda className="bottom-2 left-2" />
         <Tanda className="bottom-2 right-2" />
 
-        {aktif ? (
+        {aktif && !buka ? (
           <span className="absolute right-2 top-2 z-10 hidden rounded-sm bg-accent px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-white sm:inline-block">
             kamu&nbsp;di&nbsp;sini
           </span>
@@ -98,38 +91,16 @@ function Tile({
           {String(t.nomor).padStart(2, "0")}
         </span>
 
-        <div className="flex items-start justify-between gap-4 pt-3">
-          <div className="flex items-center gap-3">
-            <div
-              className={`grid size-11 place-items-center border-2 bg-paper text-primary sm:size-12 ${
-                isFinal ? "border-accent" : "border-primary/30"
-              }`}
-            >
-              <Icon className="size-5 sm:size-6" />
-            </div>
+        <div className="flex items-center gap-3 pt-5">
+          <PelatTahap index={i} />
+          <div className="min-w-0">
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft/70">
               Tahap {t.nomor}
             </p>
+            <h3 id={`tile-${t.nomor}`} className="mt-0.5 font-display text-base font-semibold leading-snug text-ink sm:text-lg">
+              {t.judulSingkat}
+            </h3>
           </div>
-          {t.fakta && (
-            <div className="shrink-0 text-right">
-              <p className="font-display text-lg font-bold leading-none text-primary sm:text-xl">
-                {t.fakta.nilai}
-              </p>
-              <p className="mt-1 max-w-44 text-[10px] uppercase leading-tight tracking-[0.14em] text-ink-soft/80">
-                {t.fakta.label}
-              </p>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-4">
-          <h3 id={`tile-${t.nomor}`} className="font-display text-base font-semibold leading-snug text-ink sm:text-lg">
-            {t.judulSingkat}
-          </h3>
-          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-soft">
-            {t.ringkasan}
-          </p>
         </div>
 
         <div className="mt-4 flex items-center justify-between border-t border-dashed border-line pt-3">
@@ -157,8 +128,21 @@ function Tile({
         transition={reduce ? { duration: 0 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden"
       >
-        <div className="border-x border-b border-dashed border-line bg-paper/70 p-5 sm:p-6">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <div className="border-x border-b border-line bg-surface p-5 sm:p-6">
+          {t.fakta && (
+            <div className="mb-4 rounded-[2px] border border-line bg-paper px-4 py-3">
+              <p className="font-display text-xl font-bold leading-none text-primary sm:text-2xl">
+                {t.fakta.nilai}
+              </p>
+              <p className="mt-1 text-[11px] uppercase leading-tight tracking-[0.14em] text-ink-soft">
+                {t.fakta.label}
+              </p>
+            </div>
+          )}
+
+          <p className="text-sm leading-relaxed text-ink-soft">{t.ringkasan}</p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
               <Clock className="size-3" aria-hidden="true" />
               {t.estimasiWaktu}
@@ -205,16 +189,14 @@ export function PapanJalur() {
   const reduce = useReducedMotion();
   const [kunci, setKunci] = useState(0);
   const [terbuka, setTerbuka] = useState<ReadonlySet<number>>(new Set());
-  const [berjalan, setBerjalan] = useState(false);
 
   useEffect(() => {
-    if (!berjalan || kunci >= TOTAL - 1) return;
-    const id = window.setTimeout(
-      () => setKunci((k) => Math.min(TOTAL - 1, k + 1)),
-      1150,
-    );
+    if (terbuka.size > 0) return;
+    const id = window.setTimeout(() => {
+      setKunci((k) => (k + 1) % TOTAL);
+    }, reduce ? 4000 : DELAY_AUTO);
     return () => window.clearTimeout(id);
-  }, [berjalan, kunci]);
+  }, [kunci, terbuka.size, reduce]);
 
   const toggle = (i: number) =>
     setTerbuka((prev) => {
@@ -228,39 +210,18 @@ export function PapanJalur() {
     });
 
   const pindah = (delta: number) => {
-    setBerjalan(false);
-    setKunci((k) => Math.min(TOTAL - 1, Math.max(0, k + delta)));
+    setKunci((k) => (k + delta + TOTAL) % TOTAL);
   };
 
   const tahuKlik = (i: number) => {
-    setBerjalan(false);
     setKunci(i);
     toggle(i);
-  };
-
-  const sedangDemo = berjalan && kunci < TOTAL - 1;
-
-  const toggleDemo = () => {
-    if (sedangDemo) {
-      setBerjalan(false);
-      return;
-    }
-    if (kunci === TOTAL - 1) {
-      setKunci(0);
-      setTerbuka(new Set());
-    }
-    setBerjalan(true);
-  };
-
-  const mulaiUlang = () => {
-    setKunci(0);
-    setTerbuka(new Set());
-    setBerjalan(true);
   };
 
   const p = POSISI[kunci];
   const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
   const selesai = kunci === TOTAL - 1;
+  const tokenTersembunyi = terbuka.size > 0;
 
   return (
     <div className="relative">
@@ -277,11 +238,11 @@ export function PapanJalur() {
             points={POLYLINE}
             fill="none"
             vectorEffect="non-scaling-stroke"
-            strokeDasharray="5 6"
+            strokeDasharray="2 6"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={1.5}
-            className="stroke-primary/20"
+            strokeWidth={1.25}
+            className="stroke-primary/15"
           />
           <polyline
             points={POLYLINE}
@@ -301,27 +262,32 @@ export function PapanJalur() {
         </svg>
       </div>
 
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none absolute z-20 hidden lg:block"
-        initial={false}
-        animate={{ top: `${p.top}%`, left: `${p.left}%` }}
-        transition={
-          reduce
-            ? { duration: 0 }
-            : { type: "spring", stiffness: 300, damping: 26 }
-        }
-      >
-        {selesai ? (
-          <div className="grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-[0_0_0_6px_rgb(123_91_27/0.15)]">
-            <BadgeCheck className="size-6" />
-          </div>
-        ) : (
-          <div className="grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
-            <IconKunci className="size-5" />
-          </div>
-        )}
-      </motion.div>
+      {!tokenTersembunyi && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute z-20 hidden lg:block"
+          initial={false}
+          animate={{ top: `${p.top}%`, left: `${p.left}%` }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { type: "spring", stiffness: 300, damping: 26 }
+          }
+        >
+          {selesai ? (
+            <div className="grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-[0_0_0_6px_rgb(123_91_27/0.15)]">
+              <BadgeCheck className="size-6" />
+            </div>
+          ) : (
+            <div className="grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
+              <svg viewBox="0 0 32 32" className="size-4.5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="10" cy="10" r="4" />
+                <path d="M13 13 24 24" />
+              </svg>
+            </div>
+          )}
+        </motion.div>
+      )}
 
       <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
         <p
@@ -336,7 +302,7 @@ export function PapanJalur() {
             </>
           ) : (
             <>
-              Posisi kamu —{" "}
+              Loop otomatis —{" "}
               <span className="font-bold text-primary">
                 Tahap {pad(kunci + 1)} dari {TOTAL}
               </span>
@@ -346,34 +312,8 @@ export function PapanJalur() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
-            className={playBtn}
-            onClick={toggleDemo}
-            aria-pressed={sedangDemo}
-          >
-            {sedangDemo ? (
-              <Pause className="size-4" aria-hidden="true" />
-            ) : (
-              <Play className="size-4" aria-hidden="true" />
-            )}
-            {sedangDemo
-              ? "Jeda"
-              : selesai
-                ? "Ulangi demo"
-                : "Mainkan demo"}
-          </button>
-          <button
-            type="button"
-            className={iconBtn}
-            onClick={mulaiUlang}
-            aria-label="Mulai ulang demo dari tahap 1"
-          >
-            <RotateCcw className="size-4" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
             className={navBtn}
             onClick={() => pindah(-1)}
-            disabled={kunci === 0}
             aria-label="Pindah ke tahap sebelumnya"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
@@ -383,7 +323,6 @@ export function PapanJalur() {
             type="button"
             className={navBtn}
             onClick={() => pindah(1)}
-            disabled={kunci === TOTAL - 1}
             aria-label="Pindah ke tahap berikutnya"
           >
             <span className="hidden sm:inline">Berikutnya</span>
@@ -398,8 +337,8 @@ export function PapanJalur() {
             <button
               type="button"
               onClick={() => {
-                setBerjalan(false);
                 setKunci(i);
+                setTerbuka(new Set());
               }}
               aria-current={kunci === i ? "step" : undefined}
               aria-label={`Menuju tahap ${t.nomor}: ${t.judulSingkat}`}

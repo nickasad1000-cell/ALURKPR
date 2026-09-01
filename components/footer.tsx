@@ -68,12 +68,12 @@ export function Footer() {
 
           {[
             { judul: "Panduan", items: kolomPanduan },
-            { judul: "Alat & referensi", items: kolomAlat },
+            { judul: "Alat & referensi", items: kolomAlat, duaKolom: true },
             { judul: "Informasi", items: kolomInfo },
           ].map((kol) => (
             <nav key={kol.judul} aria-label={kol.judul}>
               <h2 className="text-sm font-bold text-ink">{kol.judul}</h2>
-              <ul className="mt-4 space-y-2">
+              <ul className={`mt-4 ${kol.duaKolom ? "grid grid-cols-2 gap-x-4" : "space-y-2"}`}>
                 {kol.items.map((item) => (
                   <li key={item.href}>
                     <Link
@@ -98,8 +98,7 @@ export function Footer() {
             dan bank penyalur sebelum pengajuan.
           </p>
           <p className="mt-3 text-xs text-ink-soft">
-            © {new Date().getFullYear()} AlurKPR · {BRAND_NAME}. Dibuat dengan
-            semangat literasi perumahan.
+            © {new Date().getFullYear()} AlurKPR · {BRAND_NAME}
           </p>
         </div>
       </Container>

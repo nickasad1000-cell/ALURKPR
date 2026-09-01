@@ -13,11 +13,8 @@ import {
 } from "lucide-react";
 import {
   angsuranBulanan,
-  biayaAwal,
   formatRupiah,
-  totalPembayaran,
 } from "@/lib/finance";
-import { panduanArtikel } from "@/content/panduan";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
 import { ProfilKamu } from "@/components/profil-kamu";
 import { AlurJalur } from "@/components/alur-jalur";
@@ -32,8 +29,6 @@ const HERO_DP = 1;
 const HERO_TENOR = 20;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
 const heroAngsuran = angsuranBulanan(heroPlafon, 5, HERO_TENOR);
-const heroTotal = totalPembayaran(heroPlafon, 5, HERO_TENOR);
-const heroBiayaAwal = biayaAwal(HERO_HARGA, HERO_DP).total;
 
 const fitur = [
   {
@@ -48,19 +43,15 @@ const fitur = [
   },
   {
     icon: Landmark,
-    judul: "Banding kanal bank",
+    judul: "Bandingkan bank",
     teks: "Perbandingan subsidi FLPP vs komersial dan bunga indikatif beberapa bank penyalur.",
   },
   {
     icon: ShieldCheck,
-    judul: "Pakar? Bukan — jelas & sederhana",
-    teks: "Istilah berat dibimbing glosarium, sehingga kamu bicara pada level yang sama dengan petugas bank.",
+    judul: "Dibuat untuk orang awam",
+    teks: "Istilah berat dijelaskan dengan bahasa sehari-hari, supaya kamu selevel paham dengan petugas bank.",
   },
 ];
-
-const artikelUnggulan = panduanArtikel.filter((a) =>
-  ["kpr-subsidi-flpp", "perbedaan-kpr-subsidi-dan-komersial", "dp-dan-biaya-initial-kpr"].includes(a.slug),
-);
 
 export default function Home() {
   return (
@@ -94,9 +85,9 @@ export default function Home() {
               Rumah pertama itu mungkin, kalau alurnya kamu pahami dulu.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
-              Pelan tapi pasti: cek kelayakan, hitung angsuran, bandingkan
-              subsidi vs komersial, sampai tanda tangan akad. Semua dijelaskan
-              langkah demi langkah dalam bahasa manusia.
+              Hitung angsuran, cek kelayakan subsidi, dan bandingkan skema KPR
+              lebih dulu — sebelum janjian ke bank. Langkah demi langkah, dalam
+              bahasa yang tidak bikin kepala pusing.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link href="/kalkulator" className={btnPrimary}>
@@ -184,7 +175,7 @@ export default function Home() {
                   {formatRupiah(heroAngsuran)}
                 </p>
               </div>
-              <dl className="mt-7 grid grid-cols-2 gap-4 border-t border-line pt-6 text-sm">
+              <dl className="mt-7 grid grid-cols-3 gap-2 border-t border-line pt-6 text-sm sm:gap-4">
                 <div>
                   <dt className="text-ink-soft">Harga rumah</dt>
                   <dd className="mt-0.5 font-bold tabular-nums">
@@ -196,23 +187,20 @@ export default function Home() {
                   <dd className="mt-0.5 font-bold tabular-nums">{HERO_DP}%</dd>
                 </div>
                 <div>
-                  <dt className="text-ink-soft">Total bayar (20 th)</dt>
-                  <dd className="mt-0.5 font-bold tabular-nums">
-                    {formatRupiah(heroTotal)}
-                  </dd>
-                </div>
-                <div>
                   <dt className="text-ink-soft">Tenor</dt>
                   <dd className="mt-0.5 font-bold tabular-nums">
                     {HERO_TENOR} tahun
                   </dd>
                 </div>
               </dl>
-              <p className="mt-5 flex flex-wrap items-baseline gap-x-2 rounded-xl bg-primary-soft/60 px-4 py-3 text-sm">
-                <span className="font-semibold text-primary-deep">Biaya awal (DP + biaya)</span>
-                <span className="font-display text-lg font-semibold tabular-nums text-ink">
-                  ± {formatRupiah(heroBiayaAwal)}
-                </span>
+              <p className="mt-5 rounded-xl bg-primary-soft/60 px-4 py-3 text-sm leading-relaxed">
+                <span className="font-semibold text-danger/80 line-through">
+                  Biaya awal (DP + biaya) ± Rp11,5 jt
+                </span>{" "}
+                <span className="font-semibold text-primary-deep">
+                  cukup siapkan biaya booking ±Rp100 ribu
+                </span>{" "}
+                — DP & biaya lain bisa diakad belakangan.
               </p>
               <Link
                 href="/kalkulator"
@@ -231,7 +219,7 @@ export default function Home() {
         <Container className="py-12 sm:py-16">
           <SectionHeading
             eyebrow="Kenapa AlurKPR"
-            title="Yang membedakan panduan ini"
+            title="Beda dari artikel KPR lainnya"
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {fitur.map((f) => (
@@ -253,9 +241,9 @@ export default function Home() {
       <section className="mt-20 sm:mt-28">
         <Container>
           <SectionHeading
-            eyebrow="Alat perencanaan gratis"
-            title="Lima alat untuk mulai merencanakan"
-            description="Gunakan sesuai urutan: tahu kemampuan beli, bandingkan sewa vs beli, kumpulkan DP, hitung angsuran, lalu dapatkan rekomendasi skema."
+            eyebrow="Kalkulator & alat bantu"
+            title="Lima alat yang paling sering dipakai"
+            description="Coba sesuai urutanmu: tahu kemampuan beli, bandingkan sewa vs beli, kumpulkan DP, hitung angsuran, lalu temukan skema yang cocok."
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
@@ -317,12 +305,12 @@ export default function Home() {
             <div>
               <Eyebrow>Rekomendasi personal</Eyebrow>
               <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                Tidak yakin mulai dari subsidi atau komersial?
+                Subsidi atau komersial? Biar tidak menebak-nebak.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
-                5 pertanyaan singkat cukup untuk mengarahkanmu ke skema yang
-                paling sesuai penghasilan dan tujuanmu — lalu dapat langkah
-                selanjutnya yang jelas.
+                5 pertanyaan singkat cukup untuk mengenali kecenderungan
+                skema KPR-mu — subsidi atau komersial — lengkap dengan rekomendasi
+                langkah berikutnya.
               </p>
               <Link
                 href="/profil-kamu"
@@ -332,7 +320,7 @@ export default function Home() {
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <p className="mt-3 text-xs text-ink-soft">
-                Simulasi kilat — tanpa daftar akun, tanpa data pribadi diminta.
+                Tanpa daftar akun, tanpa data pribadi yang diminta.
               </p>
             </div>
             <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
@@ -349,39 +337,6 @@ export default function Home() {
       <section className="mt-20 sm:mt-28">
         <Container>
           <BlokDemografis />
-        </Container>
-      </section>
-
-      {/* Artikel unggulan */}
-      <section className="mt-20 sm:mt-28">
-        <Container>
-          <SectionHeading
-            eyebrow="Baca selanjutnya"
-            title="Tiga topik yang paling sering dicari"
-          />
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            {artikelUnggulan.map((a) => (
-              <Link
-                key={a.slug}
-                href={`/panduan/${a.slug}`}
-                className="group flex flex-col rounded-3xl border border-line bg-surface p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
-              >
-                <span className="rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-ink">
-                  {a.kategori}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
-                  {a.judul}
-                </h3>
-                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-soft">
-                  {a.ringkasan}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
-                  Baca selengkapnya
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
         </Container>
       </section>
 

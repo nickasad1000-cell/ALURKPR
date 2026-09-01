@@ -112,12 +112,7 @@ export function Kalkulator({
     setDraftHarga(terformat);
     const n = parseNumberId(terformat);
     if (!terformat || !Number.isFinite(n)) return;
-    const terpaku = clampInt(
-      Math.round(n / HARGA_STEP) * HARGA_STEP,
-      HARGA_MIN,
-      HARGA_MAX,
-    );
-    setHarga(terpaku);
+    setHarga(n);
   };
 
   const selesaiHarga = () => setDraftHarga(harga.toLocaleString("id-ID"));

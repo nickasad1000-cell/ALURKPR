@@ -227,24 +227,25 @@ export function ProfilKamu() {
               </ol>
             </div>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2">
-          <Link href="/kalkulator" className={btnPrimary}>
-            <Wallet className="size-4" aria-hidden="true" />
-            Hitung angsuran
-          </Link>
-          <Link href="/syarat" className={btnSecondary}>
-            Cek kelayakan
-          </Link>
-        </div>
-            <WhatsAppButton
-              source="profil_completed"
-              label="Tanya lanjutan via WhatsApp"
-              pesan={`Halo, saya baru selesai mengisi "Profil Kamu" di AlurKPR (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`}
-            />
+        <div className="mt-7 space-y-3">
+              <Link href="/kalkulator" className={`${btnPrimary} w-full`}>
+                <Wallet className="size-4" aria-hidden="true" />
+                Hitung angsuran
+              </Link>
+              <WhatsAppButton
+                source="profil_completed"
+                label="Tanya lanjutan via WhatsApp"
+                className="w-full"
+                pesan={`Halo, saya baru selesai mengisi "Profil Kamu" di AlurKPR (penghasilan ${label(profil.penghasilan)}, ${label(profil.pekerjaan)}, ${label(profil.skema)}). Rekomendasi awal: ${rekomendasi.ringkas}. Saya ingin konsultasi lanjutan.`}
+              />
+              <Link href="/syarat" className={`${btnSecondary} w-full`}>
+                Cek kelayakan
+              </Link>
+            </div>
             <button
               type="button"
               onClick={() => setStep(0)}
-              className="mt-4 inline-flex w-full items-center justify-center gap-1.5 text-sm font-bold text-ink-soft transition hover:text-ink"
+              className="mt-5 inline-flex w-full items-center justify-center gap-1.5 text-sm font-bold text-ink-soft transition hover:text-ink"
             >
               <RotateCcw className="size-3.5" aria-hidden="true" />
               Ulangi dari awal

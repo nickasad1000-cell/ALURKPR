@@ -38,20 +38,11 @@ export function AlurJalur() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
               Alur pengajuan KPR
             </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Jalur pengajuan KPR
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
-              Delapan tahap dari cek keuangan sampai akad dan KPR cair. Ikuti
-              jalurnya satu per satu, setiap pemberhentian terhubung ke panduan
-              lengkapnya.
-            </p>
           </div>
           {/* Label gambar teknik */}
           <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft/70 sm:block">
             <p>Dwg No. KPR-08</p>
             <p>Skala: NTS</p>
-            <p>Rev. 2026.2</p>
           </div>
         </div>
 
@@ -68,7 +59,7 @@ export function AlurJalur() {
 
           {/* Title block / cartouche */}
           <div className="mt-10 border border-line bg-paper text-[10px] uppercase tracking-[0.18em] text-ink-soft">
-            <div className="grid grid-cols-2 divide-x divide-line sm:grid-cols-4">
+            <div className="grid grid-cols-2 divide-x divide-line sm:grid-cols-3">
               <div className="p-3">
                 <p className="text-ink-soft/70">Proyek</p>
                 <p className="mt-0.5 font-bold text-ink">AlurKPR</p>
@@ -80,10 +71,6 @@ export function AlurJalur() {
               <div className="border-t border-line p-3 sm:border-t-0">
                 <p className="text-ink-soft/70">Status</p>
                 <p className="mt-0.5 font-bold text-primary">Disetujui</p>
-              </div>
-              <div className="border-l border-t border-line p-3 sm:border-l-0 sm:border-t-0">
-                <p className="text-ink-soft/70">Revisi</p>
-                <p className="mt-0.5 font-bold text-ink">2026.2</p>
               </div>
             </div>
           </div>

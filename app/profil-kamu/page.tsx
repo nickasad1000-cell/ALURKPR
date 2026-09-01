@@ -17,7 +17,7 @@ export default function ProfilKamuPage() {
           as="h1"
           eyebrow="Rekomendasi personal"
           title="Profil Kamu: mulai dari mana?"
-          description="Bingung mulai dari subsidi atau komersial? Jawab 5 pertanyaan ini dan kami arahkan ke alur yang paling masuk akal untuk kondisimu."
+          description="Bingung mulai dari subsidi atau komersial? Jawab 5 pertanyaan ini untuk menemukan skema yang paling sesuai dengan kondisimu."
           align="center"
         />
         <div className="mt-10">

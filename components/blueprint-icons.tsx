@@ -122,3 +122,36 @@ export const TAHAP_ICONS = [
   IconKunci,
   IconRumah,
 ] as const;
+
+type RampTahap = { bg: string; icon: string };
+
+const RAMP_TAHAP: RampTahap[] = [
+  { bg: "from-paper to-line", icon: "text-ink-soft" },
+  { bg: "from-paper to-line", icon: "text-ink-soft" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
+  { bg: "from-accent-soft to-accent", icon: "text-white" },
+  { bg: "from-accent-soft to-accent", icon: "text-white" },
+];
+
+/** Plat ikon 3D per tahap: background gradien + bevel, warna mengikuti rampa. */
+export function PelatTahap({
+  index,
+  className = "",
+}: {
+  index: number;
+  className?: string;
+}) {
+  const Icon = TAHAP_ICONS[index];
+  const r = RAMP_TAHAP[index] ?? RAMP_TAHAP[0];
+  return (
+    <span
+      aria-hidden="true"
+      className={`pelat-3d grid size-11 shrink-0 place-items-center rounded-[7px] border border-black/10 bg-gradient-to-b sm:size-12 ${r.bg} ${className}`}
+    >
+      <Icon className={`size-5 sm:size-6 ${r.icon}`} />
+    </span>
+  );
+}
