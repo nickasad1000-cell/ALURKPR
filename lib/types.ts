@@ -32,8 +32,8 @@ export type GlosariumItem = { istilah: string; definisi: string };
 
 export type KelayakanInput = {
   penghasilan: number;
-  sudahPunyaRumah: boolean;
-  pernahSubsidi: boolean;
+  belumPunyaRumah: boolean;
+  belumPernahSubsidi: boolean;
   hargaUnit: number;
   dewasaAtauMenikah: boolean;
 };

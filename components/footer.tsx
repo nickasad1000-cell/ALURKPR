@@ -36,7 +36,7 @@ const kolomInfo = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-surface">
+    <footer className="mt-28 border-t border-line bg-surface">
       <Container className="py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>

@@ -180,7 +180,7 @@ export function ChecklistDokumen() {
                         <label
                           htmlFor={idCb}
                           className={`flex cursor-pointer items-start gap-3 rounded-xl px-2 py-2.5 transition hover:bg-paper ${
-                            checked ? "opacity-70" : ""
+                            checked ? "opacity-85" : ""
                           }`}
                         >
                           <input

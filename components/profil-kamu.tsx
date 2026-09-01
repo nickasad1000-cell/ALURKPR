@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -10,7 +10,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { track } from "@/lib/analytics";
-import { btnPrimary, btnSecondary } from "./ui";
+import { btnFocus, btnPrimary, btnSecondary } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 type Penghasilan = "di-bawah-4" | "4-8" | "8-12" | "di-atas-12";
@@ -133,6 +133,8 @@ const pertanyaan: { key: keyof Profil; label: string }[] = [
 
 export function ProfilKamu() {
   const [step, setStep] = useState(0);
+  const questionRef = useRef<HTMLHeadingElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [profil, setProfil] = useState<Profil>({
     penghasilan: "4-8",
     pekerjaan: "karyawan",
@@ -143,6 +145,10 @@ export function ProfilKamu() {
 
   const rekomendasi = buildRekomendasi(profil);
 
+  useEffect(() => {
+    if (step < stepCount) questionRef.current?.focus();
+  }, [step]);
+
   const pilih = (k: keyof Profil, v: string) => {
     setProfil((prev) => ({ ...prev, [k]: v }));
     if (step < stepCount - 1) {
@@ -150,6 +156,25 @@ export function ProfilKamu() {
     } else {
       setStep(stepCount);
       track("profil_completed", { skema: v });
+    }
+  };
+
+  const aturFokusOpsi = (dir: -1 | 1) => {
+    const n = opsiUntuk(currentKey).length;
+    const aktif = opsiUntuk(currentKey).findIndex(
+      (o) => profil[currentKey] === o.key,
+    );
+    const next = (aktif + dir + n) % n;
+    optionRefs.current[next]?.focus();
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      e.preventDefault();
+      aturFokusOpsi(1);
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      aturFokusOpsi(-1);
     }
   };
 
@@ -247,19 +272,30 @@ export function ProfilKamu() {
         </p>
         <h2
           id={`pertanyaan-${step}`}
+          ref={questionRef}
+          tabIndex={-1}
           aria-live="polite"
-          className="mt-2 font-display text-2xl font-semibold sm:text-3xl"
+          className="mt-2 font-display text-2xl font-semibold sm:text-3xl focus:outline-none"
         >
           {pertanyaan[step].label}
         </h2>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-labelledby={`pertanyaan-${step}`}>
-          {options.map((o) => (
+        <div
+          className="mt-7 grid gap-3 sm:grid-cols-2"
+          role="radiogroup"
+          aria-labelledby={`pertanyaan-${step}`}
+          onKeyDown={onKeyDown}
+        >
+          {options.map((o, i) => (
             <OptionButton
               key={o.key}
+              ref={(el) => {
+                optionRefs.current[i] = el;
+              }}
               label={o.label}
               sub={"sub" in o ? (o as { sub: string }).sub : undefined}
               aktif={profil[currentKey] === o.key}
+              tabIndex={profil[currentKey] === o.key ? 0 : -1}
               onClick={() => pilih(currentKey, o.key)}
             />
           ))}
@@ -323,28 +359,29 @@ function opsiUntuk(key: keyof Profil) {
   }
 }
 
-function OptionButton({
-  label,
-  sub,
-  aktif,
-  onClick,
-}: {
-  label: string;
-  sub?: string;
-  aktif: boolean;
-  onClick: () => void;
-}) {
+const OptionButton = forwardRef<
+  HTMLButtonElement,
+  {
+    label: string;
+    sub?: string;
+    aktif: boolean;
+    tabIndex?: number;
+    onClick: () => void;
+  }
+>(function OptionButton({ label, sub, aktif, tabIndex = 0, onClick }, ref) {
   return (
     <button
+      ref={ref}
       type="button"
       role="radio"
       aria-checked={aktif}
+      tabIndex={tabIndex}
       onClick={onClick}
       className={`group flex items-center gap-3 rounded-2xl border px-5 py-4 text-left transition ${
         aktif
           ? "border-primary bg-primary-soft"
           : "border-line bg-surface hover:border-primary/40 hover:bg-paper"
-      }`}
+      } ${btnFocus}`}
     >
       <span
         className={`grid size-5 shrink-0 place-items-center rounded-full border transition ${
@@ -360,4 +397,4 @@ function OptionButton({
       </span>
     </button>
   );
-}
+});

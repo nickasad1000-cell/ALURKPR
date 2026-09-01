@@ -4,31 +4,32 @@ import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import { cekKelayakan } from "@/lib/eligibility";
+import { parseNumberId } from "@/lib/finance";
 import type { KelayakanResult } from "@/lib/types";
 import { track } from "@/lib/analytics";
-import { inputCls, btnPrimary } from "./ui";
+import { inputCls, btnPrimary, btnFocus } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 export function KelayakanForm() {
   const [penghasilan, setPenghasilan] = useState("5000000");
   const [hargaUnit, setHargaUnit] = useState("150000000");
   const [dewasaAtauMenikah, setDewasaAtauMenikah] = useState(false);
-  const [sudahPunyaRumah, setSudahPunyaRumah] = useState(false);
-  const [pernahSubsidi, setPernahSubsidi] = useState(false);
+  const [belumPunyaRumah, setBelumPunyaRumah] = useState(false);
+  const [belumPernahSubsidi, setBelumPernahSubsidi] = useState(false);
   const [hasil, setHasil] = useState<KelayakanResult | null>(null);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const res = cekKelayakan({
-      penghasilan: Number(penghasilan) || 0,
-      hargaUnit: Number(hargaUnit) || 0,
+      penghasilan: parseNumberId(penghasilan),
+      hargaUnit: parseNumberId(hargaUnit),
       dewasaAtauMenikah,
-      sudahPunyaRumah,
-      pernahSubsidi,
+      belumPunyaRumah,
+      belumPernahSubsidi,
     });
     setHasil(res);
     track(res.layak ? "eligibility_passed" : "eligibility_failed", {
-      penghasilan: Number(penghasilan) || 0,
+      penghasilan: parseNumberId(penghasilan),
     });
   };
 
@@ -82,6 +83,9 @@ export function KelayakanForm() {
 
       <fieldset className="mt-6 space-y-3">
         <legend className="text-sm font-bold">Kondisi pemohon</legend>
+        <p className="text-xs leading-relaxed text-ink-soft">
+          Centang setiap pernyataan yang sesuai dengan kondisimu.
+        </p>
         {[
           {
             id: "dewasa",
@@ -92,14 +96,14 @@ export function KelayakanForm() {
           {
             id: "belum-punya",
             label: "Saya belum pernah memiliki rumah",
-            value: !sudahPunyaRumah,
-            set: (v: boolean) => setSudahPunyaRumah(!v),
+            value: belumPunyaRumah,
+            set: setBelumPunyaRumah,
           },
           {
             id: "belum-subsidi",
             label: "Saya belum pernah menerima subsidi perumahan pemerintah",
-            value: !pernahSubsidi,
-            set: (v: boolean) => setPernahSubsidi(!v),
+            value: belumPernahSubsidi,
+            set: setBelumPernahSubsidi,
           },
         ].map((item) => (
           <label key={item.id} className="flex items-start gap-3 text-sm">
@@ -116,7 +120,7 @@ export function KelayakanForm() {
 
       <button
         type="submit"
-        className="mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-primary font-bold text-white transition hover:bg-primary-deep"
+        className={`mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-primary font-bold text-white transition hover:bg-primary-deep ${btnFocus}`}
       >
         Periksa kelayakan
       </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { BadgeCheck, Clock, ArrowRight } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
@@ -105,6 +105,7 @@ function StepCard({
 
 export function AlurJalur() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start end", "end start"],
@@ -120,7 +121,7 @@ export function AlurJalur() {
         style={{
           backgroundImage:
             "linear-gradient(to right, rgb(11 107 79 / 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgb(11 107 79 / 0.05) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
+          backgroundSize: "32px 32px",
         }}
       />
 
@@ -174,16 +175,18 @@ export function AlurJalur() {
               />
               {/* garis progres */}
               <motion.div
-                style={{ height: progressHeight }}
+                style={reduce ? { height: "100%" } : { height: progressHeight }}
                 className="absolute left-1/2 top-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-primary via-primary to-accent"
               />
             </div>
 
-            <ol className="relative space-y-8 sm:space-y-10">
-              {tahapKpr.map((t, i) => (
-                <StepCard key={t.nomor} t={t} i={i} />
-              ))}
-            </ol>
+            <MotionConfig reducedMotion="user">
+              <ol className="relative space-y-8 sm:space-y-10">
+                {tahapKpr.map((t, i) => (
+                  <StepCard key={t.nomor} t={t} i={i} />
+                ))}
+              </ol>
+            </MotionConfig>
           </div>
 
           {/* Title block / cartouche */}

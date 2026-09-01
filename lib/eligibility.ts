@@ -20,17 +20,17 @@ export function cekKelayakan(input: KelayakanInput): KelayakanResult {
     },
     {
       label: "Belum pernah memiliki rumah",
-      lolos: !input.sudahPunyaRumah,
-      catatan: input.sudahPunyaRumah
-        ? "KPR subsidi hanya untuk rumah pertama."
-        : undefined,
+      lolos: input.belumPunyaRumah,
+      catatan: input.belumPunyaRumah
+        ? undefined
+        : "Centang ini bila belum pernah memiliki rumah — KPR subsidi hanya untuk rumah pertama.",
     },
     {
       label: "Belum pernah menerima subsidi perumahan dari pemerintah",
-      lolos: !input.pernahSubsidi,
-      catatan: input.pernahSubsidi
-        ? "Subsidi FLPP hanya diberikan satu kali seumur hidup."
-        : undefined,
+      lolos: input.belumPernahSubsidi,
+      catatan: input.belumPernahSubsidi
+        ? undefined
+        : "Centang ini bila belum pernah menerima subsidi FLPP — hanya diberikan satu kali seumur hidup.",
     },
     {
       label: `Penghasilan pokok ≤ Rp8 juta/bulan (rumah tapak)`,

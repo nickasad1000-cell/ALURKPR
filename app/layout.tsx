@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     locale: "id_ID",
     siteName: "AlurKPR",
     url: "/",
+    images: [{ url: "/logo.png", width: 635, height: 635, alt: "Logo AlurKPR" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "AlurKPR — Panduan KPR Rumah Pertama dari A sampai Z",
+    description:
+      "Panduan langkah demi langkah mengurus KPR subsidi & komersial di Indonesia: simulasi angsuran, cek kelayakan FLPP, perbandingan bank, biaya awal, FAQ dan glosarium.",
+    images: ["/logo.png"],
   },
 };
 
@@ -68,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       contactType: "customer service",
       areaServed: "ID",
       availableLanguage: "Indonesian",
+      description: "Konsultasi via WhatsApp (AlurKPR — bukan agen bank, edukasi netral).",
     },
   };
   return (
@@ -76,6 +85,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fraunces.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}

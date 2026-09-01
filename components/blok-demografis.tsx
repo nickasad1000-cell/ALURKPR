@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import {
   Users,
   Percent,
@@ -131,6 +131,7 @@ export function BlokDemografis() {
         </div>
       </div>
 
+      <MotionConfig reducedMotion="user">
       <motion.dl
         variants={containerVariants}
         initial="hidden"
@@ -153,7 +154,9 @@ export function BlokDemografis() {
               <span className={`h-2 w-px ${f.sorot ? "bg-accent" : "bg-primary/40"}`} />
             </div>
 
-            <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-soft">
+            <dt className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${
+              f.sorot ? "text-accent-ink" : "text-ink-soft"
+            }`}>
               <span
                 className={`grid size-7 place-items-center border ${
                   f.sorot
@@ -174,6 +177,7 @@ export function BlokDemografis() {
           </motion.div>
         ))}
       </motion.dl>
+      </MotionConfig>
 
       {/* Catatan spesifikasi */}
       <div className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-[auto_1fr]">

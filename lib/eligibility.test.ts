@@ -3,8 +3,8 @@ import { cekKelayakan } from "./eligibility";
 
 const lolosSemua = {
   penghasilan: 5_000_000,
-  sudahPunyaRumah: false,
-  pernahSubsidi: false,
+  belumPunyaRumah: true,
+  belumPernahSubsidi: true,
   hargaUnit: 150_000_000,
   dewasaAtauMenikah: true,
 };
@@ -24,15 +24,15 @@ describe("cekKelayakan", () => {
   });
 
   it("sudah punya rumah → tidak layak", () => {
-    expect(cekKelayakan({ ...lolosSemua, sudahPunyaRumah: true }).layak).toBe(
+    expect(cekKelayakan({ ...lolosSemua, belumPunyaRumah: false }).layak).toBe(
       false,
     );
   });
 
   it("pernah subsidi → tidak layak", () => {
-    expect(cekKelayakan({ ...lolosSemua, pernahSubsidi: true }).layak).toBe(
-      false,
-    );
+    expect(
+      cekKelayakan({ ...lolosSemua, belumPernahSubsidi: false }).layak,
+    ).toBe(false);
   });
 
   it("harga unit di atas plafon konservatif → tidak layak", () => {
@@ -51,7 +51,7 @@ describe("cekKelayakan", () => {
     const r = cekKelayakan({
       ...lolosSemua,
       penghasilan: 9_000_000,
-      sudahPunyaRumah: true,
+      belumPunyaRumah: false,
     });
     expect(r.alasan.length).toBe(2);
   });

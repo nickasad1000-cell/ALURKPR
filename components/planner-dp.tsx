@@ -1,9 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, Info, PiggyBank, Wallet } from "lucide-react";
 import Link from "next/link";
-import { bulanUntukMenabung, formatRupiah, tabunganBulananUntuk } from "@/lib/finance";
+import {
+  bulanUntukMenabung,
+  formatRupiah,
+  tabunganBulananUntuk,
+  parseNumberId,
+} from "@/lib/finance";
 import { track } from "@/lib/analytics";
 import { btnPrimary, btnSecondary, inputCls } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
@@ -18,22 +23,29 @@ export function PlannerDp() {
   const [setoranBulanan, setSetoranBulanan] = useState("2500000");
   const [jumlahBulan, setJumlahBulan] = useState("24");
 
+  const hargaN = parseNumberId(harga);
+  const tabunganAwalN = parseNumberId(tabunganAwal);
+  const setoranBulananN = parseNumberId(setoranBulanan);
+  const jumlahBulanN = parseNumberId(jumlahBulan, 0);
+
   const hasil = useMemo(() => {
-    const targetDp = Math.round((Number(harga) || 0) * (dpPersen / 100));
-    const awal = Number(tabunganAwal) || 0;
+    const targetDp = Math.round(hargaN * (dpPersen / 100));
     const data =
       mode === "lama"
         ? {
-            bulan: bulanUntukMenabung(targetDp, awal, Number(setoranBulanan) || 0),
-            perBulan: Number(setoranBulanan) || 0,
+            bulan: bulanUntukMenabung(targetDp, tabunganAwalN, setoranBulananN),
+            perBulan: setoranBulananN,
           }
         : {
-            bulan: Number(jumlahBulan) || 0,
-            perBulan: tabunganBulananUntuk(targetDp, awal, Number(jumlahBulan) || 0),
+            bulan: Math.max(0, jumlahBulanN),
+            perBulan: tabunganBulananUntuk(targetDp, tabunganAwalN, jumlahBulanN),
           };
-    track("calc_result_viewed", { tool: "planner-dp" });
     return { targetDp, ...data };
-  }, [mode, harga, dpPersen, tabunganAwal, setoranBulanan, jumlahBulan]);
+  }, [mode, hargaN, dpPersen, tabunganAwalN, setoranBulananN, jumlahBulanN]);
+
+  useEffect(() => {
+    track("calc_result_viewed", { tool: "planner-dp" });
+  }, [hasil.targetDp, mode]);
 
   const tercapai = hasil.bulan === 0;
   const tahun = Math.floor((hasil.bulan || 0) / 12);
@@ -191,7 +203,7 @@ export function PlannerDp() {
               className="mt-2 font-display text-3xl font-semibold tabular-nums text-primary sm:text-4xl"
               aria-live="polite"
             >
-              {tercapai ? formatRupiah(0) : `${formatRupiah(hasil.perBulan)}/bln`}
+              {tercapai ? "Sudah tercapai" : `${formatRupiah(hasil.perBulan)}/bln`}
             </p>
           )}
 
@@ -207,7 +219,7 @@ export function PlannerDp() {
               {mode === "lama" && hasil.bulan !== Infinity
                 ? `Kurang ${durasiTeks} dari setoran ${formatRupiah(hasil.perBulan)}/bulan.`
                 : mode === "bulanan"
-                  ? `Setor ${formatRupiah(hasil.perBulan)}/bulan selama ${jumlahBulan || 0} bulan.`
+                  ? `Setor ${formatRupiah(hasil.perBulan)}/bulan selama ${jumlahBulanN} bulan.`
                   : "Setor minimal Rp1/bulan agar ada pergerakan."}
             </p>
           )}
@@ -215,11 +227,11 @@ export function PlannerDp() {
           <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-line pt-6 text-sm">
             <div>
               <dt className="text-ink-soft">Harga target</dt>
-              <dd className="mt-0.5 font-bold tabular-nums">{formatRupiah(Number(harga) || 0)}</dd>
+              <dd className="mt-0.5 font-bold tabular-nums">{formatRupiah(hargaN)}</dd>
             </div>
             <div>
               <dt className="text-ink-soft">Tabungan awal</dt>
-              <dd className="mt-0.5 font-bold tabular-nums">{formatRupiah(Number(tabunganAwal) || 0)}</dd>
+              <dd className="mt-0.5 font-bold tabular-nums">{formatRupiah(tabunganAwalN)}</dd>
             </div>
           </dl>
         </div>
@@ -250,7 +262,7 @@ export function PlannerDp() {
             <WhatsAppButton
               source="planner-dp"
               label="Tanya tentang target hinggap"
-              pesan={`Halo, saya pakai planner DP di AlurKPR: target harga ${formatRupiah(Number(harga) || 0)}, DP ${dpPersen}%. Saya ingin konsultasi lanjutan.`}
+              pesan={`Halo, saya pakai planner DP di AlurKPR: target harga ${formatRupiah(hargaN)}, DP ${dpPersen}%. Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>

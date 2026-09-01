@@ -245,7 +245,7 @@ export const tahapKpr: Tahap[] = [
     kesalahanUmum: [
       "Tebal di bulan pertama lalu telat bayar — denda & catatan negatif SLIK.",
       "Menganggap rumah tidak butuh perawatan sampai ada kerusakan besar.",
-      "Tidak membandingkan bunga bank lain selama bertahun-tahun; take-over bisa menghemat miliaran rupiah total bunga.",
+      "Tidak membandingkan bunga bank lain selama bertahun-tahun; take-over bisa menghemat puluhan hingga ratusan juta rupiah total bunga.",
     ],
     perbedaanSubsidi:
       "Subsidi: ada aturan ketat soal jual sebelum masa tertentu. Komersial: bebas dijual/disewakan (tetap periksa klausul bank).",

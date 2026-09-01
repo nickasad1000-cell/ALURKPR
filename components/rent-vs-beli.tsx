@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Home, Info, Scale, Wallet } from "lucide-react";
 import Link from "next/link";
 import {
@@ -10,6 +10,7 @@ import {
   biayaSewaKumulatif,
   formatRupiah,
   tahunImpas,
+  parseNumberId,
 } from "@/lib/finance";
 import { track } from "@/lib/analytics";
 import { btnPrimary, btnSecondary, inputCls } from "./ui";
@@ -25,9 +26,10 @@ export function RentVsBeli() {
   const [sewa, setSewa] = useState("1500000");
   const [kenaikan, setKenaikan] = useState(5);
 
+  const hargaN = parseNumberId(harga);
+  const sewaN = parseNumberId(sewa);
+
   const hasil = useMemo(() => {
-    const hargaN = Number(harga) || 0;
-    const sewaN = Number(sewa) || 0;
     const awal = biayaAwal(hargaN, dp);
     const angsuran = angsuranBulanan(hargaN - awal.dp, bunga, tenor);
     const impas = tahunImpas(awal.total, angsuran, sewaN, kenaikan);
@@ -36,9 +38,12 @@ export function RentVsBeli() {
       beli: biayaBeliKumulatif(awal.total, angsuran, t),
       sewa: biayaSewaKumulatif(sewaN, kenaikan, t),
     }));
-    track("calc_result_viewed", { tool: "rent-vs-beli" });
     return { awal, angsuran, impas, titik };
-  }, [harga, dp, bunga, tenor, sewa, kenaikan]);
+  }, [hargaN, dp, bunga, tenor, sewaN, kenaikan]);
+
+  useEffect(() => {
+    track("calc_result_viewed", { tool: "rent-vs-beli" });
+  }, [hasil.impas]);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
@@ -259,7 +264,7 @@ export function RentVsBeli() {
             <WhatsAppButton
               source="rent-vs-beli"
               label="Konsultasi via WhatsApp"
-              pesan={`Halo, saya bandingkan beli vs sewa di AlurKPR (harga ${formatRupiah(Number(harga) || 0)}, angsuran ${formatRupiah(hasil.angsuran)}/bln). Saya ingin konsultasi lanjutan.`}
+              pesan={`Halo, saya bandingkan beli vs sewa di AlurKPR (harga ${formatRupiah(hargaN)}, angsuran ${formatRupiah(hasil.angsuran)}/bln). Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>

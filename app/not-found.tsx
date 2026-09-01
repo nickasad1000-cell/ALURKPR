@@ -1,10 +1,17 @@
 import Link from "next/link";
-import { Container, btnPrimary } from "@/components/ui";
+import type { Metadata } from "next";
+import { Container, btnPrimary, btnFocus } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Halaman Tidak Ditemukan — AlurKPR",
+  description: "Halaman yang kamu cari tidak ditemukan. Mulai dari panduan KPR atau kalkulator.",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
     <Container className="flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-      <p className="font-display text-7xl font-semibold text-primary/30">404</p>
+      <p className="font-display text-7xl font-semibold text-primary">404</p>
       <h1 className="mt-4 font-display text-2xl font-semibold sm:text-3xl">
         Halaman yang kamu cari tidak ditemukan
       </h1>
@@ -16,7 +23,7 @@ export default function NotFound() {
         <Link href="/" className={btnPrimary}>
           Kembali ke beranda
         </Link>
-        <Link href="/panduan" className="inline-flex h-12 items-center rounded-full border border-line bg-surface px-6 text-sm font-bold">
+        <Link href="/panduan" className={`inline-flex h-12 items-center rounded-full border border-line bg-surface px-6 text-sm font-bold ${btnFocus}`}>
           Lihat panduan
         </Link>
       </div>

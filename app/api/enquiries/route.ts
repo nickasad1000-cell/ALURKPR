@@ -96,9 +96,12 @@ export async function POST(request: Request) {
   }
 
   console.warn(
-    `[enquiries] mode pengembangan tanpa Supabase — pesan DIBUANG (nama=${nama.length}ch, email=${email.length}ch, pesan=${pesan.length}ch).`,
+    `[enquiries] mode tanpa Supabase — kirim balik arahan WhatsApp (nama=${nama.length}ch, email=${email.length}ch, pesan=${pesan.length}ch).`,
   );
-  return NextResponse.json({
-    message: "Terima kasih! Pesan diterima (mode pengembangan tanpa penyimpanan).",
-  });
+  return NextResponse.json(
+    {
+      error: `Formulir dalam pemeliharaan. Agar pesanmu tidak hilang, kirim langsung ke WhatsApp ${WHATSAPP_DISPLAY}.`,
+    },
+    { status: 503 },
+  );
 }

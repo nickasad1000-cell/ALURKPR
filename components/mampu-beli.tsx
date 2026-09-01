@@ -1,9 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, Info, Wallet } from "lucide-react";
 import Link from "next/link";
-import { hargaMaksimalMampu, formatRupiah, angsuranBulanan } from "@/lib/finance";
+import {
+  hargaMaksimalMampu,
+  formatRupiah,
+  angsuranBulanan,
+  parseNumberId,
+} from "@/lib/finance";
 import { track } from "@/lib/analytics";
 import { btnPrimary, btnSecondary, inputCls } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
@@ -16,22 +21,27 @@ export function MampuBeli() {
   const [tenor, setTenor] = useState(20);
   const [bunga, setBunga] = useState(5);
 
+  const penghasilanN = parseNumberId(penghasilan);
+  const cicilanN = parseNumberId(cicilan);
+
   const hasil = useMemo(() => {
-    const r = hargaMaksimalMampu({
-      penghasilanBulanan: Number(penghasilan) || 0,
-      cicilanLainBulanan: Number(cicilan) || 0,
+    return hargaMaksimalMampu({
+      penghasilanBulanan: penghasilanN,
+      cicilanLainBulanan: cicilanN,
       dbrPersen: dbr,
       dpPersen: dp,
       tenorTahun: tenor,
       bungaTahunanPersen: bunga,
     });
+  }, [penghasilanN, cicilanN, dbr, dp, tenor, bunga]);
+
+  useEffect(() => {
     track("calc_result_viewed", { tool: "mampu-beli" });
-    return r;
-  }, [penghasilan, cicilan, dbr, dp, tenor, bunga]);
+  }, [hasil.hargaMaksimal]);
 
   const danaAwal = Math.round((hasil.hargaMaksimal * dp) / 100);
   const angsuranAktual = angsuranBulanan(hasil.plafonMaksimal, bunga, tenor);
-  const bersih = Math.max(0, (Number(penghasilan) || 0) - (Number(cicilan) || 0));
+  const bersih = Math.max(0, penghasilanN - cicilanN);
   const diBawahBatasKetat = bersih > 0 && angsuranAktual / bersih <= 0.3;
 
   return (

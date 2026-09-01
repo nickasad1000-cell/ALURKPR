@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { inputCls } from "@/components/ui";
+import { inputCls, btnFocus } from "@/components/ui";
 import { track } from "@/lib/analytics";
 
 type Status =
@@ -64,10 +64,11 @@ export function HubungiForm() {
           <input
             type="text"
             required
+            autoComplete="name"
             value={form.nama}
             onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))}
             className={`${inputCls} mt-1.5`}
-            placeholder="Nama kamu"
+            placeholder="Nama kamu…"
           />
         </label>
         <label className="block">
@@ -75,10 +76,12 @@ export function HubungiForm() {
           <input
             type="email"
             required
+            autoComplete="email"
+            inputMode="email"
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
             className={`${inputCls} mt-1.5`}
-            placeholder="kamu@email.com"
+            placeholder="kamu@email.com…"
           />
         </label>
       </div>
@@ -115,7 +118,7 @@ export function HubungiForm() {
       <button
         type="submit"
         disabled={status.state === "sending"}
-        className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary font-bold text-white transition hover:bg-primary-deep disabled:opacity-60 sm:w-auto sm:px-8"
+        className={`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary font-bold text-white transition hover:bg-primary-deep disabled:opacity-60 sm:w-auto sm:px-8 ${btnFocus}`}
       >
         {status.state === "sending" ? (
           <>

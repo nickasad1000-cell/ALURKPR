@@ -72,19 +72,21 @@ export function Kalkulator({
   const bank = pilihan.find((b) => b.id === bankId) ?? pilihan[0];
   const tenorEfektif = Math.min(tenor, bank.maxTenor);
   const tenorTerpotong = tenorEfektif !== tenor;
-  const dpTerlaluKecil = dpPct < bank.minDp;
+  const dpEfektif = Math.max(dpPct, bank.minDp);
+  const dpNaikkan = dpEfektif !== dpPct;
 
   const hasil = useMemo(() => {
-    const plafon = plafondMaksimal(harga, dpPct);
+    const plafon = plafondMaksimal(harga, dpEfektif);
     const angsuran = angsuranBulanan(plafon, bank.fixedRate, tenorEfektif);
     const angsuranFloating = bank.floatingRate
       ? angsuranBulanan(plafon, bank.floatingRate, tenorEfektif)
       : null;
     const total = totalPembayaran(plafon, bank.fixedRate, tenorEfektif);
     const bunga = total - plafon;
-    const biaya = biayaAwal(harga, dpPct);
+    const biaya = biayaAwal(harga, dpEfektif);
     return { plafon, angsuran, angsuranFloating, total, bunga, biaya };
-  }, [harga, dpPct, tenorEfektif, bank.fixedRate, bank.floatingRate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [harga, dpEfektif, tenorEfektif, bank.id]);
 
   const tabel = useMemo(() => {
     if (!lihatAmortisasi) return null;
@@ -164,9 +166,9 @@ export function Kalkulator({
               </button>
             ))}
           </div>
-          {dpTerlaluKecil ? (
+          {dpNaikkan ? (
             <p className="mt-2 text-xs font-semibold text-accent-ink">
-              DP minimum skema ini {bank.minDp}% — angka di bawah hanya untuk edukasi.
+              DP minimum skema ini {bank.minDp}% — dihitung pakai {dpEfektif}%.
             </p>
           ) : null}
         </div>

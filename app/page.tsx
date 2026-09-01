@@ -123,8 +123,8 @@ export default function Home() {
             </ul>
             <p className="mt-6 rounded-xl border border-line bg-surface px-4 py-3 text-sm leading-relaxed text-ink-soft">
               <span className="font-bold text-ink">Harga subsidi berganti tiap tahun kalender.</span>{" "}
-              Batas FLPP saat ini <span className="font-bold text-primary">Rp 166 jt</span> —
-              cocokkan dulu dengan budget-mu sebelum memilih rumah.
+              Batas FLPP saat ini <span className="font-bold text-primary">Rp166–240 jt</span>{" "}
+              (bervariasi sesuai zona / wilayah) — cocokkan dulu dengan budget-mu sebelum memilih rumah.
             </p>
           </div>
 
@@ -250,7 +250,7 @@ export default function Home() {
       </section>
 
       {/* Profil Kamu */}
-      <section className="mt-20 sm:mt-24">
+      <section className="mt-20 sm:mt-28">
         <Container>
           <div className="grid gap-10 rounded-[2.5rem] border border-line bg-surface p-7 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
@@ -282,7 +282,7 @@ export default function Home() {
       </section>
 
       {/* Alat perencanaan */}
-      <section className="mt-20 sm:mt-24">
+      <section className="mt-20 sm:mt-28">
         <Container>
           <SectionHeading
             eyebrow="Alat perencanaan gratis"
@@ -346,14 +346,14 @@ export default function Home() {
       <AlurJalur />
 
       {/* Demografis & fakta KPR */}
-      <section className="mt-20 sm:mt-24">
+      <section className="mt-20 sm:mt-28">
         <Container>
           <BlokDemografis />
         </Container>
       </section>
 
       {/* Artikel unggulan */}
-      <section className="mt-20 sm:mt-24">
+      <section className="mt-20 sm:mt-28">
         <Container>
           <SectionHeading
             eyebrow="Baca selanjutnya"
@@ -386,7 +386,7 @@ export default function Home() {
       </section>
 
       {/* CTA banner */}
-      <section className="mt-20 sm:mt-24">
+      <section className="mt-20 sm:mt-28">
         <Container>
           <div className="relative overflow-hidden rounded-[2.5rem] bg-primary-deep px-7 py-14 text-white sm:px-14">
             <div

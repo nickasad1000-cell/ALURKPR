@@ -10,6 +10,19 @@ export function formatRupiah(n: number): string {
   return formatterRupiah.format(Math.round(n));
 }
 
+/**
+ * Parse input angka yang mungkin memakai pemisah ribuan bergaya Indonesia
+ * ("8.000.000"), spasi, atau format mata uang ("Rp 8.000.000"). Mengembalikan
+ * angka asli, atau `fallback` bila rupanya tidak valid.
+ */
+export function parseNumberId(input: string, fallback = 0): number {
+  const cleaned = String(input).trim().replace(/[^\d.,-]/g, "");
+  if (!cleaned) return fallback;
+  const normalized = cleaned.replace(/\./g, "").replace(",", ".");
+  const n = Number(normalized);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 /** Plafon pinjaman = harga rumah dikurangi uang muka. */
 export function plafondMaksimal(harga: number, dpPercent: number): number {
   return Math.round(harga * (1 - dpPercent / 100));

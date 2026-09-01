@@ -1,10 +1,7 @@
 import type { MetadataRoute } from "next";
-import { SITE_ORIGIN } from "@/lib/site";
+import { SITE_ORIGIN, RIVISI } from "@/lib/site";
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
-
-// Tanggal revisi konten terakhir (konstan, bukan timestamp build agar sitemap stabil).
-const RIVISI = "2026-08-30";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const statis = [
