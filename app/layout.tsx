@@ -33,14 +33,12 @@ export const metadata: Metadata = {
     locale: "id_ID",
     siteName: "AlurKPR",
     url: "/",
-    images: [{ url: "/logo.png", width: 635, height: 635, alt: "Logo AlurKPR" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "AlurKPR — Panduan KPR Rumah Pertama dari A sampai Z",
     description:
       "Panduan langkah demi langkah mengurus KPR subsidi & komersial di Indonesia: simulasi angsuran, cek kelayakan FLPP, perbandingan bank, biaya awal, FAQ dan glosarium.",
-    images: ["/logo.png"],
   },
 };
 

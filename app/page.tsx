@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const HERO_HARGA = 240_000_000;
-const HERO_DP = 10;
+const HERO_HARGA = 166_000_000;
+const HERO_DP = 1;
 const HERO_TENOR = 20;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
 const heroAngsuran = angsuranBulanan(heroPlafon, 5, HERO_TENOR);

@@ -32,7 +32,7 @@ export function RentVsBeli() {
   const hasil = useMemo(() => {
     const awal = biayaAwal(hargaN, dp);
     const angsuran = angsuranBulanan(hargaN - awal.dp, bunga, tenor);
-    const impas = tahunImpas(awal.total, angsuran, sewaN, kenaikan);
+    const impas = tahunImpas(awal.total, angsuran, sewaN, kenaikan, 30);
     const titik = TAHUN_TITIK.map((t) => ({
       tahun: t,
       beli: biayaBeliKumulatif(awal.total, angsuran, t),
