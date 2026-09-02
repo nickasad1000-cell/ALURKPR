@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, Info, PiggyBank, Wallet } from "lucide-react";
+import { CalendarDays, Check, Info, PiggyBank, Wallet } from "lucide-react";
 import Link from "next/link";
 import {
   bulanUntukMenabung,
@@ -60,13 +60,19 @@ export function PlannerDp() {
       <div className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
         <h2 className="font-display text-lg font-semibold">Atur target DP-mu</h2>
 
-        <div className="mt-5 grid grid-cols-2 gap-2 rounded-2xl bg-paper p-1.5">
+        <div
+          className="mt-5 grid grid-cols-2 gap-1 rounded-2xl border border-line bg-paper p-1"
+          role="group"
+          aria-label="Mode planner DP"
+        >
           <button
             type="button"
             onClick={() => setMode("lama")}
             aria-pressed={mode === "lama"}
-            className={`rounded-xl px-3 py-2 text-xs font-bold transition ${
-              mode === "lama" ? "bg-primary text-white shadow-sm" : "text-ink-soft hover:text-ink"
+            className={`min-h-10 rounded-xl px-3 text-sm font-bold transition ${
+              mode === "lama"
+                ? "bg-primary text-white shadow-sm"
+                : "text-ink-soft hover:bg-paper hover:text-ink"
             }`}
           >
             Berapa lama?
@@ -75,8 +81,10 @@ export function PlannerDp() {
             type="button"
             onClick={() => setMode("bulanan")}
             aria-pressed={mode === "bulanan"}
-            className={`rounded-xl px-3 py-2 text-xs font-bold transition ${
-              mode === "bulanan" ? "bg-primary text-white shadow-sm" : "text-ink-soft hover:text-ink"
+            className={`min-h-10 rounded-xl px-3 text-sm font-bold transition ${
+              mode === "bulanan"
+                ? "bg-primary text-white shadow-sm"
+                : "text-ink-soft hover:bg-paper hover:text-ink"
             }`}
           >
             Berapa sebulan?
@@ -209,7 +217,7 @@ export function PlannerDp() {
 
           {tercapai ? (
             <p className="mt-3 flex items-start gap-2 rounded-2xl bg-primary-soft/60 p-4 text-xs leading-relaxed text-ink-soft">
-              <CheckIcon />
+              <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               Tabungan awalmu sudah mencukupi DP — bisa langsung lanjut ke simulasi angsuran.
             </p>
           ) : (
@@ -261,27 +269,12 @@ export function PlannerDp() {
           <div className="mt-3">
             <WhatsAppButton
               source="planner-dp"
-              label="Tanya tentang target hinggap"
+              label="Tanya tentang target DP"
               pesan={`Halo, saya pakai planner DP di AlurKPR: target harga ${formatRupiah(hargaN)}, DP ${dpPersen}%. Saya ingin konsultasi lanjutan.`}
             />
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      className="mt-0.5 size-4 shrink-0 text-primary"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l3 3 6-6" />
-    </svg>
   );
 }

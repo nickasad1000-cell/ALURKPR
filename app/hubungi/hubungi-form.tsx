@@ -103,7 +103,7 @@ export function HubungiForm() {
           required
           checked={form.consent}
           onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
-          className="mt-0.5 size-4 accent-[var(--color-primary)]"
+          className="mt-0.5 size-4 accent-primary"
         />
         <span className="text-xs leading-relaxed text-ink-soft">
           Saya setuju data nama, email, dan isi pesan diproses untuk membalas

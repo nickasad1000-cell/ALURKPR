@@ -189,7 +189,7 @@ export function ChecklistDokumen() {
                             name={item.label}
                             checked={checked}
                             onChange={(e) => ubah(item, e.target.checked)}
-                            className="mt-1 size-4 accent-[var(--color-primary)]"
+                            className="mt-1 size-4 accent-primary"
                           />
                           <span
                             className={`text-sm leading-relaxed ${

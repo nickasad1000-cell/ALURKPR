@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function HubungiPage() {
   return (
-    <section className="py-14 sm:py-20">
-      <Container>
+    <section className="border-b border-line bg-surface">
+      <Container className="py-14 sm:py-20">
         <SectionHeading
           as="h1"
           eyebrow="Hubungi kami"

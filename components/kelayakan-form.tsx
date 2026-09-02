@@ -7,7 +7,7 @@ import { cekKelayakan } from "@/lib/eligibility";
 import { parseNumberId } from "@/lib/finance";
 import type { KelayakanResult } from "@/lib/types";
 import { track } from "@/lib/analytics";
-import { inputCls, btnPrimary, btnFocus } from "./ui";
+import { inputCls, btnPrimary } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 export function KelayakanForm() {
@@ -120,7 +120,7 @@ export function KelayakanForm() {
 
       <button
         type="submit"
-        className={`mt-7 inline-flex h-12 w-full items-center justify-center rounded-full bg-primary font-bold text-white transition hover:bg-primary-deep ${btnFocus}`}
+        className={`mt-7 ${btnPrimary} w-full`}
       >
         Periksa kelayakan
       </button>
