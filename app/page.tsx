@@ -199,8 +199,7 @@ export default function Home() {
                 </span>{" "}
                 <span className="font-semibold text-primary-deep">
                   cukup siapkan biaya booking ±Rp100 ribu
-                </span>{" "}
-                — DP & biaya lain bisa diakad belakangan.
+                </span>
               </p>
               <Link
                 href="/kalkulator"

@@ -14,10 +14,10 @@ const kolomPanduan = [
 ];
 
 const kolomAlat = [
-  { href: "/profil-kamu", label: "Profil Kamu · rekomendasi" },
+  { href: "/profil-kamu", label: "Profil Kamu" },
   { href: "/kalkulator", label: "Kalkulator KPR" },
-  { href: "/mampu-beli", label: "Kemampuan beli rumah" },
-  { href: "/planner-dp", label: "Planner tabungan DP" },
+  { href: "/mampu-beli", label: "Kemampuan beli" },
+  { href: "/planner-dp", label: "Planner DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/checklist", label: "Checklist dokumen" },
@@ -38,7 +38,7 @@ export function Footer() {
   return (
     <footer className="mt-28 border-t border-line bg-surface">
       <Container className="py-14">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1.5fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">

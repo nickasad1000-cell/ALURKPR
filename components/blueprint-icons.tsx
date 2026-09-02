@@ -24,14 +24,12 @@ export function IconKompas(props: IconProps) {
   );
 }
 
-/** Tahap 2 — Rumah dalam kaca pembesar (riset rumah & lokasi) */
+/** Tahap 2 — Penanda lokasi (riset rumah & lokasi) */
 export function IconRisetRumah(props: IconProps) {
   return (
     <svg {...base} {...props}>
-      <circle cx="14" cy="14" r="7" />
-      <path d="M19.3 19.3 25.5 25.5" />
-      <path d="M10.5 15.6 14 12.4l3.5 3.2" />
-      <path d="M11.5 15v3.4h5v-3.4" />
+      <path d="M16 26.5c4.4-6.2 6.6-9.6 6.6-13.4a6.6 6.6 0 1 0-13.2 0c0 3.8 2.2 7.2 6.6 13.4Z" />
+      <path d="M12.6 12.6a3.4 3.4 0 1 0 6.8 0 3.4 3.4 0 0 0-6.8 0Z" />
     </svg>
   );
 }
@@ -75,15 +73,15 @@ export function IconBerkas(props: IconProps) {
   );
 }
 
-/** Tahap 6 — Grafik batang dalam kaca pembesar (analisis & appraisal) */
+/** Tahap 6 — Grafik analisis & appraisal properti */
 export function IconAppraisal(props: IconProps) {
   return (
     <svg {...base} {...props}>
-      <circle cx="14" cy="14" r="7" />
-      <path d="M19.3 19.3 25.5 25.5" />
-      <path d="M11.2 17.5v-2.6" />
-      <path d="M14 17.5v-6" />
-      <path d="M16.8 17.5v-3.8" />
+      <path d="M6 4v22h21" />
+      <path d="M11 21.5v-6" />
+      <path d="M15.5 21.5v-10" />
+      <path d="M20 21.5v-4" />
+      <path d="M8 11l5.5-3.5 4 4L23 7" />
     </svg>
   );
 }
