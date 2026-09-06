@@ -19,7 +19,8 @@ function Crosshair({ className = "" }: { className?: string }) {
 
 export function AlurJalur() {
   return (
-    <section className="relative mt-20 overflow-hidden sm:mt-28">
+    <section className="relative mt-20 sm:mt-28">
+
       {/* Tekstur grid blueprint */}
       <div
         aria-hidden="true"

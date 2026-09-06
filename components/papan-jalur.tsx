@@ -248,25 +248,25 @@ export function PapanJalur() {
   return (
     <div>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-        <p
-          role="status"
-          aria-live="polite"
-          className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft"
-        >
-          {selesai ? (
-            <>
-              Garis akhir —{" "}
-              <span className="font-bold text-accent-ink">kunci di tangan</span>
-            </>
-          ) : (
-            <>
-              {berjalan ? "Putaran otomatis —" : "Jelajah manual —"}{" "}
-              <span className="font-bold text-primary">
-                Tahap {pad(kunci + 1)} dari {TOTAL}
-              </span>
-            </>
-          )}
-        </p>
+<div
+  role="status"
+  aria-live="polite"
+  className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-soft break-words whitespace-normal"
+>
+  {selesai ? (
+    <>
+      Garis akhir —{" "}
+      <span className="font-bold text-accent-ink">kunci di tangan</span>
+    </>
+  ) : (
+    <>
+      {berjalan ? "Putaran otomatis —" : "Jelajah manual —"}{" "}
+      <span className="font-bold text-primary">
+        Tahap {pad(kunci + 1)} dari {TOTAL}
+      </span>
+    </>
+  )}
+</div>
         <div className="flex flex-wrap items-center gap-2">
           {!reduce && (
             <button
@@ -345,44 +345,45 @@ export function PapanJalur() {
       </ol>
 
       <div className="relative">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 hidden lg:block"
-        >
-          <svg
-            className="h-full w-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <polyline
-              points={POLYLINE}
-              fill="none"
-              vectorEffect="non-scaling-stroke"
-              strokeDasharray="2 6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.25}
-              className="stroke-primary/15"
-            />
-            <polyline
-              points={POLYLINE}
-              fill="none"
-              vectorEffect="non-scaling-stroke"
-              pathLength={1}
-              strokeDasharray="1"
-              strokeDashoffset={1 - progres}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2.5}
-              className="stroke-primary"
-              style={{
-                transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
-              }}
-            />
-          </svg>
-        </div>
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute inset-0 overflow-visible hidden lg:block"
+>
+  <svg
+    className="h-full w-full"
+    viewBox="-5 -5 110 110"
+    preserveAspectRatio="none"
+  >
+    <polyline
+      points={POLYLINE}
+      fill="none"
+      vectorEffect="non-scaling-stroke"
+      strokeDasharray="2 6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.25}
+      className="stroke-primary/15"
+    />
+    <polyline
+      points={POLYLINE}
+      fill="none"
+      vectorEffect="non-scaling-stroke"
+      pathLength={1}
+      strokeDasharray="1"
+      strokeDashoffset={1 - progres}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2.5}
+      className="stroke-primary"
+      style={{
+        transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
+      }}
+    />
+  </svg>
+</div>
 
-        {!tokenTersembunyi && (
+
+        {false && (
           <motion.div
             aria-hidden="true"
             className="pointer-events-none absolute z-20 hidden lg:block"
