@@ -40,7 +40,7 @@ export default function TentangPage() {
         <Container className="py-14 sm:py-20">
           <Eyebrow>Tentang kami</Eyebrow>
           <h1 className="mt-4 max-w-3xl font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-5xl">
-            Panduan alur KPR: dari cek keuangan sampai kunci rumah.
+            Panduan alur KPR: dari cek keuangan sampai terima kunci rumah.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
             Banyak orang gagal beli rumah karena nggak paham urutannya. AlurKPR
