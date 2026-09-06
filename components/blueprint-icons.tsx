@@ -124,8 +124,8 @@ export const TAHAP_ICONS = [
 type RampTahap = { bg: string; icon: string };
 
 const RAMP_TAHAP: RampTahap[] = [
-  { bg: "from-paper to-line", icon: "text-ink-soft" },
-  { bg: "from-paper to-line", icon: "text-ink-soft" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
+  { bg: "from-primary-soft to-primary", icon: "text-white" },
   { bg: "from-primary-soft to-primary", icon: "text-white" },
   { bg: "from-primary-soft to-primary", icon: "text-white" },
   { bg: "from-primary-soft to-primary", icon: "text-white" },
