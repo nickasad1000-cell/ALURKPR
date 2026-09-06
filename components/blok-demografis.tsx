@@ -114,20 +114,20 @@ export function BlokDemografis() {
 
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-            Demografis & fakta
-          </p>
-          <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Sekilas profil dan aturan KPR
-          </h2>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
+              Demografis & fakta
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              Ringkasan Aturan KPR
+            </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
             Ringkasan angka yang berlaku umum di lapangan — cocokkan dengan
             kondisi dan skema pilihanmu.
           </p>
         </div>
         <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft/70 sm:block">
-          <p>Spec Sheet</p>
-          <p>Dwg No. KPR-DS</p>
+          <p>Referensi cepat</p>
+          <p>Ringkasan</p>
         </div>
       </div>
 

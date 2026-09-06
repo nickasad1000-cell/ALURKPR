@@ -64,7 +64,7 @@ export function Footer() {
 
           {[
             { judul: "Panduan", items: kolomPanduan },
-            { judul: "Alat & referensi", items: kolomAlat },
+            { judul: "Alat", items: kolomAlat },
             { judul: "Informasi", items: kolomInfo },
           ].map((kol) => (
             <nav key={kol.judul} aria-label={kol.judul}>

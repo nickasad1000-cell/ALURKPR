@@ -8,31 +8,26 @@ import { Logo } from "./logo";
 import { btnFocus } from "./ui";
 
 const nav = [
-  { href: "/profil-kamu", label: "Rekomendasi Skema" },
   { href: "/panduan", label: "Panduan" },
-  { href: "/kalkulator", label: "Kalkulator" },
-  { href: "/syarat", label: "Syarat & Bank" },
+  { href: "/tentang", label: "Tentang" },
+  { href: "/hubungi", label: "Hubungi" },
 ];
 
-// Referensi hukum & istilah — dilipat agar nav utama tidak terlalu penuh.
-const referensiNav = [
-  { href: "/glosarium", label: "Glosarium" },
-  { href: "/faq", label: "FAQ" },
-];
-
-// Kumpulan alat pendamping (bukan halaman utama). Kontak sengaja tidak
-// ditaruh di sini — "Hubungi kami" hidup di footer & menu mobile tersendiri.
-const toolNav = [
+const alatNav = [
+  { href: "/profil-kamu", label: "Profil Kamu" },
+  { href: "/kalkulator", label: "Kalkulator KPR" },
   { href: "/mampu-beli", label: "Kemampuan beli" },
   { href: "/planner-dp", label: "Rencana tabung DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/checklist", label: "Checklist dokumen" },
+  { href: "/glosarium", label: "Glosarium" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [buka, setBuka] = useState<"alat" | "referensi" | null>(null);
+  const [buka, setBuka] = useState<"alat" | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,49 +86,40 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <div ref={dropdownRef} className="relative flex items-center gap-0.5">
-            {(
-              [
-                { id: "referensi", label: "Referensi", items: referensiNav, ariaLabel: "Referensi — FAQ dan glosarium" },
-                { id: "alat", label: "Alat & Simulasi", items: toolNav, ariaLabel: "Alat dan simulasi KPR" },
-              ] as const
-            ).map((m) => (
-              <div key={m.id} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setBuka((v) => (v === m.id ? null : m.id))}
-                  aria-expanded={buka === m.id}
-                  aria-haspopup="menu"
-                  className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-[background-color,color] ${btnFocus} ${
-                    buka === m.id ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
-                  }`}
-                >
-                  {m.label}
-                  <ChevronDown
-                    className={`size-4 transition-transform ${buka === m.id ? "rotate-180" : ""}`}
-                    aria-hidden="true"
-                  />
-                </button>
-                {buka === m.id ? (
-                  <div
-                    role="group"
-                    aria-label={m.ariaLabel}
-                    className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-ink/5"
+          <div ref={dropdownRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setBuka((v) => (v === "alat" ? null : "alat"))}
+              aria-expanded={buka === "alat"}
+              aria-haspopup="menu"
+              className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-[background-color,color] ${btnFocus} ${
+                buka === "alat" ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
+              }`}
+            >
+              Alat
+              <ChevronDown
+                className={`size-4 transition-transform ${buka === "alat" ? "rotate-180" : ""}`}
+                aria-hidden="true"
+              />
+            </button>
+            {buka === "alat" ? (
+              <div
+                role="menu"
+                aria-label="Alat dan referensi KPR"
+                className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-ink/5"
+              >
+                {alatNav.map((t) => (
+                  <Link
+                    key={t.href}
+                    href={t.href}
+                    onClick={() => setBuka(null)}
+                    className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-primary-soft hover:text-primary-deep"
                   >
-                    {m.items.map((t) => (
-                      <Link
-                        key={t.href}
-                        href={t.href}
-                        onClick={() => setBuka(null)}
-                        className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-primary-soft hover:text-primary-deep"
-                      >
-                        {t.label}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
+                    {t.label}
+                  </Link>
+                ))}
               </div>
-            ))}
+            ) : null}
           </div>
           <Link
             href="/syarat"
@@ -180,27 +166,9 @@ export function Header() {
               </Link>
             ))}
             <p className="mt-3 px-4 pt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              Referensi
+              Alat & Referensi
             </p>
-            {referensiNav.map((r) => (
-              <Link
-                key={r.href}
-                href={r.href}
-                onClick={() => setOpen(false)}
-                aria-current={isActive(r.href) ? "page" : undefined}
-                className={`rounded-xl px-4 py-3 text-sm font-semibold ${btnFocus} ${
-                  isActive(r.href)
-                    ? "bg-primary-soft text-primary-deep"
-                    : "text-ink-soft hover:bg-surface hover:text-ink"
-                }`}
-              >
-                {r.label}
-              </Link>
-            ))}
-            <p className="mt-3 px-4 pt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              Alat & Simulasi
-            </p>
-            {toolNav.map((t) => (
+            {alatNav.map((t) => (
               <Link
                 key={t.href}
                 href={t.href}
@@ -210,13 +178,6 @@ export function Header() {
                 {t.label}
               </Link>
             ))}
-            <Link
-              href="/hubungi"
-              onClick={() => setOpen(false)}
-              className={`rounded-xl px-4 py-3 text-sm font-semibold ${btnFocus} text-ink-soft hover:bg-surface hover:text-ink`}
-            >
-              Hubungi kami
-            </Link>
             <Link
               href="/syarat"
               onClick={() => setOpen(false)}

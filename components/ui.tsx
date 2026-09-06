@@ -71,6 +71,9 @@ export const btnPrimary =
 export const btnSecondary =
   `inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line bg-surface px-6 text-sm font-bold text-ink transition-[border-color,color,transform] hover:border-primary/40 hover:text-primary active:scale-[0.98] ${btnFocus}`;
 
+export const btnTertiary =
+  `inline-flex items-center gap-1 text-sm font-bold text-ink-soft underline-offset-4 transition hover:text-primary hover:underline ${btnFocus}`;
+
 export const inputCls =
   `w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-sm text-ink transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 ${btnFocus}`;
 

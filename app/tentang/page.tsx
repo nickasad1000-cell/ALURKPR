@@ -40,14 +40,13 @@ export default function TentangPage() {
         <Container className="py-14 sm:py-20">
           <Eyebrow>Tentang kami</Eyebrow>
           <h1 className="mt-4 max-w-3xl font-display text-3xl font-semibold leading-tight tracking-tight text-balance sm:text-5xl">
-            Membeli rumah pertama seharusnya terasa seperti langkah yang
-            dimengerti, bukan lompatan gelap.
+            Panduan alur KPR: dari cek keuangan sampai kunci rumah.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
-            AlurKPR lahir dari satu kenyataan: banyak calon pemilik rumah gagal
-            bukan karena tidak mampu, tapi karena tidak tahu urutannya. Situs ini
-            menyusun alur itu — dari cek keuangan sampai kunci di tangan — agar
-            setiap orang bisa merencanakannya dengan angka yang jujur di tangan.
+            Banyak orang gagal beli rumah karena nggak paham urutannya. AlurKPR
+            susun langkah-langkahnya — hitung kemampuan, cek subsidi, bandingkan
+            bank, sampai akad dan serah terima. Angka yang dipakai jelas, tanpa
+            embel-embel.
           </p>
         </Container>
       </section>

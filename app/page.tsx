@@ -15,7 +15,7 @@ import {
   angsuranBulanan,
   formatRupiah,
 } from "@/lib/finance";
-import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/components/ui";
+import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary, btnTertiary } from "@/components/ui";
 import { ProfilKamu } from "@/components/profil-kamu";
 import { AlurJalur } from "@/components/alur-jalur";
 import { BlokDemografis } from "@/components/blok-demografis";
@@ -76,14 +76,24 @@ export default function Home() {
           }}
         />
         <Container className="relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-bold text-ink-soft">
-              <span className="size-2 rounded-full bg-primary" aria-hidden="true" />
-              Edukasi KPR Indonesia · data indikatif 2026
-            </span>
-            <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              Rumah pertama itu mungkin, kalau alurnya kamu pahami dulu.
-            </h1>
+            <div>
+              <div className="mb-4 flex items-center gap-2" aria-hidden="true">
+                <svg viewBox="0 0 80 60" className="h-12 w-auto text-primary/40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 35 L40 10 L75 35" />
+                  <path d="M15 30 V55 H65 V30" />
+                  <path d="M35 55 V40 H45 V55" />
+                  <path d="M25 38 H33 V46 H25 Z" />
+                  <path d="M47 38 H55 V46 H47 Z" />
+                  <path d="M5 55 H75" strokeDasharray="4 3" />
+                </svg>
+                <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-bold text-ink-soft">
+                  <span className="size-2 rounded-full bg-primary" aria-hidden="true" />
+                  Edukasi KPR Indonesia · data indikatif 2026
+                </span>
+              </div>
+              <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+                Rumah pertama itu mungkin, kalau alurnya kamu pahami dulu.
+              </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
               Hitung angsuran, cek kelayakan subsidi, dan bandingkan skema KPR
               lebih dulu — sebelum janjian ke bank. Langkah demi langkah, dalam
@@ -99,7 +109,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/panduan/tahap-1-cek-keuangan-dan-kelayakan"
-                className="inline-flex items-center gap-1 text-sm font-bold text-ink-soft underline-offset-4 transition hover:text-primary hover:underline"
+                className={btnTertiary}
               >
                 Baru mulai dari nol? Baca Tahap 1 dulu
               </Link>

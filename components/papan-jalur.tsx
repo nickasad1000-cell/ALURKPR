@@ -425,6 +425,15 @@ export function PapanJalur() {
           ))}
         </div>
         </MotionConfig>
+        {/* Progress dots untuk mobile */}
+        <div className="mt-6 flex justify-center gap-2 lg:hidden" aria-hidden="true">
+          {tahapKpr.map((_, i) => (
+            <span
+              key={i}
+              className={`h-2 w-2 rounded-full transition-colors ${i === kunci ? 'bg-primary' : 'bg-line'}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
