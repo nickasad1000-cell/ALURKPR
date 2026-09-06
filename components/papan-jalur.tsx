@@ -344,41 +344,43 @@ export function PapanJalur() {
         ))}
       </ol>
 
-      <div className="relative">
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 hidden lg:block"
+      <div className="relative min-h-[420px] lg:min-h-[520px]">
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute inset-0 overflow-visible hidden lg:block"
+>
+  <svg
+    className="h-full w-full"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="xMidYMid meet"
   >
-    <svg
-      className="h-full w-full"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      <polyline
-        points={POLYLINE}
-        fill="none"
-        strokeDasharray="4 6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        className="stroke-primary/20"
-      />
-      <polyline
-        points={POLYLINE}
-        fill="none"
-        pathLength={1}
-        strokeDasharray="1"
-        strokeDashoffset={1 - progres}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={3}
-        className="stroke-primary"
-        style={{
-          transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
-        }}
-      />
-    </svg>
-  </div>
+    <polyline
+      points={POLYLINE}
+      fill="none"
+      strokeDasharray="4 6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      className="stroke-primary/30"
+      vectorEffect="non-scaling-stroke"
+    />
+    <polyline
+      points={POLYLINE}
+      fill="none"
+      pathLength={1}
+      strokeDasharray="1"
+      strokeDashoffset={1 - progres}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={4}
+      className="stroke-primary"
+      style={{
+        transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
+      }}
+      vectorEffect="non-scaling-stroke"
+    />
+  </svg>
+</div>
 
 
 
