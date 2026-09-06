@@ -23,6 +23,8 @@
   --color-accent-soft: #f3e8cd;
   --color-line: #e5dccb;
   --color-danger: #b4443c;
+  --color-wa: #1a7a42;
+  --color-wa-deep: #156535;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);

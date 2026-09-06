@@ -150,12 +150,17 @@ export function ProfilKamu() {
   }, [step]);
 
   const pilih = (k: keyof Profil, v: string) => {
-    setProfil((prev) => ({ ...prev, [k]: v }));
+    const nextProfil = { ...profil, [k]: v } as Profil;
+    setProfil(nextProfil);
     if (step < stepCount - 1) {
       setStep((s) => s + 1);
     } else {
       setStep(stepCount);
-      track("profil_completed", { skema: v });
+      // Catat hasil rekomendasinya (bukan jawaban pertanyaan terakhir),
+      // tanpa mengirim detail profil ke analytics.
+      track("profil_completed", {
+        rekomendasi: buildRekomendasi(nextProfil).ringkas,
+      });
     }
   };
 

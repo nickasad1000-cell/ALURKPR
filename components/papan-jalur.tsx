@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, MotionConfig, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
@@ -10,6 +10,8 @@ import {
   Check,
   ChevronDown,
   Clock,
+  Pause,
+  Play,
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { PelatTahap } from "@/components/blueprint-icons";
@@ -82,7 +84,7 @@ function Tile({
         <Tanda className="bottom-2 right-2" />
 
         {aktif && !buka ? (
-          <span className="absolute right-2 top-2 z-10 hidden rounded-sm bg-accent px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-white sm:inline-block">
+          <span className="absolute right-2 top-2 z-10 inline-block rounded-sm bg-accent px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-white">
             kamu&nbsp;di&nbsp;sini
           </span>
         ) : null}
@@ -189,14 +191,29 @@ export function PapanJalur() {
   const reduce = useReducedMotion();
   const [kunci, setKunci] = useState(0);
   const [terbuka, setTerbuka] = useState<ReadonlySet<number>>(new Set());
+  // Putar otomatis dimatikan total untuk pengguna reduced-motion; kontrol
+  // jeda/lanjut eksplisit memenuhi WCAG 2.2.2 (konten bergerak > 5 detik).
+  const [jeda, setJeda] = useState(false);
+  const [tersembunyi, setTersembunyi] = useState(false);
+  const stepperRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    if (terbuka.size > 0) return;
+    const onVis = () => setTersembunyi(document.hidden);
+    onVis();
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  const berjalan =
+    !jeda && !reduce && !tersembunyi && terbuka.size === 0;
+
+  useEffect(() => {
+    if (!berjalan) return;
     const id = window.setTimeout(() => {
       setKunci((k) => (k + 1) % TOTAL);
-    }, reduce ? 4000 : DELAY_AUTO);
+    }, DELAY_AUTO);
     return () => window.clearTimeout(id);
-  }, [kunci, terbuka.size, reduce]);
+  }, [kunci, berjalan]);
 
   const toggle = (i: number) =>
     setTerbuka((prev) => {
@@ -222,6 +239,11 @@ export function PapanJalur() {
   const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
   const selesai = kunci === TOTAL - 1;
   const tokenTersembunyi = terbuka.size > 0;
+
+  const fokuskanStepper = (i: number) => {
+    setKunci(i);
+    stepperRefs.current[i]?.focus();
+  };
 
   return (
     <div className="relative">
@@ -297,12 +319,12 @@ export function PapanJalur() {
         >
           {selesai ? (
             <>
-              Finish —{" "}
+              Garis akhir —{" "}
               <span className="font-bold text-accent">kunci di tangan</span>
             </>
           ) : (
             <>
-              Loop otomatis —{" "}
+              {berjalan ? "Putaran otomatis —" : "Jelajah manual —"}{" "}
               <span className="font-bold text-primary">
                 Tahap {pad(kunci + 1)} dari {TOTAL}
               </span>
@@ -310,6 +332,22 @@ export function PapanJalur() {
           )}
         </p>
         <div className="flex flex-wrap items-center gap-2">
+          {!reduce && (
+            <button
+              type="button"
+              className={navBtn}
+              onClick={() => setJeda((j) => !j)}
+              aria-pressed={jeda}
+              aria-label={jeda ? "Lanjutkan putaran otomatis papan jalur" : "Jeda putaran otomatis papan jalur"}
+            >
+              {jeda ? (
+                <Play className="size-4" aria-hidden="true" />
+              ) : (
+                <Pause className="size-4" aria-hidden="true" />
+              )}
+              <span className="hidden sm:inline">{jeda ? "Lanjut" : "Jeda"}</span>
+            </button>
+          )}
           <button
             type="button"
             className={navBtn}
@@ -331,18 +369,31 @@ export function PapanJalur() {
         </div>
       </div>
 
-      <ol className="mb-6 flex items-center gap-1" aria-label="Tahapan KPR">
+      <ol className="mb-6 flex items-center gap-1" aria-label="Navigasi tahapan KPR">
         {tahapKpr.map((t, i) => (
           <li key={t.nomor} className="flex items-center gap-1">
             <button
+              ref={(el) => {
+                stepperRefs.current[i] = el;
+              }}
               type="button"
               onClick={() => {
                 setKunci(i);
                 setTerbuka(new Set());
               }}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight") {
+                  e.preventDefault();
+                  fokuskanStepper((i + 1) % TOTAL);
+                } else if (e.key === "ArrowLeft") {
+                  e.preventDefault();
+                  fokuskanStepper((i - 1 + TOTAL) % TOTAL);
+                }
+              }}
+              tabIndex={kunci === i ? 0 : -1}
               aria-current={kunci === i ? "step" : undefined}
               aria-label={`Menuju tahap ${t.nomor}: ${t.judulSingkat}`}
-              className={`grid size-8 place-items-center rounded-[2px] border font-mono text-[10px] font-bold transition-colors sm:size-9 ${
+              className={`grid size-8 place-items-center rounded-[2px] border font-mono text-[10px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:size-9 ${
                 kunci === i
                   ? "border-primary bg-primary text-white shadow-sm"
                   : "border-line bg-paper text-ink-soft hover:border-primary/40 hover:text-primary"
@@ -358,18 +409,7 @@ export function PapanJalur() {
       </ol>
 
       <MotionConfig reducedMotion="user">
-        <div
-          className="grid grid-cols-1 gap-y-2 gap-x-6 lg:grid-cols-2 lg:gap-y-4"
-          onKeyDown={(e) => {
-            if (e.key === "ArrowRight") {
-              e.preventDefault();
-              pindah(1);
-            } else if (e.key === "ArrowLeft") {
-              e.preventDefault();
-              pindah(-1);
-            }
-          }}
-        >
+        <div className="grid grid-cols-1 gap-y-2 gap-x-6 lg:grid-cols-2 lg:gap-y-4">
           {tahapKpr.map((t, i) => (
             <Tile
               key={t.nomor}

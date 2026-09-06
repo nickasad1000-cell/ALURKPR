@@ -3,41 +3,51 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
-import { cekKelayakan } from "@/lib/eligibility";
-import { parseNumberId } from "@/lib/finance";
+import { cekKelayakan, OPSI_ZONA } from "@/lib/eligibility";
+import { formatAngkaId, parseNumberId } from "@/lib/finance";
 import type { KelayakanResult } from "@/lib/types";
 import { track } from "@/lib/analytics";
 import { inputCls, btnPrimary } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 export function KelayakanForm() {
-  const [penghasilan, setPenghasilan] = useState("5000000");
-  const [hargaUnit, setHargaUnit] = useState("150000000");
+  const [penghasilan, setPenghasilan] = useState("5.000.000");
+  const [hargaUnit, setHargaUnit] = useState("150.000.000");
+  const [zona, setZona] = useState<1 | 2 | 3 | 4>(1);
   const [dewasaAtauMenikah, setDewasaAtauMenikah] = useState(false);
   const [belumPunyaRumah, setBelumPunyaRumah] = useState(false);
   const [belumPernahSubsidi, setBelumPernahSubsidi] = useState(false);
   const [hasil, setHasil] = useState<KelayakanResult | null>(null);
+  const [errorInput, setErrorInput] = useState<string | null>(null);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const penghasilanN = parseNumberId(penghasilan);
+    const hargaN = parseNumberId(hargaUnit);
+    if (penghasilanN <= 0 || hargaN <= 0) {
+      setHasil(null);
+      setErrorInput("Isi penghasilan dan harga unit dengan angka lebih dari nol dulu, ya.");
+      return;
+    }
+    setErrorInput(null);
     const res = cekKelayakan({
-      penghasilan: parseNumberId(penghasilan),
-      hargaUnit: parseNumberId(hargaUnit),
+      penghasilan: penghasilanN,
+      hargaUnit: hargaN,
       dewasaAtauMenikah,
       belumPunyaRumah,
       belumPernahSubsidi,
+      zona,
     });
     setHasil(res);
-    track(res.layak ? "eligibility_passed" : "eligibility_failed", {
-      penghasilan: parseNumberId(penghasilan),
-    });
+    // Privasi: jangan kirim angka keuangan ke analytics — cukup hasil lolos/tidak.
+    track(res.layak ? "eligibility_passed" : "eligibility_failed");
   };
 
   return (
     <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Cek kelayakan KPR subsidi</h2>
       <p className="mt-1 text-sm text-ink-soft">
-        Berdasarkan aturan umum FLPP untuk rumah tapak — indikatif.
+        Mengacu aturan FLPP terbaru (Permen PKP No. 5 Tahun 2025) — indikatif.
       </p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -48,14 +58,13 @@ export function KelayakanForm() {
               Rp
             </span>
             <input
-              type="number"
-              min={0}
-              step={100000}
+              type="text"
               name="penghasilan"
               inputMode="numeric"
+              autoComplete="off"
               aria-label="Penghasilan pokok per bulan dalam Rupiah"
               value={penghasilan}
-              onChange={(e) => setPenghasilan(e.target.value)}
+              onChange={(e) => setPenghasilan(formatAngkaId(e.target.value))}
               className={`${inputCls} rounded-l-none`}
             />
           </div>
@@ -67,19 +76,38 @@ export function KelayakanForm() {
               Rp
             </span>
             <input
-              type="number"
-              min={0}
-              step={1000000}
+              type="text"
               name="harga-unit"
               inputMode="numeric"
+              autoComplete="off"
               aria-label="Harga unit rumah dalam Rupiah"
               value={hargaUnit}
-              onChange={(e) => setHargaUnit(e.target.value)}
+              onChange={(e) => setHargaUnit(formatAngkaId(e.target.value))}
               className={`${inputCls} rounded-l-none`}
             />
           </div>
         </label>
       </div>
+
+      <label className="mt-5 block">
+        <span className="text-sm font-bold">Zona lokasi rumah (aturan FLPP)</span>
+        <select
+          value={zona}
+          onChange={(e) => setZona(Number(e.target.value) as 1 | 2 | 3 | 4)}
+          className={`mt-1.5 ${inputCls}`}
+          aria-label="Zona lokasi rumah menurut aturan FLPP"
+        >
+          {OPSI_ZONA.map((z) => (
+            <option key={z.nilai} value={z.nilai}>
+              {z.label}
+            </option>
+          ))}
+        </select>
+        <span className="mt-1 block text-xs text-ink-soft">
+          Batas penghasilan MBR berbeda per zona — pemohon yang sudah menikah
+          punya batas lebih tinggi.
+        </span>
+      </label>
 
       <fieldset className="mt-6 space-y-3">
         <legend className="text-sm font-bold">Kondisi pemohon</legend>
@@ -124,6 +152,13 @@ export function KelayakanForm() {
       >
         Periksa kelayakan
       </button>
+
+      {errorInput ? (
+        <p role="alert" className="mt-3 flex items-start gap-2 rounded-xl bg-accent-soft/60 p-3 text-sm font-semibold text-accent-ink">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+          {errorInput}
+        </p>
+      ) : null}
 
       {hasil ? (
         <div role="alert" className={`mt-6 rounded-2xl border p-5 ${hasil.layak ? "border-primary/30 bg-primary-soft" : "border-accent/40 bg-accent-soft/60"}`}>
@@ -171,7 +206,7 @@ export function KelayakanForm() {
               <WhatsAppButton
                 source="eligibility_passed"
                 label="Diskusi via WhatsApp"
-                pesan={`Halo, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${Number(penghasilan).toLocaleString("id-ID")}/bln). Saya ingin konsultasi proses selanjutnya.`}
+                pesan={`Halo, saya lolos cek kelayakan subsidi di AlurKPR (penghasilan Rp${penghasilan}/bln). Saya ingin konsultasi proses selanjutnya.`}
               />
             </div>
           ) : (

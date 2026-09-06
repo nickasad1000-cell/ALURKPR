@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
-import { Container, Eyebrow, Breadcrumb } from "@/components/ui";
+import { Container, Eyebrow, Breadcrumb, DisclaimerNasihat } from "@/components/ui";
 import { SITE_ORIGIN, RIVISI } from "@/lib/site";
 
 type Params = Promise<{ slug: string }>;
@@ -144,7 +144,7 @@ function ArtikelView({ artikel }: { artikel: (typeof panduanArtikel)[number] }) 
           <AlertTriangle className="size-5 shrink-0 text-accent-ink" aria-hidden="true" />
           <span>
             Angka bunga, plafon, dan batas penghasilan dapat berubah mengikuti
-            kebijakan. Verifikasi ke Kementerian PUPR dan bank penyalur sebelum
+            kebijakan. Verifikasi ke BP Tapera dan bank penyalur sebelum
             mengajukan.
           </span>
         </div>
@@ -387,6 +387,10 @@ function TahapView({ slug }: { slug: string }) {
           </h2>
           <p className="mt-4 text-sm leading-relaxed sm:text-base">{tahap.perbedaanSubsidi}</p>
         </section>
+
+        <div className="mt-6 rounded-2xl bg-accent-soft/60 p-5">
+          <DisclaimerNasihat />
+        </div>
       </article>
 
       <section aria-labelledby="alat-bantu" className="mx-auto mt-12 max-w-3xl rounded-3xl bg-primary-soft p-7">

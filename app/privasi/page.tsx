@@ -40,7 +40,7 @@ const pokok = [
     judul: "Cookie & analitik",
     isi: [
       "Kami menggunakan Google Analytics dengan IP dianonimkan untuk memahami halaman mana yang berguna. Google memproses data ini sesuai kebijakan privasinya.",
-      "Gerakan di luar itu (preferensi tema dsb.) disimpan di perangkatmu (localStorage) dan tidak dikirim ke server.",
+      "Progres checklist dokumen disimpan hanya di perangkatmu (localStorage) dan tidak pernah dikirim ke server kami.",
     ],
   },
   {
@@ -103,7 +103,7 @@ export default function PrivasiPage() {
               <WhatsAppLink
                 source="privasi"
                 pesan="Halo, saya ingin mengajukan permintaan penghapusan data pribadi di AlurKPR. Nama saya: ..."
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1a7a42] px-5 text-sm font-bold text-white hover:bg-[#156535]"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-wa px-5 text-sm font-bold text-white hover:bg-wa-deep"
               >
                 {WHATSAPP_DISPLAY}
               </WhatsAppLink>

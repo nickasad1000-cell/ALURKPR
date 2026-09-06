@@ -59,10 +59,10 @@ export default async function SyaratPage() {
               </ul>
             </div>
             <div className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-6 text-sm leading-relaxed text-ink-soft">
-              Angka yang dipakai alat ini (batas penghasilan, harga plafon,
-              syarat MBR) bersifat indikatif dan bisa diperbarui pemerintah.
+              Angka yang dipakai alat ini mengacu aturan FLPP terbaru
+              (Permen PKP No. 5 Tahun 2025) dan bisa diperbarui pemerintah.
               Hasil di sini bukan keputusan resmi — gunakan sebagai panduan,
-              lalu konfirmasi ke bank penyalur & data Kementerian PUPR.
+              lalu konfirmasi ke bank penyalur & situs resmi BP Tapera.
               <a
                 href="/faq"
                 className="mt-3 inline-flex items-center gap-1.5 font-bold text-accent-ink"

@@ -5,6 +5,7 @@ import { CalendarDays, Check, Info, PiggyBank, Wallet } from "lucide-react";
 import Link from "next/link";
 import {
   bulanUntukMenabung,
+  formatAngkaId,
   formatRupiah,
   tabunganBulananUntuk,
   parseNumberId,
@@ -17,10 +18,10 @@ type Mode = "lama" | "bulanan";
 
 export function PlannerDp() {
   const [mode, setMode] = useState<Mode>("lama");
-  const [harga, setHarga] = useState("300000000");
+  const [harga, setHarga] = useState("300.000.000");
   const [dpPersen, setDpPersen] = useState(20);
   const [tabunganAwal, setTabunganAwal] = useState("0");
-  const [setoranBulanan, setSetoranBulanan] = useState("2500000");
+  const [setoranBulanan, setSetoranBulanan] = useState("2.500.000");
   const [jumlahBulan, setJumlahBulan] = useState("24");
 
   const hargaN = parseNumberId(harga);
@@ -44,7 +45,10 @@ export function PlannerDp() {
   }, [mode, hargaN, dpPersen, tabunganAwalN, setoranBulananN, jumlahBulanN]);
 
   useEffect(() => {
-    track("calc_result_viewed", { tool: "planner-dp" });
+    const id = window.setTimeout(() => {
+      track("calc_result_viewed", { tool: "planner-dp" });
+    }, 1500);
+    return () => window.clearTimeout(id);
   }, [hasil.targetDp, mode]);
 
   const tercapai = hasil.bulan === 0;
@@ -97,14 +101,13 @@ export function PlannerDp() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={5000000}
+                type="text"
                 name="harga-target"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Harga target rumah dalam Rupiah"
                 value={harga}
-                onChange={(e) => setHarga(e.target.value)}
+                onChange={(e) => setHarga(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>
@@ -133,14 +136,13 @@ export function PlannerDp() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={500000}
+                type="text"
                 name="tabungan-awal"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Tabungan awal dalam Rupiah"
                 value={tabunganAwal}
-                onChange={(e) => setTabunganAwal(e.target.value)}
+                onChange={(e) => setTabunganAwal(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>
@@ -152,14 +154,13 @@ export function PlannerDp() {
               <div className="mt-1.5 flex items-center">
                 <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
                 <input
-                  type="number"
-                  min={0}
-                  step={100000}
+                  type="text"
                   name="setoran-bulanan"
                   inputMode="numeric"
+                  autoComplete="off"
                   aria-label="Setoran tabungan per bulan dalam Rupiah"
                   value={setoranBulanan}
-                  onChange={(e) => setSetoranBulanan(e.target.value)}
+                  onChange={(e) => setSetoranBulanan(formatAngkaId(e.target.value))}
                   className={`${inputCls} rounded-l-none`}
                 />
               </div>
@@ -211,7 +212,11 @@ export function PlannerDp() {
               className="mt-2 font-display text-3xl font-semibold tabular-nums text-primary sm:text-4xl"
               aria-live="polite"
             >
-              {tercapai ? "Sudah tercapai" : `${formatRupiah(hasil.perBulan)}/bln`}
+              {tercapai
+                ? "Sudah tercapai"
+                : hasil.perBulan === Infinity
+                  ? "Isi target waktunya"
+                  : `${formatRupiah(hasil.perBulan)}/bln`}
             </p>
           )}
 
@@ -227,7 +232,9 @@ export function PlannerDp() {
               {mode === "lama" && hasil.bulan !== Infinity
                 ? `Kurang ${durasiTeks} dari setoran ${formatRupiah(hasil.perBulan)}/bulan.`
                 : mode === "bulanan"
-                  ? `Setor ${formatRupiah(hasil.perBulan)}/bulan selama ${jumlahBulanN} bulan.`
+                  ? hasil.perBulan === Infinity
+                    ? "Isi jumlah bulan lebih dari 0 untuk melihat setoran yang dibutuhkan."
+                    : `Setor ${formatRupiah(hasil.perBulan)}/bulan selama ${jumlahBulanN} bulan.`
                   : "Setor minimal Rp1/bulan agar ada pergerakan."}
             </p>
           )}

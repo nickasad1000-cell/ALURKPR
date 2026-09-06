@@ -192,10 +192,10 @@ export function BlokDemografis() {
         <div className="bg-paper p-5">
           <p className="text-xs leading-relaxed text-ink-soft">
             Angka usia, bunga, DP, dan tenor mengacu ketentuan program FLPP
-            Kementerian PUPR per 2026. Harga rumah subsidi mengikuti ketetapan
-            pemerintah tahun berjalan. Semua bersifat indikatif — selalu
-            verifikasi angka resmi ke bank penyalur dan ketentuan pemerintah
-            sebelum pengajuan.
+            (dikelola BP Tapera) per peraturan terbaru. Harga rumah subsidi
+            mengikuti ketetapan pemerintah tahun berjalan. Semua bersifat
+            indikatif — selalu verifikasi angka resmi ke bank penyalur dan
+            BP Tapera sebelum pengajuan.
           </p>
         </div>
       </div>

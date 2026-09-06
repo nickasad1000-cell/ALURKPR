@@ -14,7 +14,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Siapa yang berhak mengajukan KPR subsidi FLPP?",
     jawaban:
-      "Warga Negara Indonesia, usia minimal 21 tahun atau sudah menikah, belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan pokok di bawah batas MBR (untuk rumah tapak ± Rp8 juta/bulan sesuai ketentuan terakhir). Rincian bisa berubah — selalu cek pengumuman resmi Kementerian PUPR.",
+      "Warga Negara Indonesia, usia minimal 21 tahun atau sudah menikah, belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai Permen PKP No. 5 Tahun 2025. Cek zona lokasimu di cek kelayakan, lalu konfirmasi ke BP Tapera atau bank penyalur.",
   },
   {
     pertanyaan: "Berapa bunga KPR subsidi FLPP dan berapa tenornya?",
@@ -24,7 +24,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Berapa DP minimum untuk KPR?",
     jawaban:
-      "Untuk KPR subsidi bisa 0–1% bahkan program khusus tanpa DP. Untuk komersial umumnya 10–30% tergantung bank, tenor, dan penilaian risiko (LTV). Semakin besar DP, semakin kecil plafon dan angsuran.",
+      "Untuk KPR subsidi resminya mulai 1% dari harga rumah. Kalau ada tawaran 'tanpa DP', biasanya pengembang yang menalangi atau memotong dari promo — tanyakan strukturnya tertulis. Untuk komersial umumnya 10–30% tergantung bank dan kelonggaran LTV yang berlaku. Semakin besar DP, semakin kecil plafon dan angsuran.",
   },
   {
     pertanyaan: "Apa saja biaya di luar DP yang harus disiapkan?",
@@ -34,7 +34,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Berapa lama proses pengajuan KPR?",
     jawaban:
-      "Dengan berkas lengkap, berkisar 2–6 minggu untuk seluruh alur: pre-approval hingga akad. Analisis kredit dan appraisal biasanya menghabiskan 1–3 minggu. Lambatnya sering karena kelengkapan dokumen debitur atau kesiapan dokumen pengembang.",
+      "Proses di bank (pre-approval sampai akad) umumnya 2–6 minggu bila berkas lengkap; analisis kredit dan appraisal biasanya memakan 1–3 minggu. Kalau dihitung dari mulai riset rumah sampai kunci di tangan, siapkan mental untuk 2–6 bulan — pencarian unit dan kesiapan dokumen pengembang sering jadi penentunya.",
   },
   {
     pertanyaan: "Apa itu BPHTB dan siapa yang membayarnya?",
@@ -49,7 +49,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Kalau gagal bayar cicilan, apa konsekuensinya?",
     jawaban:
-      "Keterlambatan dikenakan denda dan tercatat di SLIK (BI Checking) yang memengaruhi kredibilitasmu ke seluruh bank. Jika macet berlarut-larut, bank dapat melakukan restrukturisasi, atau tahap akhir maka rumah disita. Jaga arus kas dan segera negosiasi bila kesulitan.",
+      "Keterlambatan dikenakan denda dan tercatat di SLIK (BI Checking) yang memengaruhi kredibilitasmu ke seluruh bank. Bila macet berlarut, bank biasanya menawarkan restrukturisasi dulu; kalau tetap gagal, rumah bisa disita dan dilelang. Sebelum sampai ke sana, bicarakan ke bank sedini mungkin — bank lebih suka restrukturisasi daripada sita.",
   },
   {
     pertanyaan: "Apakah wajib memakai notaris untuk akad KPR?",
@@ -62,9 +62,14 @@ export const faq: FaqItem[] = [
       "Tidak. KPR subsidi FLPP hanya untuk rumah pertama dan ada kewajiban menempati sendiri. Membeli rumah kedua/sewakan lewat subsidi melanggar aturan dan bisa memicu penalti/pengembalian subsidi.",
   },
   {
-    pertanyaan: "Apa itu SKUMBUH/SiKUMBUH dan mengapa penting?",
+    pertanyaan: "Apa itu SiKumbang dan SiKasep?",
     jawaban:
-      "SiKUMBUH (Sistem Kumpulan Pengembang) adalah sistem verifikasi data KPR subsidi dari Kementerian PUPR. Pengembang dan bank memakai datanya untuk memvalidasi kelayakan debitur MBR — makanya pastikan data KTP dan status rumahmu benar dan konsisten sejak awal.",
+      "SiKumbang adalah portal BP Tapera berisi data pengembang dan stok rumah subsidi; SiKasep aplikasi untuk calon debitur mencari rumah dan memantau pengajuan subsidi. Dua-duanya jalur resmi — kalau pengembang mengklaim proyeknya subsidi, cek dulu di sana.",
+  },
+  {
+    pertanyaan: "Siapa yang mengelola program KPR subsidi (FLPP) sekarang?",
+    jawaban:
+      "Sejak 2025 pengelolaan FLPP dipegang BP Tapera, dengan payung kebijakan Kementerian Perumahan dan Kawasan Permukiman (PKP). Jadi sumber informasi terkini adalah situs BP Tapera (termasuk portal SiKumbang), bukan lagi kanal lama Kementerian PUPR.",
   },
   {
     pertanyaan: "Kalkulator di situs ini bisa dipercaya?",

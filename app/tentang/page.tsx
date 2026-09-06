@@ -83,9 +83,11 @@ export default function TentangPage() {
               yang ditampilkan bersifat indikatif serta dapat berubah.
             </p>
             <p className="mt-3">
-              Keputusan kredit final berada di bank penyalur dan kebijakan resmi
-              Kementerian PUPR. Gunakan situs ini untuk belajar dan mempersiapkan
-              diri, lalu verifikasi ke sumber resmi sebelum menandatangani apa pun.
+              Keputusan kredit final berada di bank penyalur, dan aturan
+              subsidinya di tangan BP Tapera serta Kementerian Perumahan dan
+              Kawasan Permukiman (PKP). Gunakan situs ini untuk belajar dan
+              mempersiapkan diri, lalu verifikasi ke sumber resmi sebelum
+              menandatangani apa pun.
             </p>
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">

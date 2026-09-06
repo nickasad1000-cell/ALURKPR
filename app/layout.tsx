@@ -55,11 +55,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     inLanguage: "id-ID",
     description: "Panduan KPR rumah pertama di Indonesia.",
     publisher: { "@type": "Organization", name: "AlurKPR", url: SITE_ORIGIN },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_ORIGIN}/panduan?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+    // Catatan: tidak ada SearchAction — situs belum punya fitur pencarian,
+    // mengiklankannya ke Google akan menyesatkan crawler.
   };
   const orgLd = {
     "@context": "https://schema.org",

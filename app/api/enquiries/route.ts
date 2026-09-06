@@ -58,6 +58,12 @@ export async function POST(request: Request) {
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
   const pesan = typeof body.pesan === "string" ? body.pesan.trim() : "";
 
+  if (body.consent !== true) {
+    return NextResponse.json(
+      { error: "Persetujuan pemrosesan data wajib dicentang sebelum mengirim." },
+      { status: 400 },
+    );
+  }
   if (!nama || !email || !pesan) {
     return NextResponse.json(
       { error: "Nama, email, dan pesan wajib diisi." },

@@ -8,6 +8,7 @@ import {
   biayaAwal,
   biayaBeliKumulatif,
   biayaSewaKumulatif,
+  formatAngkaId,
   formatRupiah,
   tahunImpas,
   parseNumberId,
@@ -19,11 +20,11 @@ import { WhatsAppButton } from "./whatsapp-button";
 const TAHUN_TITIK = [1, 5, 10, 15, 20, 25, 30];
 
 export function RentVsBeli() {
-  const [harga, setHarga] = useState("300000000");
+  const [harga, setHarga] = useState("300.000.000");
   const [dp, setDp] = useState(20);
   const [bunga, setBunga] = useState(5);
   const [tenor, setTenor] = useState(20);
-  const [sewa, setSewa] = useState("1500000");
+  const [sewa, setSewa] = useState("1.500.000");
   const [kenaikan, setKenaikan] = useState(5);
 
   const hargaN = parseNumberId(harga);
@@ -32,17 +33,20 @@ export function RentVsBeli() {
   const hasil = useMemo(() => {
     const awal = biayaAwal(hargaN, dp);
     const angsuran = angsuranBulanan(hargaN - awal.dp, bunga, tenor);
-    const impas = tahunImpas(awal.total, angsuran, sewaN, kenaikan, 30);
+    const impas = tahunImpas(awal.total, angsuran, sewaN, kenaikan, tenor, 30);
     const titik = TAHUN_TITIK.map((t) => ({
       tahun: t,
-      beli: biayaBeliKumulatif(awal.total, angsuran, t),
+      beli: biayaBeliKumulatif(awal.total, angsuran, t, tenor),
       sewa: biayaSewaKumulatif(sewaN, kenaikan, t),
     }));
     return { awal, angsuran, impas, titik };
   }, [hargaN, dp, bunga, tenor, sewaN, kenaikan]);
 
   useEffect(() => {
-    track("calc_result_viewed", { tool: "rent-vs-beli" });
+    const id = window.setTimeout(() => {
+      track("calc_result_viewed", { tool: "rent-vs-beli" });
+    }, 1500);
+    return () => window.clearTimeout(id);
   }, [hasil.impas]);
 
   return (
@@ -56,14 +60,13 @@ export function RentVsBeli() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={5000000}
+                type="text"
                 name="harga"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Harga rumah jika dibeli dalam Rupiah"
                 value={harga}
-                onChange={(e) => setHarga(e.target.value)}
+                onChange={(e) => setHarga(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>
@@ -110,14 +113,16 @@ export function RentVsBeli() {
               <div className="mt-1.5 flex items-center">
                 <input
                   type="number"
-                  min={5}
+                  min={1}
                   max={30}
                   step={1}
                   name="tenor"
                   inputMode="numeric"
                   aria-label="Tenor KPR dalam tahun"
                   value={tenor}
-                  onChange={(e) => setTenor(Number(e.target.value))}
+                  onChange={(e) =>
+                    setTenor(Math.min(30, Math.max(1, Number(e.target.value) || 1)))
+                  }
                   className={`${inputCls}`}
                 />
                 <span className="ml-2 text-sm font-bold text-ink-soft">th</span>
@@ -130,14 +135,13 @@ export function RentVsBeli() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={100000}
+                type="text"
                 name="sewa"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Sewa per bulan dalam Rupiah"
                 value={sewa}
-                onChange={(e) => setSewa(e.target.value)}
+                onChange={(e) => setSewa(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>
@@ -240,9 +244,11 @@ export function RentVsBeli() {
         <div className="rounded-3xl bg-accent-soft/60 p-6 text-xs leading-relaxed text-ink-soft">
           <p className="flex items-start gap-2">
             <Info className="mt-0.5 size-4 shrink-0 text-accent-ink" aria-hidden="true" />
-            Beli dihitung dari dana awal + angsuran tetap; sewa memakai kenaikan tahunan.
-            Belum termasuk nilai sisa rumah, inflasi, kesempatan investasi uang muka, atau
-            biaya pemeliharaan rumah. Untuk keputusan, gabungkan kenyamanan dan tujuan jangka panjang.
+            Beli dihitung dari dana awal + angsuran tetap yang berhenti saat KPR
+            lunas sesuai tenor; sewa memakai kenaikan tahunan. Belum termasuk
+            nilai sisa rumah, inflasi, kesempatan investasi uang muka, atau
+            biaya pemeliharaan rumah. Untuk keputusan, gabungkan kenyamanan dan
+            tujuan jangka panjang.
           </p>
         </div>
 

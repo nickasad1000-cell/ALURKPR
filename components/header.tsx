@@ -8,7 +8,7 @@ import { Logo } from "./logo";
 import { btnFocus } from "./ui";
 
 const nav = [
-  { href: "/profil-kamu", label: "Profil Kamu" },
+  { href: "/profil-kamu", label: "Rekomendasi Skema" },
   { href: "/panduan", label: "Panduan" },
   { href: "/kalkulator", label: "Kalkulator" },
   { href: "/syarat", label: "Syarat & Bank" },
@@ -16,12 +16,13 @@ const nav = [
   { href: "/faq", label: "FAQ" },
 ];
 
+// Kumpulan alat pendamping (bukan halaman utama). Kontak sengaja tidak
+// ditaruh di sini — "Hubungi kami" hidup di footer & menu mobile tersendiri.
 const toolNav = [
-  { href: "/mampu-beli", label: "Cek kemampuan beli" },
-  { href: "/planner-dp", label: "Perencana DP" },
+  { href: "/mampu-beli", label: "Kemampuan beli" },
+  { href: "/planner-dp", label: "Rencana tabung DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/checklist", label: "Checklist dokumen" },
-  { href: "/hubungi", label: "Hubungi kami" },
 ];
 
 export function Header() {
@@ -96,7 +97,7 @@ export function Header() {
                 alatOpen ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
               }`}
             >
-              Simulator
+              Alat & Simulasi
               <ChevronDown
                 className={`size-4 transition-transform ${alatOpen ? "rotate-180" : ""}`}
                 aria-hidden="true"
@@ -104,15 +105,14 @@ export function Header() {
             </button>
             {alatOpen ? (
               <div
-                role="menu"
-                aria-label="Simulator KPR"
-                className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-stone-900/5"
+                role="group"
+                aria-label="Alat dan simulasi KPR"
+                className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-ink/5"
               >
                 {toolNav.map((t) => (
                   <Link
                     key={t.href}
                     href={t.href}
-                    role="menuitem"
                     onClick={() => setAlatOpen(false)}
                     className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-primary-soft hover:text-primary-deep"
                   >
@@ -167,7 +167,7 @@ export function Header() {
               </Link>
             ))}
             <p className="mt-3 px-4 pt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              Simulator
+              Alat & Simulasi
             </p>
             {toolNav.map((t) => (
               <Link
@@ -179,6 +179,13 @@ export function Header() {
                 {t.label}
               </Link>
             ))}
+            <Link
+              href="/hubungi"
+              onClick={() => setOpen(false)}
+              className={`rounded-xl px-4 py-3 text-sm font-semibold ${btnFocus} text-ink-soft hover:bg-surface hover:text-ink`}
+            >
+              Hubungi kami
+            </Link>
             <Link
               href="/syarat"
               onClick={() => setOpen(false)}

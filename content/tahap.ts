@@ -4,7 +4,7 @@ export const tahapKpr: Tahap[] = [
   {
     nomor: 1,
     slug: "tahap-1-cek-keuangan-dan-kelayakan",
-    judul: "Cek Keuangan & kelayakan Sebelum Apa Pun",
+    judul: "Cek Keuangan & Kelayakan Sebelum Apa Pun",
     judulSingkat: "Cek kelayakan & keuangan",
     ringkasan:
       "Hitung penghasilan, cicilan maksimal, dan pastikan kamu memenuhi syarat sebelum mulai mencari rumah.",
@@ -29,7 +29,7 @@ export const tahapKpr: Tahap[] = [
       "Tidak mengecek status subsidi terlebih dahulu, kemudian kecewa karena tidak lolos MBR.",
     ],
     perbedaanSubsidi:
-      "Untuk subsidi, cek kelayakannya lebih ketat dan ada verifikasi MBR oleh sistem Kementerian PUPR. Untuk komersial, kelayakan hanya dinilai bank (suku bunga & plafon lebih longgar).",
+      "Untuk subsidi, cek kelayakannya lebih ketat: ada verifikasi MBR oleh sistem resmi BP Tapera (pengelola FLPP). Untuk komersial, kelayakan hanya dinilai bank (suku bunga & plafon lebih longgar).",
   },
   {
     nomor: 2,
@@ -50,7 +50,7 @@ export const tahapKpr: Tahap[] = [
     biayaTerkait: ["Transportasi survei", "Opsional: jasa konsultan properti"],
     tips: [
       "Cek peta rawan banjir dan akses jalan di musim hujan — kelihatan murah sekarang bisa mahal kemudian.",
-      "Pastikan pengembang terdaftar dan proyeknya tercatat di sistem resmi (mis. data Kementerian PUPR untuk rumah subsidi).",
+      "Pastikan pengembang terdaftar dan proyeknya tercatat di sistem resmi (untuk rumah subsidi: cek di SiKumbang, portal proyek BP Tapera).",
       "Tanyakan progress PSU dan jadwal serah terima sebelum menandatangani PPJB.",
     ],
     kesalahanUmum: [
@@ -103,7 +103,7 @@ export const tahapKpr: Tahap[] = [
       "Pra-persetujuan kredit (pre-approval) adalah penilaian awal bank atas kemampuan kreditmu. Ini memberi 'harga diri' saat bernegosiasi dan mempercepat proses ketika unit sudah ditemukan.",
       "Saat unit ditemukan, kamu membayar booking fee (fee wajib, umumnya mulai ratusan ribu hingga jutaan) untuk mengunci unit. Booking fee biasanya dapat menjadi bagian dari DP jika deal selesai.",
       "Perhatikan ketentuan refund booking fee pada SP2 (surat pemesanan) — sekecil apa pun, pastikan tertulis hitam di atas putih.",
-      "Untuk rumah subsidi, pengembang akan menginput data ke sistem FLPP; status pemesanan dan verifikasi awal bisa dicek melalui sistem milik pemerintah.",
+      "Untuk rumah subsidi, pengembang memasukkan datamu ke sistem FLPP; status pemesanan dan hasil verifikasi awal bisa kamu pantau lewat aplikasi resmi SiKasep (atau tanyakan ke bank penyalur).",
     ],
     dokumen: ["KTP", "KK", "Slip gaji", "Rekening koran 3 bulan", "NPWP", "Buku nikah (jika menikah)"],
     estimasiWaktu: "1–2 hari untuk booking; pre-approval 3–7 hari kerja",
@@ -119,7 +119,7 @@ export const tahapKpr: Tahap[] = [
       "Booking unit yang masih berstatus SP2 tanpa verifikasi — pastikan proyeknya lancar dan pengembang terdaftar.",
     ],
     perbedaanSubsidi:
-      "Booking unit subsidi umumnya disertai verifikasi MBR oleh sistem PUPR sebelum unit benar-benar terkunci; komersial tidak ada tahap verifikasi MBR.",
+      "Booking unit subsidi umumnya disertai verifikasi MBR oleh sistem BP Tapera sebelum unit benar-benar terkunci; komersial tidak ada tahap verifikasi MBR.",
   },
   {
     nomor: 5,
@@ -169,7 +169,7 @@ export const tahapKpr: Tahap[] = [
     penjelasan: [
       "Bank melakukan analisis kredit: mengecek BI Checking (SLIK), rasio pendapatan terhadap angsuran, stabilitas pekerjaan, dan riwayat pembayaran. Hasilnya menentukan persetujuan atau penolakan.",
       "Secara paralel, bank melakukan appraisal properti — penilaian fisik dan lokasi oleh surveyor untuk memastikan unit bernilai wajar sesuai harga pengajuan (LTV).",
-      "Segala temuan (harga over, sertifikat belum balik nama, biji hitam) umumnya bisa ditindaklanjuti dengan dokumen tambahan; jangan panik, tanyakan solusinya ke bank.",
+      "Segala temuan (harga di atas appraisal, sertifikat belum balik nama, catatan kredit lama) umumnya bisa ditindaklanjuti dengan dokumen tambahan; jangan panik, tanyakan solusinya ke bank.",
       "Setelah acc, bank menerbitkan surat persetujuan kredit (SP3K) berisi plafon, bunga, tenor, dan syarat. Baca sampai selesai sebelum lanjut ke akad.",
     ],
     dokumen: ["Surat persetujuan kredit (SP3K)", "Dokumen tambahan sesuai permintaan bank"],
@@ -199,7 +199,7 @@ export const tahapKpr: Tahap[] = [
     penjelasan: [
       "Di hadapan notaris/PPAT, kamu menandatangani akad kredit (syariah: akad murabahah) serta PPJB/AJB dengan pengembang. Di sinilah hak dan kewajiban dikunci secara hukum.",
       "Bank membayarkan plafon kredit ke pengembang/penjual. Kamu mulai memegang cicilan sejak akad, dan pengembang menyerahkan unit beserta kunci serta dokumen (sertifikat, IMB, SHGB/SHM, bukti PBB).",
-      "Urutan legalitas: untuk rumah baru umumnya PPJB dulu (di akad), lalu AJB + balik nama sertifikat setelah selesai bayar/akad — ikuti arahan notaris agar banding tidak berlarut.",
+      "Urutan legalitas: untuk rumah baru umumnya PPJB dulu (di akad), lalu AJB + balik nama sertifikat setelahnya — ikuti arahan notaris agar proses balik nama tidak berlarut-larut.",
       "Periksa semua dokumen serah terima: sertifikat, denah sesuai, kunci, dan kelengkapan rumah. Buat berita acara serah terima (BAST) sebagai bukti.",
     ],
     dokumen: ["KTP", "KK", "Buku nikah", "SP3K", "PPJB/SP2", "Identitas saksi", "Dana untuk biaya akad & pajak"],
@@ -247,11 +247,11 @@ export const tahapKpr: Tahap[] = [
     ],
     tips: [
       "Buat reminder jatuh tempo dan sisihkan pos angsuran di hari gajian.",
-      "Kalau mendapat bonus/CATU, lunasi sebagian untuk memangkas bunga selama tanpa penalti.",
+      "Kalau dapat THR atau bonus tahunan, pertimbangkan melunasi sebagian pokok (bila bebas penalti) untuk memangkas total bunga.",
       "Urus balik nama SHGB→SHM bila memenuhi syarat; jual-beli di kemudian hari jauh lebih mudah.",
     ],
     kesalahanUmum: [
-      "Tebal di bulan pertama lalu telat bayar — denda & catatan negatif SLIK.",
+      "Telat bayar di bulan-bulan awal — denda menumpuk dan riwayat SLIK langsung tercatat negatif.",
       "Menganggap rumah tidak butuh perawatan sampai ada kerusakan besar.",
       "Tidak membandingkan bunga bank lain selama bertahun-tahun; take-over bisa menghemat puluhan hingga ratusan juta rupiah total bunga.",
     ],

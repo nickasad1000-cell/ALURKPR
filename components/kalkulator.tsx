@@ -7,12 +7,13 @@ import type { BankRate } from "@/lib/types";
 import {
   angsuranBulanan,
   biayaAwal,
+  formatAngkaId,
   formatRupiah,
   hargaMaksimalMampu,
   jadwalAmortisasi,
   parseNumberId,
   plafondMaksimal,
-  totalPembayaran,
+  totalPembayaranBertahap,
 } from "@/lib/finance";
 import { track } from "@/lib/analytics";
 import { btnSecondary, inputCls } from "./ui";
@@ -69,19 +70,12 @@ function clampInt(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, Math.round(n)));
 }
 
-function formatAngkaId(raw: string): string {
-  const digits = raw
-    .replace(/\D/g, "")
-    .replace(/^0+(?=\d)/, "")
-    .slice(0, 15);
-  if (!digits) return "";
-  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
 export function KalkulatorWithDp({ rates }: { rates: BankRate[] }) {
   const searchParams = useSearchParams();
-  const dp = Number(searchParams.get("dp"));
-  const initialDp = Math.min(50, Math.max(0, dp || 10));
+  const raw = searchParams.get("dp");
+  // Gunakan has !== null agar ?dp=0 tetap dihormati (0 adalah DP yang sah).
+  const parsed = raw !== null ? Number(raw) : NaN;
+  const initialDp = Number.isFinite(parsed) ? Math.min(50, Math.max(0, parsed)) : 10;
   return <Kalkulator rates={rates} initialDp={initialDp} />;
 }
 
@@ -173,11 +167,18 @@ export function Kalkulator({
   const hasil = useMemo(() => {
     const plafon = plafondMaksimal(hargaEfektif, dpEfektif);
     const angsuran = angsuranBulanan(plafon, bank.fixedRate, tenorEfektif);
-    const angsuranFloating = bank.floatingRate
-      ? angsuranBulanan(plafon, bank.floatingRate, tenorEfektif)
-      : null;
-    const total = totalPembayaran(plafon, bank.fixedRate, tenorEfektif);
-    const bunga = total - plafon;
+    // Skema bertingkat: masa fixed di atas plafon awal, lalu sisa pokok
+    // dijadwalkan ulang pada bunga floating atas sisa tenor (praktik bank).
+    const bertahap = totalPembayaranBertahap(
+      plafon,
+      bank.fixedRate,
+      bank.floatingRate,
+      tenorEfektif,
+      bank.fixedYears,
+    );
+    const angsuranFloating = bertahap.angsuranFloating;
+    const total = bertahap.total;
+    const bunga = bertahap.bunga;
     const biaya = biayaAwal(hargaEfektif, dpEfektif);
     return { plafon, angsuran, angsuranFloating, total, bunga, biaya };
     // eslint-disable-next-line react-hooks/exhaustive-deps

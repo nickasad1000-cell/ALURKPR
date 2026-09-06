@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Minus, Plus } from "lucide-react";
 import { faq } from "@/content/faq";
-import { Container, SectionHeading } from "@/components/ui";
+import { Container, DisclaimerNasihat, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Pertanyaan yang Sering Diajukan (FAQ)",
@@ -66,6 +66,9 @@ export default function FaqPage() {
                 </p>
               </details>
             ))}
+          </div>
+          <div className="mt-8 rounded-2xl bg-accent-soft/60 p-5">
+            <DisclaimerNasihat />
           </div>
         </Container>
       </section>

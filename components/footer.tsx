@@ -14,10 +14,10 @@ const kolomPanduan = [
 ];
 
 const kolomAlat = [
-  { href: "/profil-kamu", label: "Profil Kamu" },
+  { href: "/profil-kamu", label: "Rekomendasi skema" },
   { href: "/kalkulator", label: "Kalkulator KPR" },
   { href: "/mampu-beli", label: "Kemampuan beli" },
-  { href: "/planner-dp", label: "Planner DP" },
+  { href: "/planner-dp", label: "Rencana tabung DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/checklist", label: "Checklist dokumen" },
@@ -93,9 +93,10 @@ export function Footer() {
           <p className="text-xs leading-relaxed text-ink-soft">{DISCLOSURE}</p>
           <p className="mt-3 text-xs leading-relaxed text-ink-soft">
             Suku bunga, plafon, dan persyaratan di situs ini bersifat indikatif
-            dan dapat berubah mengikuti kebijakan pemerintah/BPS maupun
-            keputusan bank. Selalu konfirmasi angka resmi ke Kementerian PUPR
-            dan bank penyalur sebelum pengajuan.
+            dan dapat berubah mengikuti kebijakan BP Tapera, Kementerian
+            Perumahan dan Kawasan Permukiman (PKP), maupun keputusan bank.
+            Selalu konfirmasi angka resmi ke BP Tapera dan bank penyalur
+            sebelum pengajuan.
           </p>
           <p className="mt-3 text-xs text-ink-soft">
             © {new Date().getFullYear()} AlurKPR · {BRAND_NAME}

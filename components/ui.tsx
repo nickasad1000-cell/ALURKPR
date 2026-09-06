@@ -1,5 +1,6 @@
 import type { ElementType, ReactNode } from "react";
 import Link from "next/link";
+import { Info } from "lucide-react";
 
 export function Container({
   children,
@@ -46,8 +47,8 @@ export function SectionHeading({
     <div className={`max-w-2xl ${alignCls}`}>
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
       <Tag
-        className={`mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl ${
-          as === "h1" ? "text-4xl sm:text-5xl" : ""
+        className={`mt-3 font-display font-semibold tracking-tight text-balance ${
+          as === "h1" ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl"
         }`}
       >
         {title}
@@ -74,16 +75,15 @@ export const inputCls =
   `w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-sm text-ink transition-[border-color,box-shadow] focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 ${btnFocus}`;
 
 export const btnWhatsApp =
-  `inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#1a7a42] px-6 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-[#156535] active:scale-[0.98] ${btnFocus}`;
+  `inline-flex h-12 items-center justify-center gap-2 rounded-full bg-wa px-6 text-sm font-bold text-white shadow-sm transition-[background-color,box-shadow,transform] hover:bg-wa-deep active:scale-[0.98] ${btnFocus}`;
 
-export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
-  return (
+export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {  return (
     <nav aria-label="Breadcrumb" className="mb-6">
       <ol className="flex flex-wrap items-center gap-1.5 text-sm">
         {items.map((item, i) => {
           const last = i === items.length - 1;
           return (
-            <li key={i} className="flex items-center gap-1.5">
+            <li key={item.label} className="flex items-center gap-1.5">
               {item.href && !last ? (
                 <Link
                   href={item.href}
@@ -109,5 +109,17 @@ export function Breadcrumb({ items }: { items: { label: string; href?: string }[
         })}
       </ol>
     </nav>
+  );
+}
+
+export function DisclaimerNasihat({ children }: { children?: ReactNode }) {
+  return (
+    <p className="flex items-start gap-2 text-xs leading-relaxed text-ink-soft">
+      <Info className="mt-0.5 size-4 shrink-0 text-accent-ink" aria-hidden="true" />
+      <span>
+        {children ??
+          "Halaman ini bersifat edukasi dan bukan nasihat keuangan resmi. Angka, batas penghasilan, dan kuota FLPP dapat berubah sesuai kebijakan pemerintah serta penilaian tiap bank."}
+      </span>
+    </p>
   );
 }

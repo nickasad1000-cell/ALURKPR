@@ -11,6 +11,7 @@ import {
   tabunganBulananUntuk,
   tahunImpas,
   totalPembayaran,
+  totalPembayaranBertahap,
 } from "./finance";
 
 describe("plafondMaksimal", () => {
@@ -52,6 +53,26 @@ describe("totalPembayaran", () => {
   it("= angsuran × bulan", () => {
     const t = totalPembayaran(240_000_000, 5, 20);
     expect(t).toBe(angsuranBulanan(240_000_000, 5, 20) * 240);
+  });
+});
+
+describe("totalPembayaranBertahap", () => {
+  it("tanpa floating → sama dengan total pembayaran biasa", () => {
+    const r = totalPembayaranBertahap(240_000_000, 5, null, 20, 20);
+    expect(r.total).toBe(totalPembayaran(240_000_000, 5, 20));
+    expect(r.angsuranFloating).toBeNull();
+  });
+  it("fixed 3 th di 6,6% lalu floating 9,3%: total > skenario flat 6,6%", () => {
+    const bertahap = totalPembayaranBertahap(240_000_000, 6.6, 9.3, 20, 3);
+    const flat = totalPembayaranBertahap(240_000_000, 6.6, null, 20, 3);
+    expect(bertahap.total).toBeGreaterThan(flat.total);
+    expect(bertahap.angsuranFloating).not.toBeNull();
+    expect(bertahap.bunga).toBeGreaterThan(0);
+  });
+  it("fixedYears melebihi tenor → diabaikan (berlaku fixed penuh)", () => {
+    const r = totalPembayaranBertahap(100_000_000, 7, 10, 10, 25);
+    expect(r.angsuranFloating).toBeNull();
+    expect(r.total).toBe(totalPembayaran(100_000_000, 7, 10));
   });
 });
 
@@ -110,6 +131,19 @@ describe("hargaMaksimalMampu (reverse)", () => {
     });
     expect(h.hargaMaksimal).toBe(0);
   });
+  it("bunga 0% → perhitungan linear (angsuran × bulan), bukan 0", () => {
+    const h = hargaMaksimalMampu({
+      penghasilanBulanan: 10_000_000,
+      cicilanLainBulanan: 0,
+      dbrPersen: 40,
+      dpPersen: 0,
+      tenorTahun: 10,
+      bungaTahunanPersen: 0,
+    });
+    // Angsuran maks 4jt/bln × 120 bulan = 480jt plafon = harga (DP 0%)
+    expect(h.plafonMaksimal).toBe(4_000_000 * 120);
+    expect(h.hargaMaksimal).toBe(4_000_000 * 120);
+  });
 });
 
 describe("bulanUntukMenabung", () => {
@@ -140,6 +174,17 @@ describe("biayaBeliKumulatif", () => {
   it("dana awal 50jt + 2jt/bln selama 5 tahun → 170jt", () => {
     expect(biayaBeliKumulatif(50_000_000, 2_000_000, 5)).toBe(170_000_000);
   });
+  it("angsuran berhenti setelah tenor: tahun ke-25 dengan tenor 20 = tahun ke-20", () => {
+    const t20 = biayaBeliKumulatif(50_000_000, 2_000_000, 20, 20);
+    const t25 = biayaBeliKumulatif(50_000_000, 2_000_000, 25, 20);
+    expect(t25).toBe(t20);
+    expect(t25).toBe(50_000_000 + 2_000_000 * 12 * 20);
+  });
+  it("tanpa tenor → angsuran dihitung sepanjang periode (perilaku lama)", () => {
+    expect(biayaBeliKumulatif(50_000_000, 2_000_000, 5)).toBe(
+      biayaBeliKumulatif(50_000_000, 2_000_000, 5, 10),
+    );
+  });
 });
 
 describe("biayaSewaKumulatif", () => {
@@ -157,5 +202,12 @@ describe("tahunImpas", () => {
   });
   it("angsuran jauh di atas sewa → null", () => {
     expect(tahunImpas(100_000_000, 5_000_000, 1_000_000, 0)).toBeNull();
+  });
+  it("angsuran berhenti saat KPR lunas mempercepat impas", () => {
+    // Dengan tenor 10 th, setelah tahun ke-10 biaya beli tidak tumbuh.
+    const tanpaBatas = tahunImpas(60_000_000, 2_500_000, 2_000_000, 0);
+    const denganTenor = tahunImpas(60_000_000, 2_500_000, 2_000_000, 0, 10);
+    expect(denganTenor).not.toBeNull();
+    if (tanpaBatas !== null) expect(denganTenor!).toBeLessThanOrEqual(tanpaBatas);
   });
 });

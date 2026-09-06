@@ -5,6 +5,7 @@ import { CheckCircle2, Info, Wallet } from "lucide-react";
 import Link from "next/link";
 import {
   hargaMaksimalMampu,
+  formatAngkaId,
   formatRupiah,
   angsuranBulanan,
   parseNumberId,
@@ -14,7 +15,7 @@ import { btnPrimary, btnSecondary, inputCls } from "./ui";
 import { WhatsAppButton } from "./whatsapp-button";
 
 export function MampuBeli() {
-  const [penghasilan, setPenghasilan] = useState("8000000");
+  const [penghasilan, setPenghasilan] = useState("8.000.000");
   const [cicilan, setCicilan] = useState("0");
   const [dbr, setDbr] = useState(30);
   const [dp, setDp] = useState(10);
@@ -36,7 +37,11 @@ export function MampuBeli() {
   }, [penghasilanN, cicilanN, dbr, dp, tenor, bunga]);
 
   useEffect(() => {
-    track("calc_result_viewed", { tool: "mampu-beli" });
+    // Debounce: jangan tembak event tiap kali slider bergeser.
+    const id = window.setTimeout(() => {
+      track("calc_result_viewed", { tool: "mampu-beli" });
+    }, 1500);
+    return () => window.clearTimeout(id);
   }, [hasil.hargaMaksimal]);
 
   const danaAwal = Math.round((hasil.hargaMaksimal * dp) / 100);
@@ -56,14 +61,13 @@ export function MampuBeli() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={500000}
+                type="text"
                 name="penghasilan"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Penghasilan pokok per bulan dalam Rupiah"
                 value={penghasilan}
-                onChange={(e) => setPenghasilan(e.target.value)}
+                onChange={(e) => setPenghasilan(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>
@@ -74,14 +78,13 @@ export function MampuBeli() {
             <div className="mt-1.5 flex items-center">
               <span className="rounded-l-xl border border-r-0 border-line bg-paper px-3 py-2.5 text-sm font-bold text-ink-soft">Rp</span>
               <input
-                type="number"
-                min={0}
-                step={100000}
+                type="text"
                 name="cicilan-lain"
                 inputMode="numeric"
+                autoComplete="off"
                 aria-label="Cicilan lain per bulan dalam Rupiah"
                 value={cicilan}
-                onChange={(e) => setCicilan(e.target.value)}
+                onChange={(e) => setCicilan(formatAngkaId(e.target.value))}
                 className={`${inputCls} rounded-l-none`}
               />
             </div>

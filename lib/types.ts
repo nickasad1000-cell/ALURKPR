@@ -42,6 +42,8 @@ export type KelayakanInput = {
   belumPernahSubsidi: boolean;
   hargaUnit: number;
   dewasaAtauMenikah: boolean;
+  /** Zona wilayah FLPP (Permen PKP No. 5 Tahun 2025): 1-4. */
+  zona: 1 | 2 | 3 | 4;
 };
 
 export type SyaratCheck = { label: string; lolos: boolean; catatan?: string };

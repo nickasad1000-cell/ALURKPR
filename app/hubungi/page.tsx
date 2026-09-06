@@ -38,7 +38,7 @@ export default function HubungiPage() {
               <WhatsAppLink
                 source="hubungi"
                 pesan="Halo, saya dari situs AlurKPR. Saya ingin bertanya soal KPR / perumahan."
-                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1a7a42] px-5 text-sm font-bold text-white hover:bg-[#156535]"
+                className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-wa px-5 text-sm font-bold text-white hover:bg-wa-deep"
               >
                 {WHATSAPP_DISPLAY}
               </WhatsAppLink>

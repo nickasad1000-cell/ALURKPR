@@ -97,6 +97,12 @@ export default function Home() {
               <Link href="/syarat" className={btnSecondary}>
                 Cek kelayakan FLPP
               </Link>
+              <Link
+                href="/panduan/tahap-1-cek-keuangan-dan-kelayakan"
+                className="inline-flex items-center gap-1 text-sm font-bold text-ink-soft underline-offset-4 transition hover:text-primary hover:underline"
+              >
+                Baru mulai dari nol? Baca Tahap 1 dulu
+              </Link>
             </div>
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-ink-soft">
               <li className="flex items-center gap-1.5">
@@ -194,12 +200,19 @@ export default function Home() {
                 </div>
               </dl>
               <p className="mt-5 rounded-xl bg-primary-soft/60 px-4 py-3 text-sm leading-relaxed">
-                <span className="font-semibold text-danger/80 line-through">
-                  Biaya awal (DP + biaya) ± Rp11,5 jt
-                </span>{" "}
                 <span className="font-semibold text-primary-deep">
-                  cukup siapkan biaya booking ±Rp100 ribu
-                </span>
+                  Yang dibayar di muka cuma booking fee ±Rp100 rb–1 jt untuk
+                  mengunci unit.
+                </span>{" "}
+                DP dan biaya akad (±Rp11,5 jt pada contoh ini) baru dibayar
+                saat proses lanjut —{" "}
+                <Link
+                  href="/panduan/dp-dan-biaya-initial-kpr"
+                  className="font-bold text-primary underline underline-offset-2 hover:text-primary-deep"
+                >
+                  lihat rinciannya
+                </Link>
+                .
               </p>
               <Link
                 href="/kalkulator"

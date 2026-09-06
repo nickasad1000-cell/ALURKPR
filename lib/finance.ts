@@ -23,6 +23,19 @@ export function parseNumberId(input: string, fallback = 0): number {
   return Number.isFinite(n) ? n : fallback;
 }
 
+/**
+ * Format input mentah menjadi angka dengan pemisah ribuan Indonesia ("8.000.000")
+ * — untuk input teks yang diformat langsung saat pengguna mengetik.
+ */
+export function formatAngkaId(raw: string): string {
+  const digits = raw
+    .replace(/\D/g, "")
+    .replace(/^0+(?=\d)/, "")
+    .slice(0, 15);
+  if (!digits) return "";
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 /** Plafon pinjaman = harga rumah dikurangi uang muka. */
 export function plafondMaksimal(harga: number, dpPercent: number): number {
   return Math.round(harga * (1 - dpPercent / 100));
@@ -80,6 +93,42 @@ export function totalPembayaran(
   tenorYears: number,
 ): number {
   return angsuranBulanan(plafon, rateYearlyPct, tenorYears) * tenorYears * 12;
+}
+
+/**
+ * Total pembayaran untuk skema dua lapis (fixed lalu floating), sesuai
+ * praktik bank: angsuran fixed berjalan `fixedYears`, lalu SISA POKOK
+ * dijadwalkan ulang pada bunga floating atas sisa tenor.
+ *
+ * Mengembalikan total bayar, angsuran masa floating, dan total bunga.
+ * Tanpa floatingRate, hasilnya sama dengan skema flat sederhana.
+ */
+export function totalPembayaranBertahap(
+  plafon: number,
+  fixedRateYearlyPct: number,
+  floatingRateYearlyPct: number | null,
+  tenorYears: number,
+  fixedYears: number,
+): { total: number; angsuranFloating: number | null; bunga: number } {
+  const angsuranAwal = angsuranBulanan(plafon, fixedRateYearlyPct, tenorYears);
+  const n = tenorYears * 12;
+  const nFixed = Math.min(Math.max(0, fixedYears), tenorYears) * 12;
+
+  if (!floatingRateYearlyPct || nFixed >= n) {
+    const total = angsuranAwal * n;
+    return { total, angsuranFloating: null, bunga: total - plafon };
+  }
+
+  const rows = jadwalAmortisasi(plafon, fixedRateYearlyPct, tenorYears);
+  const sisaSetelahFixed = rows[nFixed - 1]?.saldo ?? plafon;
+  const tenorSisa = tenorYears - fixedYears;
+  const floating = angsuranBulanan(
+    sisaSetelahFixed,
+    floatingRateYearlyPct,
+    tenorSisa,
+  );
+  const total = angsuranAwal * nFixed + floating * tenorSisa * 12;
+  return { total, angsuranFloating: floating, bunga: total - plafon };
 }
 
 export type RincianBiayaAwal = {
@@ -144,15 +193,27 @@ export function hargaMaksimalMampu(
 
   const bersih = Math.max(0, penghasilanBulanan - cicilanLainBulanan);
   const angsuranMaksimal = Math.round((bersih * dbrPersen) / 100);
-  if (n <= 0 || r <= 0 || angsuranMaksimal <= 0) {
+  if (n <= 0 || angsuranMaksimal <= 0) {
     return { angsuranMaksimal, plafonMaksimal: 0, hargaMaksimal: 0 };
+  }
+
+  // Bunga ≤ 0% diperlakukan linear (tanpa bunga): plafon = angsuran × n.
+  // Konsisten dengan penanganan r === 0 di angsuranBulanan.
+  const dpFaktor = 1 - input.dpPersen / 100;
+  if (r <= 0) {
+    const plafon = angsuranMaksimal * n;
+    return {
+      angsuranMaksimal,
+      plafonMaksimal: plafon,
+      hargaMaksimal: Math.round(plafon / dpFaktor),
+    };
   }
 
   const pow = Math.pow(1 + r, n);
   const plafon = Math.round(
     (angsuranMaksimal * (pow - 1)) / (r * pow),
   );
-  const harga = Math.round(plafon / (1 - input.dpPersen / 100));
+  const harga = Math.round(plafon / dpFaktor);
   return { angsuranMaksimal, plafonMaksimal: plafon, hargaMaksimal: harga };
 }
 
@@ -187,13 +248,23 @@ export function tabunganBulananUntuk(
   return Math.ceil(sisa / jumlahBulan);
 }
 
-/** Total kumulatif biaya beli (dana awal + angsuran tetap) selama N tahun. */
+/**
+ * Total kumulatif biaya beli (dana awal + angsuran tetap) selama N tahun.
+ * Angsuran hanya dihitung sampai tenor kredit berakhir (`tenorTahun`) —
+ * setelah lunas, tidak ada lagi biaya angsuran. Bila `tenorTahun` tidak
+ * diisi, angsuran dianggap berjalan sepanjang periode (perilaku lama).
+ */
 export function biayaBeliKumulatif(
   danaAwal: number,
   angsuranBulan: number,
   tahun: number,
+  tenorTahun?: number,
 ): number {
-  return Math.max(0, danaAwal) + Math.max(0, angsuranBulan) * 12 * Math.max(0, tahun);
+  const tahunAktif =
+    tenorTahun === undefined
+      ? Math.max(0, tahun)
+      : Math.min(Math.max(0, tahun), Math.max(0, tenorTahun));
+  return Math.max(0, danaAwal) + Math.max(0, angsuranBulan) * 12 * tahunAktif;
 }
 
 /** Total kumulatif biaya sewa selama N tahun dengan kenaikan sewa tahunan (%). */
@@ -214,18 +285,20 @@ export function biayaSewaKumulatif(
 /**
  * Tahun impas (break-even): tahun pertama saat biaya kumulatif beli sudah
  * tidak lebih mahal dari kumulatif sewa. `null` bila beli selalu lebih mahal
- * sampai batas horizon.
+ * sampai batas horizon. `tenorTahun` membatasi berapa lama angsuran masih
+ * dihitung (setelah KPR lunas, biaya beli berhenti tumbuh).
  */
 export function tahunImpas(
   danaAwal: number,
   angsuranBulan: number,
   sewaBulanan: number,
   kenaikanTahunanPersen: number,
+  tenorTahun?: number,
   horizonTahun = 40,
 ): number | null {
   for (let t = 1; t <= horizonTahun; t++) {
     if (
-      biayaBeliKumulatif(danaAwal, angsuranBulan, t) <=
+      biayaBeliKumulatif(danaAwal, angsuranBulan, t, tenorTahun) <=
       biayaSewaKumulatif(sewaBulanan, kenaikanTahunanPersen, t)
     ) {
       return t;
