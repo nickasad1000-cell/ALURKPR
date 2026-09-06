@@ -114,7 +114,7 @@ function Tile({
             {buka ? "Tutup detail" : "Lihat detail"}
           </span>
           {isFinal && (
-            <BadgeCheck className="size-5 text-accent" aria-hidden="true" />
+            <BadgeCheck className="size-5 text-accent-ink" aria-hidden="true" />
           )}
         </div>
       </button>
@@ -246,71 +246,7 @@ export function PapanJalur() {
   };
 
   return (
-    <div className="relative">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden lg:block"
-      >
-        <svg
-          className="h-full w-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <polyline
-            points={POLYLINE}
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-            strokeDasharray="2 6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.25}
-            className="stroke-primary/15"
-          />
-          <polyline
-            points={POLYLINE}
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-            pathLength={1}
-            strokeDasharray="1"
-            strokeDashoffset={1 - progres}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2.5}
-            className="stroke-primary"
-            style={{
-              transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
-            }}
-          />
-        </svg>
-      </div>
-
-      {!tokenTersembunyi && (
-        <motion.div
-          aria-hidden="true"
-          className="pointer-events-none absolute z-20 hidden lg:block"
-          initial={false}
-          animate={{ top: `${p.top}%`, left: `${p.left}%` }}
-          transition={
-            reduce
-              ? { duration: 0 }
-              : { type: "spring", stiffness: 300, damping: 26 }
-          }
-        >
-          {selesai ? (
-            <div className="grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-[0_0_0_6px_rgb(123_91_27/0.15)]">
-              <BadgeCheck className="size-6" />
-            </div>
-          ) : (
-            <div className="grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
-              <svg viewBox="0 0 32 32" className="size-4.5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="10" cy="10" r="4" />
-                <path d="M13 13 24 24" />
-              </svg>
-            </div>
-          )}
-        </motion.div>
-      )}
-
+    <div>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
         <p
           role="status"
@@ -320,7 +256,7 @@ export function PapanJalur() {
           {selesai ? (
             <>
               Garis akhir —{" "}
-              <span className="font-bold text-accent">kunci di tangan</span>
+              <span className="font-bold text-accent-ink">kunci di tangan</span>
             </>
           ) : (
             <>
@@ -408,7 +344,72 @@ export function PapanJalur() {
         ))}
       </ol>
 
-      <MotionConfig reducedMotion="user">
+      <div className="relative">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 hidden lg:block"
+        >
+          <svg
+            className="h-full w-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <polyline
+              points={POLYLINE}
+              fill="none"
+              vectorEffect="non-scaling-stroke"
+              strokeDasharray="2 6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.25}
+              className="stroke-primary/15"
+            />
+            <polyline
+              points={POLYLINE}
+              fill="none"
+              vectorEffect="non-scaling-stroke"
+              pathLength={1}
+              strokeDasharray="1"
+              strokeDashoffset={1 - progres}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              className="stroke-primary"
+              style={{
+                transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
+              }}
+            />
+          </svg>
+        </div>
+
+        {!tokenTersembunyi && (
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute z-20 hidden lg:block"
+            initial={false}
+            animate={{ top: `${p.top}%`, left: `${p.left}%` }}
+            transition={
+              reduce
+                ? { duration: 0 }
+                : { type: "spring", stiffness: 300, damping: 26 }
+            }
+          >
+            {selesai ? (
+              <div className="grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-[0_0_0_6px_rgb(123_91_27/0.15)]">
+                <BadgeCheck className="size-6" />
+              </div>
+            ) : (
+              <div className="grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-white shadow-lg ring-4 ring-paper">
+                <svg viewBox="0 0 32 32" className="size-4.5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="10" cy="10" r="4" />
+                  <path d="M13 13 24 24" />
+                </svg>
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        <MotionConfig reducedMotion="user">
         <div className="grid grid-cols-1 gap-y-2 gap-x-6 lg:grid-cols-2 lg:gap-y-4">
           {tahapKpr.map((t, i) => (
             <Tile
@@ -423,7 +424,8 @@ export function PapanJalur() {
             />
           ))}
         </div>
-      </MotionConfig>
+        </MotionConfig>
+      </div>
     </div>
   );
 }

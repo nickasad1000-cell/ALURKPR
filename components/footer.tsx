@@ -19,11 +19,7 @@ const kolomAlat = [
   { href: "/mampu-beli", label: "Kemampuan beli" },
   { href: "/planner-dp", label: "Rencana tabung DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
-  { href: "/syarat", label: "Cek kelayakan FLPP" },
   { href: "/checklist", label: "Checklist dokumen" },
-  { href: "/syarat#bank", label: "Perbandingan bank" },
-  { href: "/faq", label: "Pertanyaan umum" },
-  { href: "/glosarium", label: "Glosarium istilah" },
 ];
 
 const kolomInfo = [
@@ -68,12 +64,12 @@ export function Footer() {
 
           {[
             { judul: "Panduan", items: kolomPanduan },
-            { judul: "Alat & referensi", items: kolomAlat, duaKolom: true },
+            { judul: "Alat & referensi", items: kolomAlat },
             { judul: "Informasi", items: kolomInfo },
           ].map((kol) => (
             <nav key={kol.judul} aria-label={kol.judul}>
               <h2 className="text-sm font-bold text-ink">{kol.judul}</h2>
-              <ul className={`mt-4 ${kol.duaKolom ? "grid grid-cols-2 gap-x-4" : "space-y-2"}`}>
+              <ul className="mt-4 space-y-2">
                 {kol.items.map((item) => (
                   <li key={item.href}>
                     <Link
