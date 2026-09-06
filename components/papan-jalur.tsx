@@ -358,11 +358,11 @@ export function PapanJalur() {
       points={POLYLINE}
       fill="none"
       vectorEffect="non-scaling-stroke"
-      strokeDasharray="2 6"
+      strokeDasharray="4 6"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.25}
-      className="stroke-primary/15"
+      strokeWidth={1.5}
+      className="stroke-primary/30"
     />
     <polyline
       points={POLYLINE}
@@ -373,7 +373,7 @@ export function PapanJalur() {
       strokeDashoffset={1 - progres}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={2.5}
+      strokeWidth={3}
       className="stroke-primary"
       style={{
         transition: reduce ? "none" : "stroke-dashoffset 0.65s ease",
