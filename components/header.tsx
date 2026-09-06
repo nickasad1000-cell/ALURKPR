@@ -9,14 +9,14 @@ import { btnFocus } from "./ui";
 
 const nav = [
   { href: "/panduan", label: "Panduan" },
-  { href: "/tentang", label: "Tentang" },
+  { href: "/profil-kamu", label: "Profil Kamu" },
+  { href: "/kalkulator", label: "Kalkulator" },
+  { href: "/mampu-beli", label: "Kemampuan beli" },
   { href: "/hubungi", label: "Hubungi" },
 ];
 
 const alatNav = [
-  { href: "/profil-kamu", label: "Profil Kamu" },
-  { href: "/kalkulator", label: "Kalkulator KPR" },
-  { href: "/mampu-beli", label: "Kemampuan beli" },
+  { href: "/tentang", label: "Tentang" },
   { href: "/planner-dp", label: "Rencana tabung DP" },
   { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/checklist", label: "Checklist dokumen" },
