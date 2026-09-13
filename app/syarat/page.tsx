@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const syaratUmum = [
   "WNI dengan KTP & Kartu Keluarga aktif",
-  "Usia sesuai aturan skema — perlu dicek ulang ke bank penyalur",
+  "Usia minimal 21 tahun atau sudah menikah",
   "Belum pernah memiliki rumah (khusus subsidi)",
   "Belum pernah menerima subsidi perumahan (khusus subsidi)",
   "Penghasilan stabil & berada dalam batas skema",
@@ -60,7 +60,7 @@ export default async function SyaratPage() {
             </div>
             <div className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-6 text-sm leading-relaxed text-ink-soft">
               Angka yang dipakai alat ini mengacu aturan FLPP terbaru
-              (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026) dan bisa diperbarui pemerintah.
+              (Permen PKP No. 5 Tahun 2025) dan bisa diperbarui pemerintah.
               Hasil di sini bukan keputusan resmi — gunakan sebagai panduan,
               lalu konfirmasi ke bank penyalur & situs resmi BP Tapera.
               <a
@@ -84,9 +84,7 @@ export default async function SyaratPage() {
           />
           <div className="mt-10">
             <BandingKanBank
-              banks={rates.data.length > 0 ? rates.data : seedBankRates}
-              dariSeed={rates.sumber === "seed"}
-              dicekSeed={rates.dicek}
+              banks={rates.length > 0 ? rates : seedBankRates}
             />
           </div>
         </Container>

@@ -25,17 +25,9 @@ describe("seedBankRates", () => {
 });
 
 describe("getBankRates", () => {
-  it("selalu mengembalikan bentuk { data, sumber } yang valid", async () => {
-    const res = await getBankRates();
-    expect(res.data.length).toBeGreaterThan(0);
-    expect(["db", "seed"]).toContain(res.sumber);
-    for (const r of res.data) expect(r.updated_at).toBeTruthy();
-  });
-
-  it("sumber 'seed' menyertakan tanggal dicek", async () => {
-    const res = await getBankRates();
-    if (res.sumber === "seed") {
-      expect(res.dicek).toBeTruthy();
-    }
+  it("selalu mengembalikan daftar yang valid & tidak kosong", async () => {
+    const rates = await getBankRates();
+    expect(rates.length).toBeGreaterThan(0);
+    for (const r of rates) expect(r.updated_at).toBeTruthy();
   });
 });

@@ -12,7 +12,7 @@ const MOBILE = { width: 390, height: 844 }; // iPhone 14 Pro
 const DESKTOP_ROUTES = [
   '', 'kalkulator', 'mampu-beli', 'planner-dp', 'sewa-vs-beli',
   'checklist', 'profil-kamu', 'tentang', 'faq', 'glosarium',
-  'syarat', 'privasi', 'kontak', 'panduan',
+  'syarat', 'privasi', 'hubungi', 'panduan',
   'panduan/tahap-1-cek-keuangan-dan-kelayakan',
   'panduan/tahap-4-ajukan-kpr',
   'panduan/tahap-8-serah-terima',

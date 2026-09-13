@@ -4,47 +4,37 @@ import { useMemo, useState } from "react";
 import { ArrowDownWideNarrow, Award, Landmark } from "lucide-react";
 import Link from "next/link";
 import type { BankRate } from "@/lib/types";
-import { urutBank, bankTerendahKonvensional } from "@/lib/bank-banding";
-import type { FilterBank, SortirBank } from "@/lib/bank-banding";
 import { track } from "@/lib/analytics";
 import { btnPrimary } from "./ui";
 
-const judulFilter: Record<FilterBank, string> = {
+type Filter = "semua" | "subsidi" | "komersial";
+type Sortir = "bunga" | "dp" | "nama";
+
+const judulFilter: Record<Filter, string> = {
   semua: "Semua skema",
   subsidi: "Subsidi (FLPP)",
   komersial: "Komersial",
 };
 
-export function BandingKanBank({
-  banks,
-  dariSeed = false,
-  dicekSeed,
-}: {
-  banks: BankRate[];
-  dariSeed?: boolean;
-  dicekSeed?: string;
-}) {
-  const [filter, setFilter] = useState<FilterBank>("semua");
-  const [sortir, setSortir] = useState<SortirBank>("bunga");
+export function BandingKanBank({ banks }: { banks: BankRate[] }) {
+  const [filter, setFilter] = useState<Filter>("semua");
+  const [sortir, setSortir] = useState<Sortir>("bunga");
 
   const tampil = useMemo(() => {
-    const sorted = urutBank(banks, filter, sortir);
-    const terendah = bankTerendahKonvensional(sorted);
+    const list = banks.filter((b) => filter === "semua" || b.kpr_type === filter);
+    const sorted = [...list].sort((a, b) => {
+      if (sortir === "nama") return a.bank_name.localeCompare(b.bank_name, "id");
+      if (sortir === "dp") return a.min_dp_percent - b.min_dp_percent || a.bank_name.localeCompare(b.bank_name, "id");
+      return a.fixed_rate - b.fixed_rate || a.bank_name.localeCompare(b.bank_name, "id");
+    });
+    const terendah = sorted.length > 0 ? Math.min(...sorted.map((b) => b.fixed_rate)) : null;
     return { sorted, terendah };
   }, [banks, filter, sortir]);
 
-  function ubahFilter(f: FilterBank) {
+  function ubahFilter(f: Filter) {
     setFilter(f);
     track("calc_result_viewed", { tool: "bank-compare", filter: f });
   }
-
-  const dicekTeks = dicekSeed
-    ? new Date(dicekSeed).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-    : "per kapan pun saat disinkronkan";
 
   return (
     <div>
@@ -54,7 +44,7 @@ export function BandingKanBank({
           aria-label="Filter skema bank"
           className="flex flex-wrap gap-1.5"
         >
-          {(["semua", "subsidi", "komersial"] as FilterBank[]).map((f) => (
+          {(["semua", "subsidi", "komersial"] as Filter[]).map((f) => (
             <button
               key={f}
               type="button"
@@ -75,10 +65,10 @@ export function BandingKanBank({
           <span className="sr-only">Urutkan bank berdasarkan</span>
           <select
             value={sortir}
-            onChange={(e) => setSortir(e.target.value as SortirBank)}
+            onChange={(e) => setSortir(e.target.value as Sortir)}
             className="rounded-xl border border-line bg-paper px-3 py-2 text-xs font-bold text-ink outline-none focus-visible:border-primary"
           >
-            <option value="bunga">Bunga konvensional terendah</option>
+            <option value="bunga">Bunga terendah</option>
             <option value="dp">DP minimum</option>
             <option value="nama">Nama bank</option>
           </select>
@@ -97,12 +87,7 @@ export function BandingKanBank({
                 <p className="flex flex-wrap items-center gap-2 font-bold">
                   <Landmark className="size-4 text-primary" aria-hidden="true" />
                   {b.bank_name}
-                  {b.skema === "syariah" ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
-                      Skema syariah
-                    </span>
-                  ) : tampil.terendah !== null && b.kpr_type === "komersial" &&
-                    b.fixed_rate === tampil.terendah ? (
+                  {tampil.terendah !== null && b.fixed_rate === tampil.terendah ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold text-accent-ink">
                       <Award className="size-3.5" aria-hidden="true" />
                       Bunga terendah
@@ -110,12 +95,6 @@ export function BandingKanBank({
                   ) : null}
                 </p>
                 <p className="mt-1 text-sm text-ink-soft">{b.notes}</p>
-                {b.skema === "syariah" ? (
-                  <p className="mt-1 text-xs text-ink-soft">
-                    Margin tetap — tidak dibandingkan satu-ke-satu dengan
-                    konvensional.
-                  </p>
-                ) : null}
                 <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-ink-soft">
                   <div className="flex gap-1.5">
                     <dt className="font-bold">Fixed:</dt>
@@ -149,17 +128,6 @@ export function BandingKanBank({
           ))
         )}
       </div>
-
-      {dariSeed ? (
-        <div className="mt-6 rounded-2xl border border-accent/40 bg-accent-soft/60 p-4 text-sm text-ink-soft">
-          <p className="font-bold text-accent-ink">Data contoh (seed)</p>
-          <p className="mt-1">
-            Angka di atas adalah contoh seed {dicekTeks} — bukan penawaran
-            resmi bank. Hubungi bank untuk angka mutakhir & ketentuan yang
-            berlaku.
-          </p>
-        </div>
-      ) : null}
 
       <div className="mt-8 flex flex-col items-center gap-4 rounded-3xl border border-line bg-surface p-8 text-center sm:flex-row sm:text-left">
         <Landmark className="size-8 shrink-0 text-primary" aria-hidden="true" />

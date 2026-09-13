@@ -6,30 +6,26 @@ import { panduanArtikel } from "@/content/panduan";
 export default function sitemap(): MetadataRoute.Sitemap {
   const statis = [
     "",
-    "/perjalanan",
     "/panduan",
     "/kalkulator",
-    "/alat",
-    "/alat/planner-dp",
-    "/alat/sewa-vs-beli",
+    "/mampu-beli",
+    "/planner-dp",
+    "/sewa-vs-beli",
+    "/profil-kamu",
     "/syarat",
     "/checklist",
     "/faq",
     "/glosarium",
     "/tentang",
-    "/kontak",
+    "/hubungi",
     "/privasi",
   ].map((path) => ({
     url: `${SITE_ORIGIN}${path}`,
     lastModified: RIVISI,
   }));
-  const tahap = tahapKpr.map((t) => ({
-    url: `${SITE_ORIGIN}/perjalanan/${t.slug}`,
+  const dinamis = [...tahapKpr, ...panduanArtikel].map((x) => ({
+    url: `${SITE_ORIGIN}/panduan/${x.slug}`,
     lastModified: RIVISI,
   }));
-  const artikel = panduanArtikel.map((a) => ({
-    url: `${SITE_ORIGIN}/panduan/${a.slug}`,
-    lastModified: RIVISI,
-  }));
-  return [...statis, ...tahap, ...artikel];
+  return [...statis, ...dinamis];
 }

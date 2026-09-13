@@ -35,12 +35,12 @@ type PilihanBank = {
 function buatPilihan(rates: BankRate[]): PilihanBank[] {
   const flpp: PilihanBank = {
     id: "flpp",
-    label: "FLPP · KPR Subsidi — 5% flat · s.d. 40 tahun",
+    label: "FLPP · KPR Subsidi — 5% flat · 20 tahun",
     kprType: "subsidi",
     fixedRate: 5,
-    fixedYears: 40,
+    fixedYears: 20,
     floatingRate: null,
-    maxTenor: 40,
+    maxTenor: 20,
     minDp: 1,
   };
   const komersial = rates.map((r) => ({
@@ -64,7 +64,7 @@ const HARGA_STEP = 1_000_000;
 const DP_MIN = 0;
 const DP_MAX = 50;
 const TENOR_MIN = 5;
-const TENOR_MAX = 40;
+const TENOR_MAX = 30;
 
 function clampInt(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, Math.round(n)));
@@ -76,18 +76,15 @@ export function KalkulatorWithDp({ rates }: { rates: BankRate[] }) {
   // Gunakan has !== null agar ?dp=0 tetap dihormati (0 adalah DP yang sah).
   const parsed = raw !== null ? Number(raw) : NaN;
   const initialDp = Number.isFinite(parsed) ? Math.min(50, Math.max(0, parsed)) : 10;
-  const initialMode = searchParams.get("mode") === "income" ? "penghasilan" : "harga";
-  return <Kalkulator rates={rates} initialDp={initialDp} initialMode={initialMode} />;
+  return <Kalkulator rates={rates} initialDp={initialDp} />;
 }
 
 export function Kalkulator({
   rates,
   initialDp = 10,
-  initialMode = "harga",
 }: {
   rates: BankRate[];
   initialDp?: number;
-  initialMode?: "harga" | "penghasilan";
 }) {
   const pilihan = useMemo(() => buatPilihan(rates), [rates]);
   const [harga, setHarga] = useState(240_000_000);
@@ -99,7 +96,7 @@ export function Kalkulator({
   const [bankId, setBankId] = useState(pilihan[0].id);
   const [lihatBiaya, setLihatBiaya] = useState(false);
   const [lihatAmortisasi, setLihatAmortisasi] = useState(false);
-  const [mode, setMode] = useState<"harga" | "penghasilan">(initialMode);
+  const [mode, setMode] = useState<"harga" | "penghasilan">("harga");
   const [penghasilan, setPenghasilan] = useState("8000000");
   const [cicilanLain, setCicilanLain] = useState("0");
   const [dbr, setDbr] = useState(30);
@@ -463,7 +460,7 @@ export function Kalkulator({
           />
           <div className="mt-1 flex justify-between text-[11px] font-semibold text-ink-soft">
             <span>5 th</span>
-            <span>40 th</span>
+            <span>30 th</span>
           </div>
           {tenorTerpotong ? (
             <p className="mt-2 text-xs font-semibold text-accent-ink">
@@ -644,7 +641,7 @@ export function Kalkulator({
             {mode === "harga" ? (
               <>
                 Belum tahu kisaran kemampuannya?{" "}
-                <Link href="/kalkulator?mode=income" className="font-bold text-primary hover:text-primary-deep">
+                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
                   Cek dulu kemampuan beli
                 </Link>
                 .
@@ -652,7 +649,7 @@ export function Kalkulator({
             ) : (
               <>
                 Mau lihat perhitungan kemampuan yang lebih lengkap?{" "}
-                <Link href="/kalkulator?mode=income" className="font-bold text-primary hover:text-primary-deep">
+                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
                   Buka halaman Kemampuan beli
                 </Link>
                 .

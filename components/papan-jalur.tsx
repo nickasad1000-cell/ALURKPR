@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, MotionConfig, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
@@ -10,16 +10,24 @@ import {
   Check,
   ChevronDown,
   Clock,
+  Pause,
+  Play,
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { PelatTahap } from "@/components/blueprint-icons";
 import {
+  koordinatJalur,
+  koordinatToken,
   urutanPapan,
 } from "@/lib/papan-jalur";
 
 const KOLOM = 2;
 const TOTAL = tahapKpr.length;
+const POIN_JALUR = koordinatJalur(KOLOM, TOTAL);
+const POLYLINE = POIN_JALUR.map((p) => `${p.x},${p.y}`).join(" ");
+const POSISI = tahapKpr.map((_, i) => koordinatToken(i, KOLOM, TOTAL));
 const pad = (n: number) => String(n).padStart(2, "0");
+const DELAY_AUTO = 2400;
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-2 rounded-[2px] border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40";
@@ -141,7 +149,7 @@ function Tile({
               <Clock className="size-3" aria-hidden="true" />
               {t.estimasiWaktu}
             </span>
-            {t.uang.map((b) => (
+            {t.biayaTerkait.map((b) => (
               <span key={b} className="rounded-full border border-line bg-surface px-2.5 py-1 text-[11px] font-semibold text-ink-soft">
                 {b}
               </span>
@@ -151,20 +159,25 @@ function Tile({
           {t.dokumen.length > 0 && (
             <ul className="mt-4 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
               {t.dokumen.map((d) => (
-                <li key={`${d.kelompok}::${d.nama}`} className="flex items-start gap-2 text-sm text-ink-soft">
+                <li key={d} className="flex items-start gap-2 text-sm text-ink-soft">
                   <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-                  {d.nama}
+                  {d}
                 </li>
               ))}
             </ul>
           )}
 
+          <p className="mt-4 border-l-2 border-accent/50 pl-3 text-[13px] leading-relaxed text-ink-soft">
+            <span className="font-bold text-ink">Skema subsidi: </span>
+            {t.perbedaanSubsidi}
+          </p>
+
           <div className="mt-5">
             <Link
-              href={`/perjalanan/${t.slug}`}
+              href={`/panduan/${t.slug}`}
               className="inline-flex items-center gap-1.5 rounded-[2px] border border-primary/30 bg-surface px-4 py-2 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white focus-visible:ring-2 focus-visible:ring-primary"
             >
-              Detail lengkap di Perjalanan
+              Detail lengkap di panduan
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
@@ -178,7 +191,29 @@ export function PapanJalur() {
   const reduce = useReducedMotion();
   const [kunci, setKunci] = useState(0);
   const [terbuka, setTerbuka] = useState<ReadonlySet<number>>(new Set());
+  // Putar otomatis dimatikan total untuk pengguna reduced-motion; kontrol
+  // jeda/lanjut eksplisit memenuhi WCAG 2.2.2 (konten bergerak > 5 detik).
+  const [jeda, setJeda] = useState(false);
+  const [tersembunyi, setTersembunyi] = useState(false);
   const stepperRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const onVis = () => setTersembunyi(document.hidden);
+    onVis();
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  const berjalan =
+    !jeda && !reduce && !tersembunyi && terbuka.size === 0;
+
+  useEffect(() => {
+    if (!berjalan) return;
+    const id = window.setTimeout(() => {
+      setKunci((k) => (k + 1) % TOTAL);
+    }, DELAY_AUTO);
+    return () => window.clearTimeout(id);
+  }, [kunci, berjalan]);
 
   const toggle = (i: number) =>
     setTerbuka((prev) => {
@@ -200,8 +235,10 @@ export function PapanJalur() {
     toggle(i);
   };
 
+  const p = POSISI[kunci];
   const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
   const selesai = kunci === TOTAL - 1;
+  const tokenTersembunyi = terbuka.size > 0;
 
   const fokuskanStepper = (i: number) => {
     setKunci(i);
@@ -223,7 +260,7 @@ export function PapanJalur() {
     </>
   ) : (
     <>
-      Jelajah manual —{" "}
+      {berjalan ? "Putaran otomatis —" : "Jelajah manual —"}{" "}
       <span className="font-bold text-primary">
         Tahap {pad(kunci + 1)} dari {TOTAL}
       </span>
@@ -231,6 +268,22 @@ export function PapanJalur() {
   )}
 </div>
         <div className="flex flex-wrap items-center gap-2">
+          {!reduce && (
+            <button
+              type="button"
+              className={navBtn}
+              onClick={() => setJeda((j) => !j)}
+              aria-pressed={jeda}
+              aria-label={jeda ? "Lanjutkan putaran otomatis papan jalur" : "Jeda putaran otomatis papan jalur"}
+            >
+              {jeda ? (
+                <Play className="size-4" aria-hidden="true" />
+              ) : (
+                <Pause className="size-4" aria-hidden="true" />
+              )}
+              <span className="hidden sm:inline">{jeda ? "Lanjut" : "Jeda"}</span>
+            </button>
+          )}
           <button
             type="button"
             className={navBtn}

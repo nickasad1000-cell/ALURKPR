@@ -18,7 +18,7 @@
 - Sewa vs beli: /sewa-vs-beli
 - Checklist dokumen: /checklist
 - Tentang AlurKPR: /tentang
-- Hubungi kami: /kontak
+- Hubungi kami: /hubungi
 
 ## Topik Utama
 
@@ -41,8 +41,8 @@
 - Harga subsidi FLPP: Rp 166.000.000 (batas per zona)
 - Bunga subsidi: 5% flat (FLPP)
 - DP subsidi: mulai 1%
-- Usia pemohon: sesuai aturan skema (perlu dicek ulang ke bank penyalur)
-- Tenor: maksimal 40 tahun (rumah tapak)
+- Usia pemohon: 21–58 tahun
+- Tenor: 10–20 tahun
 
 ## Catatan
 - Seluruh angka bersifat indikatif dan dapat berubah mengikuti kebijakan pemerintah.

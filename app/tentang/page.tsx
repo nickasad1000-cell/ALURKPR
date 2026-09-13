@@ -6,7 +6,7 @@ import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary } from "@/
 export const metadata: Metadata = {
   title: "Tentang AlurKPR",
   description:
-    "AlurKPR adalah proyek literasi keuangan perumahan: membimbing calon pemilik rumah pertama memahami alur KPR subsidi dan komersial secara transparan dan dengan sumber yang jelas.",
+    "AlurKPR adalah proyek literasi keuangan perumahan: membimbing calon pemilik rumah pertama memahami alur KPR subsidi dan komersial dengan jujur dan jelas.",
   alternates: { canonical: "/tentang" },
 };
 
@@ -23,7 +23,7 @@ const nilai = [
   },
   {
     icon: Calculator,
-    judul: "Alat yang transparan",
+    judul: "Alat yang jujur",
     teks: "Kalkulator dan cek kelayakan dibuat transparan dengan asumsi yang disebutkan",
   },
   {
@@ -93,7 +93,7 @@ export default function TentangPage() {
             <Link href="/kalkulator" className={btnPrimary}>
               Mulai dari kalkulator
             </Link>
-            <Link href="/kontak" className={btnSecondary}>
+            <Link href="/hubungi" className={btnSecondary}>
               Tanya-tanya dulu
             </Link>
           </div>

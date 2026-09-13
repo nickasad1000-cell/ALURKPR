@@ -62,7 +62,7 @@ function buildRekomendasi(p: Profil) {
       judul: "Kamu sangat cocok untuk KPR subsidi",
       poin: [
         garisSubsidi,
-        "Bunga flat 5% & tenor hingga 40 tahun — fokus pada cek kelayakan & plafon zona.",
+        "Bunga flat 5% & tenor hingga 20 tahun — fokus pada cek kelayakan & plafon zona.",
         "DP bisa mulai 1% — siapkan dana awal kecil tapi total biaya tetap ada.",
       ],
       langkah: ["Cek kelayakan FLPP", "Bandingkan plafon per zona", "Pilih unit FLPP terdaftar"],

@@ -12,12 +12,14 @@ const STORAGE_KEY = "alurkpr-checklist-v1";
 type Item = { id: string; tahap: number; label: string; tahapSlug: string };
 
 const itemDokumen: Item[] = tahapKpr.flatMap((t) =>
-  t.dokumen.map((d) => ({
-    id: `${t.slug}::${d.kelompok}::${d.nama}`,
-    tahap: t.nomor,
-    label: d.nama,
-    tahapSlug: t.slug,
-  })),
+  t.dokumen
+    .filter((d) => !d.startsWith("Tidak ada"))
+    .map((d) => ({
+      id: `${t.slug}::${d}`,
+      tahap: t.nomor,
+      label: d,
+      tahapSlug: t.slug,
+    })),
 );
 
 const kelompok = itemDokumen.reduce<Record<number, Item[]>>((acc, item) => {
@@ -216,9 +218,9 @@ export function ChecklistDokumen() {
           pengajuan sambil menyiapkan dana awal.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
-          <Link href="/perjalanan/05-dana-dokumen" className={`${btnSecondary} h-10 px-4 text-xs`}>
+          <Link href="/panduan/tahap-5-pengajuan-kpr-ke-bank" className={`${btnSecondary} h-10 px-4 text-xs`}>
             <FileText className="size-4" aria-hidden="true" />
-            Kembali ke tahap pengajuan
+            Baca tahap pengajuan
           </Link>
           <Link href="/kalkulator" className={`${btnSecondary} h-10 px-4 text-xs`}>
             Hitung dana awal

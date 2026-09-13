@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import { cekKelayakan, OPSI_ZONA } from "@/lib/eligibility";
-import { OPSI_ZONA_HARGA } from "@/lib/zona";
 import { formatAngkaId, parseNumberId } from "@/lib/finance";
 import type { KelayakanResult } from "@/lib/types";
 import { track } from "@/lib/analytics";
@@ -15,10 +14,6 @@ export function KelayakanForm() {
   const [penghasilan, setPenghasilan] = useState("5.000.000");
   const [hargaUnit, setHargaUnit] = useState("150.000.000");
   const [zona, setZona] = useState<1 | 2 | 3 | 4>(1);
-  const [zonaHarga, setZonaHarga] = useState<1 | 2 | 3 | 4 | 5>(1);
-  const [statusKeluarga, setStatusKeluarga] = useState<"belum-kawin" | "kawin">(
-    "belum-kawin",
-  );
   const [dewasaAtauMenikah, setDewasaAtauMenikah] = useState(false);
   const [belumPunyaRumah, setBelumPunyaRumah] = useState(false);
   const [belumPernahSubsidi, setBelumPernahSubsidi] = useState(false);
@@ -41,9 +36,7 @@ export function KelayakanForm() {
       dewasaAtauMenikah,
       belumPunyaRumah,
       belumPernahSubsidi,
-      statusKeluarga,
       zona,
-      zonaHarga,
     });
     setHasil(res);
     // Privasi: jangan kirim angka keuangan ke analytics — cukup hasil lolos/tidak.
@@ -54,7 +47,7 @@ export function KelayakanForm() {
     <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Cek kelayakan KPR subsidi</h2>
       <p className="mt-1 text-sm text-ink-soft">
-        Mengacu aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026) — indikatif.
+        Mengacu aturan FLPP terbaru (Permen PKP No. 5 Tahun 2025) — indikatif.
       </p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -116,48 +109,6 @@ export function KelayakanForm() {
         </span>
       </label>
 
-      <label className="mt-5 block">
-        <span className="text-sm font-bold">Status keluarga</span>
-        <select
-          value={statusKeluarga}
-          onChange={(e) =>
-            setStatusKeluarga(e.target.value as "belum-kawin" | "kawin")
-          }
-          className={`mt-1.5 ${inputCls}`}
-          aria-label="Status keluarga pemohon"
-        >
-          <option value="belum-kawin">Belum kawin</option>
-          <option value="kawin">Sudah menikah (atau peserta Tapera)</option>
-        </select>
-        <span className="mt-1 block text-xs text-ink-soft">
-          Pemohon yang sudah menikah memakai batas penghasilan yang lebih
-          tinggi; peserta Tapera umumnya setara dengan baris yang sudah
-          menikah.
-        </span>
-      </label>
-
-      <label className="mt-5 block">
-        <span className="text-sm font-bold">Zona harga rumah (plafon FLPP)</span>
-        <select
-          value={zonaHarga}
-          onChange={(e) =>
-            setZonaHarga(Number(e.target.value) as 1 | 2 | 3 | 4 | 5)
-          }
-          className={`mt-1.5 ${inputCls}`}
-          aria-label="Zona harga rumah menurut Kepmen 1722/KPTS/M/2026"
-        >
-          {OPSI_ZONA_HARGA.map((z) => (
-            <option key={z.nilai} value={z.nilai}>
-              {z.label}
-            </option>
-          ))}
-        </select>
-        <span className="mt-1 block text-xs text-ink-soft">
-          Plafon harga unit subsidi berbeda per zona — acuan: Kepmen
-          1722/KPTS/M/2026.
-        </span>
-      </label>
-
       <fieldset className="mt-6 space-y-3">
         <legend className="text-sm font-bold">Kondisi pemohon</legend>
         <p className="text-xs leading-relaxed text-ink-soft">
@@ -166,7 +117,7 @@ export function KelayakanForm() {
         {[
           {
             id: "dewasa",
-            label: "Saya memenuhi syarat usia sesuai aturan skema (cek ulang ke bank penyalur)",
+            label: "Saya berusia ≥ 21 tahun atau sudah menikah",
             value: dewasaAtauMenikah,
             set: setDewasaAtauMenikah,
           },
@@ -211,16 +162,6 @@ export function KelayakanForm() {
 
       {hasil ? (
         <div role="alert" className={`mt-6 rounded-2xl border p-5 ${hasil.layak ? "border-primary/30 bg-primary-soft" : "border-accent/40 bg-accent-soft/60"}`}>
-          {hasil.peringatan.length > 0 ? (
-            <ul className="mb-4 space-y-1.5 rounded-xl border border-accent/40 bg-accent-soft/60 p-3 text-sm text-accent-ink">
-              {hasil.peringatan.map((p) => (
-                <li key={p} className="flex items-start gap-2">
-                  <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
           <div className="flex items-center gap-2.5">
             {hasil.layak ? (
               <CheckCircle2 className="size-6 text-primary" aria-hidden="true" />
@@ -275,7 +216,7 @@ export function KelayakanForm() {
                 label="Tanya strategi lainnya"
                 pesan={`Halo, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya ingin konsultasi.`}
               />
-              <Link href="/perjalanan/01-keuangan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
+              <Link href="/panduan/tahap-1-cek-keuangan-dan-kelayakan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
                 Baca langkah memperbaiki kelayakan
               </Link>
             </div>

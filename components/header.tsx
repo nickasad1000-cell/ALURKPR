@@ -8,28 +8,26 @@ import { Logo } from "./logo";
 import { btnFocus } from "./ui";
 
 const nav = [
-  { href: "/perjalanan", label: "Perjalanan" },
-  { href: "/kalkulator", label: "Kalkulator" },
   { href: "/panduan", label: "Panduan" },
-  { href: "/tentang", label: "Tentang" },
+  { href: "/profil-kamu", label: "Profil Kamu" },
+  { href: "/kalkulator", label: "Kalkulator" },
+  { href: "/mampu-beli", label: "Kemampuan beli" },
+  { href: "/hubungi", label: "Hubungi" },
 ];
 
-const referensiNav = [
-  { href: "/alat", label: "Semua alat" },
-  { href: "/syarat", label: "Cek kelayakan" },
-  { href: "/kalkulator?mode=income", label: "Kemampuan beli" },
-  { href: "/alat/planner-dp", label: "Rencana tabung DP" },
-  { href: "/alat/sewa-vs-beli", label: "Sewa vs beli" },
+const alatNav = [
+  { href: "/tentang", label: "Tentang" },
+  { href: "/planner-dp", label: "Rencana tabung DP" },
+  { href: "/sewa-vs-beli", label: "Sewa vs beli" },
   { href: "/checklist", label: "Checklist dokumen" },
-  { href: "/perjalanan/03-skema", label: "Rekomendasi skema" },
-  { href: "/faq", label: "FAQ" },
   { href: "/glosarium", label: "Glosarium" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [buka, setBuka] = useState<"referensi" | null>(null);
+  const [buka, setBuka] = useState<"alat" | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,28 +89,26 @@ export function Header() {
           <div ref={dropdownRef} className="relative">
             <button
               type="button"
-              onClick={() => setBuka((v) => (v === "referensi" ? null : "referensi"))}
-              aria-expanded={buka === "referensi"}
+              onClick={() => setBuka((v) => (v === "alat" ? null : "alat"))}
+              aria-expanded={buka === "alat"}
               aria-haspopup="menu"
               className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-[background-color,color] ${btnFocus} ${
-                buka === "referensi"
-                  ? "bg-surface text-ink"
-                  : "text-ink-soft hover:bg-surface hover:text-ink"
+                buka === "alat" ? "bg-surface text-ink" : "text-ink-soft hover:bg-surface hover:text-ink"
               }`}
             >
-              Referensi
+              Alat
               <ChevronDown
-                className={`size-4 transition-transform ${buka === "referensi" ? "rotate-180" : ""}`}
+                className={`size-4 transition-transform ${buka === "alat" ? "rotate-180" : ""}`}
                 aria-hidden="true"
               />
             </button>
-            {buka === "referensi" ? (
+            {buka === "alat" ? (
               <div
                 role="menu"
                 aria-label="Alat dan referensi KPR"
                 className="absolute right-0 z-50 mt-2 w-60 rounded-2xl border border-line bg-surface p-1.5 shadow-xl shadow-ink/5"
               >
-                {referensiNav.map((t) => (
+                {alatNav.map((t) => (
                   <Link
                     key={t.href}
                     href={t.href}
@@ -126,11 +122,11 @@ export function Header() {
             ) : null}
           </div>
           <Link
-            href="/perjalanan"
+            href="/syarat"
             onClick={tutupMenu}
             className={`ml-1.5 inline-flex h-10 items-center rounded-full bg-primary px-4 text-sm font-bold text-white shadow-sm transition-[background-color,transform] hover:bg-primary-deep active:scale-[0.98] ${btnFocus}`}
           >
-            Mulai
+            Cek Kelayakan
           </Link>
         </nav>
 
@@ -170,9 +166,9 @@ export function Header() {
               </Link>
             ))}
             <p className="mt-3 px-4 pt-3 text-xs font-bold uppercase tracking-wider text-ink-soft">
-              Referensi
+              Alat & Referensi
             </p>
-            {referensiNav.map((t) => (
+            {alatNav.map((t) => (
               <Link
                 key={t.href}
                 href={t.href}
@@ -183,11 +179,11 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/perjalanan"
+              href="/syarat"
               onClick={() => setOpen(false)}
               className={`mt-2 inline-flex h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-bold text-white ${btnFocus}`}
             >
-              Mulai perjalanan
+              Cek Kelayakan
             </Link>
           </div>
         </nav>
