@@ -84,7 +84,9 @@ export default async function SyaratPage() {
           />
           <div className="mt-10">
             <BandingKanBank
-              banks={rates.length > 0 ? rates : seedBankRates}
+              banks={rates.data.length > 0 ? rates.data : seedBankRates}
+              dariSeed={rates.sumber === "seed"}
+              dicekSeed={rates.dicek}
             />
           </div>
         </Container>

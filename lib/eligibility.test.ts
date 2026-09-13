@@ -7,7 +7,9 @@ const lolosSemua = {
   belumPernahSubsidi: true,
   hargaUnit: 150_000_000,
   dewasaAtauMenikah: true,
+  statusKeluarga: "belum-kawin" as const,
   zona: 1 as const,
+  zonaHarga: 1 as const,
 };
 
 describe("cekKelayakan", () => {
@@ -23,6 +25,21 @@ describe("cekKelayakan", () => {
     const r = cekKelayakan({ ...lolosSemua, penghasilan: 10_500_000 });
     expect(r.layak).toBe(false);
     expect(r.alasan.length).toBeGreaterThan(0);
+  });
+
+  it("status kawin memakai batas kawin yang lebih tinggi", () => {
+    // Zona 1: 9,5jt melewati batas belum kawin (8,5jt) tapi lolos batas kawin (10jt)
+    const belumKawin = cekKelayakan({ ...lolosSemua, penghasilan: 9_500_000 });
+    expect(belumKawin.layak).toBe(false);
+    const kawin = cekKelayakan({
+      ...lolosSemua,
+      penghasilan: 9_500_000,
+      statusKeluarga: "kawin",
+    });
+    expect(kawin.layak).toBe(true);
+    expect(kawin.syarat.find((s) => s.label.includes("Penghasilan"))?.lolos).toBe(
+      true,
+    );
   });
 
   it("penghasilan 9jt zona 1: gagal untuk belum kawin, tapi diberi catatan opsi kawin", () => {
@@ -56,10 +73,16 @@ describe("cekKelayakan", () => {
     ).toBe(false);
   });
 
-  it("harga unit di atas plafon konservatif → tidak layak", () => {
-    expect(cekKelayakan({ ...lolosSemua, hargaUnit: 250_000_000 }).layak).toBe(
+  it("harga unit di atas plafon zona harga 1 (166jt) → tidak layak", () => {
+    expect(cekKelayakan({ ...lolosSemua, hargaUnit: 200_000_000 }).layak).toBe(
       false,
     );
+  });
+
+  it("harga 200jt layak di zona harga 5 (Papua, 240jt)", () => {
+    const r = cekKelayakan({ ...lolosSemua, hargaUnit: 200_000_000, zonaHarga: 5 });
+    expect(r.layak).toBe(true);
+    expect(r.syarat.find((s) => s.label.includes("Harga unit"))?.lolos).toBe(true);
   });
 
   it("belum dewasa/menikah → tidak layak", () => {

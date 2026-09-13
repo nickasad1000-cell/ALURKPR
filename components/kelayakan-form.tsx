@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import { cekKelayakan, OPSI_ZONA } from "@/lib/eligibility";
+import { OPSI_ZONA_HARGA } from "@/lib/zona";
 import { formatAngkaId, parseNumberId } from "@/lib/finance";
 import type { KelayakanResult } from "@/lib/types";
 import { track } from "@/lib/analytics";
@@ -14,6 +15,10 @@ export function KelayakanForm() {
   const [penghasilan, setPenghasilan] = useState("5.000.000");
   const [hargaUnit, setHargaUnit] = useState("150.000.000");
   const [zona, setZona] = useState<1 | 2 | 3 | 4>(1);
+  const [zonaHarga, setZonaHarga] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [statusKeluarga, setStatusKeluarga] = useState<"belum-kawin" | "kawin">(
+    "belum-kawin",
+  );
   const [dewasaAtauMenikah, setDewasaAtauMenikah] = useState(false);
   const [belumPunyaRumah, setBelumPunyaRumah] = useState(false);
   const [belumPernahSubsidi, setBelumPernahSubsidi] = useState(false);
@@ -36,7 +41,9 @@ export function KelayakanForm() {
       dewasaAtauMenikah,
       belumPunyaRumah,
       belumPernahSubsidi,
+      statusKeluarga,
       zona,
+      zonaHarga,
     });
     setHasil(res);
     // Privasi: jangan kirim angka keuangan ke analytics — cukup hasil lolos/tidak.
@@ -106,6 +113,48 @@ export function KelayakanForm() {
         <span className="mt-1 block text-xs text-ink-soft">
           Batas penghasilan MBR berbeda per zona — pemohon yang sudah menikah
           punya batas lebih tinggi.
+        </span>
+      </label>
+
+      <label className="mt-5 block">
+        <span className="text-sm font-bold">Status keluarga</span>
+        <select
+          value={statusKeluarga}
+          onChange={(e) =>
+            setStatusKeluarga(e.target.value as "belum-kawin" | "kawin")
+          }
+          className={`mt-1.5 ${inputCls}`}
+          aria-label="Status keluarga pemohon"
+        >
+          <option value="belum-kawin">Belum kawin</option>
+          <option value="kawin">Sudah menikah (atau peserta Tapera)</option>
+        </select>
+        <span className="mt-1 block text-xs text-ink-soft">
+          Pemohon yang sudah menikah memakai batas penghasilan yang lebih
+          tinggi; peserta Tapera umumnya setara dengan baris yang sudah
+          menikah.
+        </span>
+      </label>
+
+      <label className="mt-5 block">
+        <span className="text-sm font-bold">Zona harga rumah (plafon FLPP)</span>
+        <select
+          value={zonaHarga}
+          onChange={(e) =>
+            setZonaHarga(Number(e.target.value) as 1 | 2 | 3 | 4 | 5)
+          }
+          className={`mt-1.5 ${inputCls}`}
+          aria-label="Zona harga rumah menurut Kepmen 1722/KPTS/M/2026"
+        >
+          {OPSI_ZONA_HARGA.map((z) => (
+            <option key={z.nilai} value={z.nilai}>
+              {z.label}
+            </option>
+          ))}
+        </select>
+        <span className="mt-1 block text-xs text-ink-soft">
+          Plafon harga unit subsidi berbeda per zona — acuan: Kepmen
+          1722/KPTS/M/2026.
         </span>
       </label>
 

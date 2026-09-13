@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KalkulatorPage() {
-  const rates = await getBankRates();
+  const { data } = await getBankRates();
   return (
     <section className="py-12 sm:py-16">
       <Container>
@@ -26,8 +26,8 @@ export default async function KalkulatorPage() {
           align="center"
         />
         <div className="mt-10">
-          <Suspense fallback={<Kalkulator rates={rates} initialDp={10} />}>
-            <KalkulatorWithDp rates={rates} />
+          <Suspense fallback={<Kalkulator rates={data} initialDp={10} />}>
+            <KalkulatorWithDp rates={data} />
           </Suspense>
         </div>
       </Container>
