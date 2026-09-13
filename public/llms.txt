@@ -18,7 +18,7 @@
 - Sewa vs beli: /sewa-vs-beli
 - Checklist dokumen: /checklist
 - Tentang AlurKPR: /tentang
-- Hubungi kami: /hubungi
+- Hubungi kami: /kontak
 
 ## Topik Utama
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail } from "lucide-react";
-import { HubungiForm } from "./hubungi-form";
+import { KontakForm } from "./kontak-form";
 import { Container, SectionHeading } from "@/components/ui";
 import { WhatsAppLink } from "@/components/whatsapp-link";
 import { ALAMAT, BRAND_NAME, WHATSAPP_DISPLAY } from "@/lib/brand";
@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   title: "Hubungi Kami",
   description:
     "Kirim pertanyaan atau masukan seputar panduan KPR. Tim AlurKPR membalas pesan yang kamu kirim melalui formulir atau WhatsApp.",
-  alternates: { canonical: "/hubungi" },
+  alternates: { canonical: "/kontak" },
 };
 
-export default function HubungiPage() {
+export default function KontakPage() {
   return (
     <section className="border-b border-line bg-surface">
       <Container className="py-14 sm:py-20">
@@ -51,7 +51,7 @@ export default function HubungiPage() {
               {ALAMAT}
             </p>
           </div>
-          <HubungiForm />
+          <KontakForm />
         </div>
       </Container>
     </section>

@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/faq",
     "/glosarium",
     "/tentang",
-    "/hubungi",
+    "/kontak",
     "/privasi",
   ].map((path) => ({
     url: `${SITE_ORIGIN}${path}`,

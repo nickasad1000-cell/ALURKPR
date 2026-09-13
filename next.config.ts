@@ -55,6 +55,11 @@ const redirects: NextConfig["redirects"] = async () => [
   // Alat lama → rute kanonis baru (PRD §102). /checklist DIKECUALIKAN:
   // dipertahankan sebagai checklist print/export pendamping Tahap 5.
   {
+    source: "/hubungi",
+    destination: "/kontak",
+    permanent: true,
+  },
+  {
     source: "/profil-kamu",
     destination: "/perjalanan/03-skema",
     permanent: true,

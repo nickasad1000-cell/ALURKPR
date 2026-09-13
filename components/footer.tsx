@@ -23,7 +23,7 @@ const kolomPanduan = [
 
 const kolomInfo = [
   { href: "/tentang", label: "Tentang AlurKPR" },
-  { href: "/hubungi", label: "Hubungi kami" },
+  { href: "/kontak", label: "Hubungi kami" },
   { href: "/faq", label: "FAQ" },
   { href: "/glosarium", label: "Glosarium" },
   { href: "/privasi", label: "Kebijakan privasi" },

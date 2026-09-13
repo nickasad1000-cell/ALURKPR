@@ -93,7 +93,7 @@ export default function TentangPage() {
             <Link href="/kalkulator" className={btnPrimary}>
               Mulai dari kalkulator
             </Link>
-            <Link href="/hubungi" className={btnSecondary}>
+            <Link href="/kontak" className={btnSecondary}>
               Tanya-tanya dulu
             </Link>
           </div>

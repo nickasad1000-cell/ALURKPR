@@ -12,7 +12,7 @@ type Status =
   | { state: "done"; pesan: string }
   | { state: "error"; pesan: string };
 
-export function HubungiForm() {
+export function KontakForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
   const [form, setForm] = useState({ nama: "", email: "", pesan: "", consent: false });
   const [website, setWebsite] = useState("");

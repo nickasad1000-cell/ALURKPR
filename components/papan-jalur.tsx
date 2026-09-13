@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, MotionConfig, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
@@ -10,8 +10,6 @@ import {
   Check,
   ChevronDown,
   Clock,
-  Pause,
-  Play,
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { PelatTahap } from "@/components/blueprint-icons";
@@ -22,7 +20,6 @@ import {
 const KOLOM = 2;
 const TOTAL = tahapKpr.length;
 const pad = (n: number) => String(n).padStart(2, "0");
-const DELAY_AUTO = 2400;
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-2 rounded-[2px] border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40";
@@ -181,29 +178,7 @@ export function PapanJalur() {
   const reduce = useReducedMotion();
   const [kunci, setKunci] = useState(0);
   const [terbuka, setTerbuka] = useState<ReadonlySet<number>>(new Set());
-  // Putar otomatis dimatikan total untuk pengguna reduced-motion; kontrol
-  // jeda/lanjut eksplisit memenuhi WCAG 2.2.2 (konten bergerak > 5 detik).
-  const [jeda, setJeda] = useState(false);
-  const [tersembunyi, setTersembunyi] = useState(false);
   const stepperRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  useEffect(() => {
-    const onVis = () => setTersembunyi(document.hidden);
-    onVis();
-    document.addEventListener("visibilitychange", onVis);
-    return () => document.removeEventListener("visibilitychange", onVis);
-  }, []);
-
-  const berjalan =
-    !jeda && !reduce && !tersembunyi && terbuka.size === 0;
-
-  useEffect(() => {
-    if (!berjalan) return;
-    const id = window.setTimeout(() => {
-      setKunci((k) => (k + 1) % TOTAL);
-    }, DELAY_AUTO);
-    return () => window.clearTimeout(id);
-  }, [kunci, berjalan]);
 
   const toggle = (i: number) =>
     setTerbuka((prev) => {
@@ -248,7 +223,7 @@ export function PapanJalur() {
     </>
   ) : (
     <>
-      {berjalan ? "Putaran otomatis —" : "Jelajah manual —"}{" "}
+      Jelajah manual —{" "}
       <span className="font-bold text-primary">
         Tahap {pad(kunci + 1)} dari {TOTAL}
       </span>
@@ -256,22 +231,6 @@ export function PapanJalur() {
   )}
 </div>
         <div className="flex flex-wrap items-center gap-2">
-          {!reduce && (
-            <button
-              type="button"
-              className={navBtn}
-              onClick={() => setJeda((j) => !j)}
-              aria-pressed={jeda}
-              aria-label={jeda ? "Lanjutkan putaran otomatis papan jalur" : "Jeda putaran otomatis papan jalur"}
-            >
-              {jeda ? (
-                <Play className="size-4" aria-hidden="true" />
-              ) : (
-                <Pause className="size-4" aria-hidden="true" />
-              )}
-              <span className="hidden sm:inline">{jeda ? "Lanjut" : "Jeda"}</span>
-            </button>
-          )}
           <button
             type="button"
             className={navBtn}

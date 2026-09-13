@@ -120,7 +120,7 @@ export default function PrivasiPage() {
 
           <p className="mt-8 text-center text-xs leading-relaxed text-ink-soft">
             Ada pertanyaan seputar privasi? Baca{" "}
-            <Link href="/hubungi" className="font-bold text-primary hover:text-primary-deep">
+            <Link href="/kontak" className="font-bold text-primary hover:text-primary-deep">
               halaman kontak
             </Link>{" "}
             atau lihat{" "}
