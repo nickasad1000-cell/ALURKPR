@@ -57,7 +57,9 @@ export type AnalyticsEvent =
   | "form_submitted"
   | "wa_clicked"
   | "next_step_clicked"
-  | "checklist_saved";
+  | "checklist_saved"
+  | "jalur_status"
+  | "jalur_hasil_checked";
 
 /** Catat event konversi. No-op bila GA belum dikonfigurasi. */
 export function track(event: AnalyticsEvent, params?: Record<string, unknown>) {

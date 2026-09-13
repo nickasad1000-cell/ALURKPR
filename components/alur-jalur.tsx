@@ -78,8 +78,8 @@ export function AlurJalur() {
         </div>
 
         <div className="mt-12 text-center">
-          <Link href="/panduan" className={btnSecondary}>
-            Baca detail semua tahap
+          <Link href="/perjalanan" className={btnSecondary}>
+            Buka peta jalan perjalanan
           </Link>
         </div>
       </Container>

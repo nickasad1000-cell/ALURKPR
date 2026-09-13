@@ -262,7 +262,7 @@ export function RentVsBeli() {
               <Wallet className="size-4" aria-hidden="true" />
               Simulasikan angsuran
             </Link>
-            <Link href="/profil-kamu" className={btnSecondary}>
+            <Link href="/perjalanan/03-skema" className={btnSecondary}>
               Kenali profil KPR
             </Link>
           </div>

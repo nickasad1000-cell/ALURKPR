@@ -3,259 +3,415 @@ import type { Tahap } from "../lib/types";
 export const tahapKpr: Tahap[] = [
   {
     nomor: 1,
-    slug: "tahap-1-cek-keuangan-dan-kelayakan",
-    judul: "Cek Keuangan & Kelayakan Sebelum Apa Pun",
-    judulSingkat: "Cek kelayakan & keuangan",
+    slug: "01-keuangan",
+    judul: "Siapkan Keuangan",
+    judulSingkat: "Siapkan keuangan",
     ringkasan:
-      "Hitung penghasilan, cicilan maksimal, dan pastikan kamu memenuhi syarat sebelum mulai mencari rumah.",
-    fakta: { nilai: "30–40%", label: "Batas cicilan sehat dari penghasilan" },
-    penjelasan: [
-      "Langkah pertama justru bukan mencari rumah, melainkan bersiap dari sisi finansial dan administrasi. Cek batas cicilan sehat: idealnya angsuran tidak lebih dari 30–40% penghasilan bersih bulanan.",
-      "Hitung dana yang sudah terkumpul: uang muka (DP), biaya awal (BPHTB, provisi, administrasi, notaris, asuransi), plus dana darurat minimal 3–6 bulan pengeluaran.",
-      "Jika kamu menargetkan KPR subsidi (FLPP), pastikan memenuhi persyaratan MBR: usia minimal 21 tahun atau sudah menikah, belum punya rumah, belum pernah menerima subsidi, dan penghasilan pokok sesuai batas yang berlaku.",
-      "Gunakan cek kelayakan di situs ini untuk simulasi cepat. Kalau belum lolos, kamu masih punya waktu untuk menabung lebih banyak atau menurunkan target harga rumah.",
+      "Tahu penghasilan bersih, cicilan maksimal yang sehat, dan posisi keuanganmu sebelum langkah lainnya.",
+    estimasiWaktu: "1–2 minggu",
+    fakta: {
+      nilai: "30–40%",
+      label: "Batas cicilan sehat dari penghasilan bersih",
+      sumber: "Praktik perbankan & edukasi perencanaan keuangan",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Kamu tahu keuanganmu siap atau belum, dan berapa cicilan bulanan yang masih nyaman.",
+    siapkanIni: [
+      "Catatan penghasilan bersih bulanan (setelah potongan)",
+      "Daftar utang dan tagihan tetap bulanan",
+      "Saldo tabungan dan dana darurat",
     ],
-    dokumen: ["KTP", "Kartu Keluarga", "Slip gaji / keterangan penghasilan 3 bulan terakhir"],
-    estimasiWaktu: "1–2 minggu (bisa sambil riset rumah)",
-    biayaTerkait: ["Tidak ada", "Opsional: konsultasi perencana keuangan"],
-    tips: [
-      "Lunasi atau kurangi utang konsumtif (KTA, kartu kredit) agar rasio utang terhadap pendapatan mengecil.",
-      "Pakai simulasi kalkulator di situs ini untuk tahu angsuran di berbagai tenor sebelum bernegosiasi.",
-      "Siapkan buffer minimal 10% di atas target biaya awal — selalu ada biaya yang muncul di luar rencana.",
+    lakukan: [
+      "Hitung penghasilan bersih bulanan dan total tagihan tetap (utang, kartu kredit, langganan).",
+      "Pastikan calon angsuran tidak lebih dari 30–40% penghasilan bersih.",
+      "Targetkan dana darurat 3–6 bulan pengeluaran sebelum akad.",
+      "Kalau membidik KPR subsidi (FLPP): cek syarat MBR — usia minimal 21 tahun atau sudah menikah, belum punya rumah, dan belum pernah menerima subsidi.",
     ],
-    kesalahanUmum: [
-      "Menyamakan limit cicilan bank dengan kemampuan finansial nyata — bank menilai berdasarkan data, kamu yang menjalani angsuran bulanannya.",
-      "Lupa menghitung biaya awal di luar DP sehingga dana jebol di tengah proses.",
-      "Tidak mengecek status subsidi terlebih dahulu, kemudian kecewa karena tidak lolos MBR.",
+    uang: ["Tidak ada uang keluar — modal utamanya waktu dan data"],
+    dokumen: [
+      { kelompok: "identitas", nama: "KTP" },
+      { kelompok: "identitas", nama: "Kartu Keluarga" },
+      { kelompok: "penghasilan", nama: "Slip gaji / bukti penghasilan 3 bulan terakhir" },
+      { kelompok: "keuangan", nama: "Rekening tabungan 3 bulan terakhir" },
     ],
-    perbedaanSubsidi:
-      "Untuk subsidi, cek kelayakannya lebih ketat: ada verifikasi MBR oleh sistem resmi BP Tapera (pengelola FLPP). Untuk komersial, kelayakan hanya dinilai bank (suku bunga & plafon lebih longgar).",
+    perhatikan: [
+      "Limit cicilan bank bukan kemampuanmu yang sebenarnya — bank menilai data, kamu yang membayar tiap bulan.",
+      "Biaya awal di luar DP (BPHTB, notaris, provisi, asuransi) sering dilupakan — siapkan buffernya.",
+      "Kebiasaan telat bayar utang konsumtif tercatat di SLIK dan menekan penilaian bank.",
+    ],
+    hasilTahap: [
+      "Tahu angka penghasilan bersih bulanan",
+      "Tahu cicilan maksimal yang masih sehat",
+      "Dana darurat 3–6 bulan tercatat",
+      "Status MBR ter-identifikasi (untuk jalur subsidi)",
+    ],
+    siapLanjut:
+      "Kalau kamu sudah tahu penghasilan bersih dan cicilan maksimal yang aman, lanjut ke tahap berikutnya.",
+    menunggu: "Bisa berjalan sambil riset rumah.",
   },
   {
     nomor: 2,
-    slug: "tahap-2-riset-kebutuhan-dan-lokasi",
-    judul: "Tentukan Kebutuhan, Lokasi, dan Tipe Rumah",
-    judulSingkat: "Riset rumah & lokasi",
+    slug: "02-kemampuan-target",
+    judul: "Tentukan Kemampuan & Target Rumah",
+    judulSingkat: "Kemampuan & target rumah",
     ringkasan:
-      "Definisikan kebutuhan (jumlah kamar, akses, lingkungan) dan bandingkan beberapa pilihan sebelum diikat dengan booking fee.",
-    fakta: { nilai: "3–5 unit", label: "Survei sebelum membayar booking fee" },
-    penjelasan: [
-      "Buat daftar prioritas: radius kerja, akses transportasi, sekolah, rumah sakit, pasar, dan arah pengembangan kota. Lokasi memengaruhi harga, kenaikan nilai, dan kualitas hidup jangka panjang.",
-      "Tentukan spesifikasi rumah: tipe 36, 45, atau lebih, jumlah kamar, tanah kavling, dan rencana renovasi. Sesuaikan dengan budget yang dihitung di tahap 1.",
-      "Kunjungi minimal 3–5 pilihan: situs properti, pameran, dan tour langsung ke lokasi. Cek legalitas proyek: SHM/IMB, perizinan PSU (prasarana, sarana, utilitas), dan reputasi pengembang.",
-      "Bandingkan juga bedanya beli dari pengembang (harga bundling, PPJB) vs rumah sekunder / second (negosiasi lebih leluasa tapi cek legalitas lebih teliti).",
+      "Ubah angka cicilan maksimal jadi rentang harga rumah yang realistis, lengkap dengan target tipe dan lokasi.",
+    estimasiWaktu: "2–6 minggu",
+    fakta: {
+      nilai: "±Rp166 jt",
+      label: "Zona Jawa · indikatif (harga unit FLPP)",
+      sumber: "Kepmen PKP No. 1722/KPTS/M/2026",
+      terakhirDicek: "2026-08-06",
+    },
+    tujuan:
+      "Kamu tahu rentang harga rumah yang realistis, besaran dana yang perlu dikumpulkan, dan target jenis rumahnya.",
+    siapkanIni: [
+      "Hasil Tahap 01: angka cicilan maksimal",
+      "Total dana terkumpul (tabungan + aset cair)",
+      "Preferensi lokasi: radius kerja, akses, fasilitas",
     ],
-    dokumen: ["Tidak ada dokumen khusus — bawa catatan kebutuhan & budget"],
-    estimasiWaktu: "2–6 minggu (bervariasi tergantung pencarian)",
-    biayaTerkait: ["Transportasi survei", "Opsional: jasa konsultan properti"],
-    tips: [
-      "Cek peta rawan banjir dan akses jalan di musim hujan — kelihatan murah sekarang bisa mahal kemudian.",
-      "Pastikan pengembang terdaftar dan proyeknya tercatat di sistem resmi (untuk rumah subsidi: cek di SiKumbang, portal proyek BP Tapera).",
-      "Tanyakan progress PSU dan jadwal serah terima sebelum menandatangani PPJB.",
+    lakukan: [
+      "Gunakan kalkulator angsuran: masukkan penghasilan untuk tahu plafon dan angsuran maksimal.",
+      "Tetapkan DP dan biaya awal yang siap kamu keluarkan (DP + buffer ±10% nilai rumah).",
+      "Definisikan kebutuhan rumah: tipe 36/45 atau lebih, jumlah kamar, prioritas lokasi.",
+      "Cocokkan target harga dengan plafon subsidi per zona (Lumajang = zona Jawa, indikatif) atau harga pasar untuk komersial.",
     ],
-    kesalahanUmum: [
-      "Kepincut harga murah tanpa cek legalitas tanah dan izin proyek.",
-      "Membeli di lokasi jauh hanya karena harga murah, lalu biaya transportasi bulanan mengikis tabungan.",
-      "Terburu-buru membayar booking fee sebelum membandingkan beberapa opsi.",
+    uang: ["Transportasi survei", "Opsional: konsultasi perencana keuangan"],
+    dokumen: [
+      { kelompok: "keuangan", nama: "Rangkuman penghasilan & aset (hasil Tahap 01)" },
     ],
-    perbedaanSubsidi:
-      "Rumah subsidi sudah ditentukan kisarannya per zona oleh pemerintah; komersial bebas harga pasar. Survei lokasi justru lebih penting untuk subsidi karena pilihan terbatas pada perumahan MBR yang terdaftar.",
+    perhatikan: [
+      "Jangan menargetkan rumah di atas kemampuan hanya karena angsurannya terlihat kecil di tenor panjang.",
+      "Harga subsidi bervariasi per zona dan bisa berubah — selalu labeli angka sebagai indikatif.",
+      "Gap antara tabungan dan DP itu wajar — jadikan target menabung, bukan alasan menyerah.",
+    ],
+    hasilTahap: [
+      "Rentang harga rumah target tertulis",
+      "Jumlah DP + biaya awal yang harus disiapkan jelas",
+      "Gap tabungan terhadap DP terukur",
+      "Prioritas lokasi & spesifikasi rumah disepakati",
+    ],
+    siapLanjut:
+      "Kalau sudah ada angka harga maksimal dan target tipe rumah, lanjut untuk memilih skema.",
   },
   {
     nomor: 3,
-    slug: "tahap-3-pilih-skema-kredit",
-    judul: "Pilih Skema Kredit: Subsidi vs Komersial",
-    judulSingkat: "Pilih skema kredit",
+    slug: "03-skema",
+    judul: "Pilih Skema KPR",
+    judulSingkat: "Pilih skema KPR",
     ringkasan:
-      "Kenali perbedaan KPR subsidi FLPP dan KPR komersial agar memilih skema yang tepat dan biaya jangka panjang terkendali.",
-    fakta: { nilai: "5%", label: "Flat hingga lunas · skema FLPP" },
-    penjelasan: [
-      "KPR subsidi (FLPP) menawarkan suku bunga rendah 5% flat untuk tenor hingga 20 tahun dengan DP ringan, tetapi hanya untuk MBR, rumah pertama, dan harga unit dalam batas per zona.",
-      "KPR komersial (konvensional & syariah) bebas untuk semua orang, plafon lebih besar, namun bunga mengikuti pasar — bisa naik saat suku bunga acuan naik.",
-      "Bandingkan suku bunga: bank sering menawarkan 'fixed' rendah di 1–3 tahun pertama lalu floating. Hitung total pembayaran, bukan hanya angka promo di tahun pertama.",
-      "Gunakan perbandingan bank di situs ini dan jalankan simulasi untuk kedua skema sebelum memutuskan.",
+      "Satu keputusan besar: subsidi FLPP atau komersial. Bandingkan bunga, DP, dan syarat sebelum memilih.",
+    estimasiWaktu: "1–2 minggu",
+    fakta: {
+      nilai: "5%",
+      label: "Bunga flat FLPP (indikatif) vs floating komersial",
+      sumber: "BP Tapera & perbandingan bank penyalur",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Kamu memilih satu skema — subsidi FLPP atau komersial — dengan alasan yang jelas.",
+    siapkanIni: [
+      "Hasil Tahap 02: rentang harga target",
+      "Status MBR dari Tahap 01",
     ],
-    dokumen: ["Tidak ada dokumen baru — hanya analisis perbandingan"],
-    estimasiWaktu: "1–2 minggu riset dan perbandingan",
-    biayaTerkait: ["Tidak ada"],
-    tips: [
-      "Untuk subsidi, pastikan unit yang dipilih ada dalam daftar proyek penerima FLPP.",
-      "Untuk komersial, tanyakan ketentuan prepayment (pelunasan sebagian) dan penaltinya.",
-      "Jangan hanya membandingkan bunga; bandingkan juga biaya provisi, administrasi, dan asuransi antar bank.",
+    lakukan: [
+      "Cek status MBR terhadap batas penghasilan yang berlaku (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026).",
+      "Cocokkan target harga dengan plafon zona subsidi; kalau di atasnya, otomatis jalur komersial.",
+      "Bandingkan bunga FLPP (±5% flat) vs komersial (fixed 1–3 tahun lalu floating) dan hitung total bayar hingga lunas.",
+      "Cek syarat: rumah pertama & belum pernah subsidi (FLPP) atau bebas (komersial).",
+      "Putuskan satu skema untuk seluruh proses berikutnya.",
     ],
-    kesalahanUmum: [
-      "Terkunci pada 'fixed 5% pertama' promo tanpa menghitung suku bunga floating setelahnya.",
-      "Memilih skema hanya dari besaran angsuran bulanan tanpa menghitung total bayar hingga lunas.",
-      "Mengabaikan biaya-biaya kecil yang diakumulasi bank secara bulanan (asuransi, admin).",
+    uang: ["Subsidi: DP ringan (±0–1%) + booking fee", "Komersial: DP umumnya 10–30%"],
+    dokumen: [
+      { kelompok: "keuangan", nama: "Simulasi perbandingan skema (hasil kalkulator)" },
     ],
-    perbedaanSubsidi:
-      "Ini tahap tempat dua skema dipertemukan: subsidi menang di bunga & DP, komersial menang di fleksibilitas & jumlah unit.",
+    perhatikan: [
+      "Jangan memilih dari angsuran promo tahun pertama — hitung total bayar sampai lunas.",
+      "DP komersial jauh lebih besar dari subsidi; sesuaikan dengan dana yang sudah direncanakan di Tahap 02.",
+      "Kalau belum yakin, jangan lanjut — keputusan ini menentukan seluruh jalur berikutnya.",
+    ],
+    hasilTahap: [
+      "Satu skema terpilih (subsidi atau komersial)",
+      "Alasan pemilihan tertulis (bunga, DP, syarat)",
+    ],
+    siapLanjut:
+      "Sudah ada satu skema yang dipilih? Kalau iya, lanjut mencari rumah yang cocok.",
   },
   {
     nomor: 4,
-    slug: "tahap-4-preapproval-dan-booking-unit",
-    judul: "Ajukan Pre-Approval & Booking Unit (DP/Booking Fee)",
-    judulSingkat: "Pre-approval & booking",
+    slug: "04-cari-verifikasi",
+    judul: "Cari & Verifikasi Rumah",
+    judulSingkat: "Cari & verifikasi rumah",
     ringkasan:
-      "Kunci unit dengan booking fee dan lakukan pra-persetujuan kredit agar proses pengajuan selanjutnya lebih mulus.",
-    fakta: { nilai: "±Rp250rb–1jt", label: "Kisaran booking fee unit" },
-    penjelasan: [
-      "Pra-persetujuan kredit (pre-approval) adalah penilaian awal bank atas kemampuan kreditmu. Ini memberi 'harga diri' saat bernegosiasi dan mempercepat proses ketika unit sudah ditemukan.",
-      "Saat unit ditemukan, kamu membayar booking fee (fee wajib, umumnya mulai ratusan ribu hingga jutaan) untuk mengunci unit. Booking fee biasanya dapat menjadi bagian dari DP jika deal selesai.",
-      "Perhatikan ketentuan refund booking fee pada SP2 (surat pemesanan) — sekecil apa pun, pastikan tertulis hitam di atas putih.",
-      "Untuk rumah subsidi, pengembang memasukkan datamu ke sistem FLPP; status pemesanan dan hasil verifikasi awal bisa kamu pantau lewat aplikasi resmi SiKasep (atau tanyakan ke bank penyalur).",
+      "Jelajahi calon rumah, verifikasi legalitasnya, lalu kunci unit dengan booking fee — sebelum mengeluarkan uang besar.",
+    estimasiWaktu: "2–6 minggu",
+    fakta: {
+      nilai: "±Rp100rb–1jt",
+      label: "Kisaran booking fee untuk mengunci unit",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Kamu menemukan satu unit yang cocok dan legal, dan menguncinya dengan booking fee.",
+    siapkanIni: [
+      "Daftar prioritas lokasi & kebutuhan (Tahap 02)",
+      "Skema terpilih (Tahap 03)",
+      "Dana untuk booking fee",
     ],
-    dokumen: ["KTP", "KK", "Slip gaji", "Rekening koran 3 bulan", "NPWP", "Buku nikah (jika menikah)"],
-    estimasiWaktu: "1–2 hari untuk booking; pre-approval 3–7 hari kerja",
-    biayaTerkait: ["Booking fee", "Opsional: biaya pengurusan dokumen"],
-    tips: [
-      "Baca SP2 dengan teliti: jumlah, status refundable, tenggat pembayaran DP dan akad.",
-      "Siapkan dokumen dalam bentuk scan PDF berkualitas agar proses bank cepat.",
-      "Kalau bisa, ajukan pre-approval ke 2 bank sekaligus sebagai pembanding.",
+    lakukan: [
+      "Kunjungi minimal 3–5 pilihan: proyek baru, situs properti, atau rumah seken.",
+      "Verifikasi legalitas: SHM/IMB, perizinan PSU, dan reputasi pengembang.",
+      "Untuk subsidi: pastikan unit terdaftar di proyek penerima FLPP (cek via Tapera Mobile / BP Tapera).",
+      "Tanyakan ketentuan refund booking fee (SP2) sebelum membayar.",
+      "Cek progres pembangunan dan jadwal serah terima.",
+      "Bayar booking fee untuk mengunci unit.",
     ],
-    kesalahanUmum: [
-      "Membayar booking fee ke pengembang tanpa cek legalitas proyek dan rekening resmi.",
-      "Tidak membaca klausul refund — kerugian besar saat batal deal.",
-      "Booking unit yang masih berstatus SP2 tanpa verifikasi — pastikan proyeknya lancar dan pengembang terdaftar.",
+    uang: [
+      "Booking fee (±Rp100 rb – 1 jt, bisa jadi bagian DP)",
+      "Transportasi survei",
     ],
-    perbedaanSubsidi:
-      "Booking unit subsidi umumnya disertai verifikasi MBR oleh sistem BP Tapera sebelum unit benar-benar terkunci; komersial tidak ada tahap verifikasi MBR.",
+    dokumen: [
+      { kelompok: "identitas", nama: "KTP" },
+      { kelompok: "identitas", nama: "Kartu Keluarga" },
+      { kelompok: "properti", nama: "SP2 / surat pemesanan unit" },
+      { kelompok: "properti", nama: "Bukti legalitas unit (SHM/IMB, denah)" },
+    ],
+    perhatikan: [
+      "Jangan bayar booking ke pengembang yang legalitas dan rekeningnya tidak jelas.",
+      "Klausul refund SP2 harus hitam di atas putih — sekecil apa pun nominalnya.",
+      "Untuk subsidi, unit yang tidak terdaftar FLPP tidak bisa diproses.",
+    ],
+    hasilTahap: [
+      "Satu unit terkunci + SP2 tertandatangani",
+      "Legalitas unit terverifikasi",
+      "Jadwal serah terima dicatat",
+    ],
+    siapLanjut:
+      "Unit terkunci dan legalitas beres? Siapkan dana dan dokumen pengajuan.",
   },
   {
     nomor: 5,
-    slug: "tahap-5-pengajuan-kpr-ke-bank",
-    judul: "Ajukan KPR ke Bank Penyalur",
-    judulSingkat: "Pengajuan KPR",
+    slug: "05-dana-dokumen",
+    judul: "Siapkan Dana, Dokumen & Ajukan",
+    judulSingkat: "Siapkan dana & ajukan",
     ringkasan:
-      "Serahkan dokumen pengajuan lengkap ke bank pilihan dan pastikan data konsisten untuk hindari penolakan karena administrasi.",
-    fakta: { nilai: "1–3 hari", label: "Kelengkapan berkas pengajuan" },
-    penjelasan: [
-      "Isi formulir aplikasi KPR dengan lengkap dan konsisten: identitas, penghasilan, pekerjaan, dan tanggungan. Ketidaksesuaian data adalah penyebab umum penolakan atau koreksi berkali-kali.",
-      "Lampirkan seluruh dokumen sesuai kebutuhan bank: KTP & KK calon debitur dan pasangan, slip gaji/bukti penghasilan, rekening koran, NPWP, dokumen jaminan (SHM/PPJB/IMB), dan rencana anggaran bila wiraswasta.",
-      "Pilih jenis kredit yang sesuai: KPR konvensional fixed/floating, KPR syariah (murabahah), atau KPR bersubsidi (FLPP). Ketiganya punya alur dan persyaratan berbeda.",
-      "Jangan ragu bertanya ke petugas: berapa lama estimasi, apa saja biaya yang dibebankan, dan syarat apa lagi yang perlu dipersiapkan.",
+      "Lengkapi seluruh dokumen pengajuan, siapkan dana awal, lalu serahkan permohonan ke bank penyalur.",
+    estimasiWaktu: "1–2 minggu (kelengkapan berkas)",
+    fakta: {
+      nilai: "5 kelompok",
+      label: "Master dokumen: identitas · penghasilan · keuangan · properti · akad",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Pengajuan lengkap masuk ke bank dengan berkas konsisten, dan kamu memegang tanda terima.",
+    siapkanIni: [
+      "Unit terkunci (Tahap 04)",
+      "Dana untuk DP + biaya awal",
+      "Seluruh dokumen dalam 5 kelompok master",
+    ],
+    lakukan: [
+      "Lengkapi berkas pengajuan dari 5 kelompok dokumen (identitas, penghasilan, keuangan, properti, akad).",
+      "Buat fotokopi/scan rapi dan pastikan data konsisten di semua dokumen.",
+      "Ajukan ke 1–2 bank (subsidi: bank penyalur FLPP, verifikasi MBR lewat Tapera Mobile).",
+      "Isi formulir dengan data yang benar dan lengkap, lalu simpan salinan aplikasi dan bukti terima berkas.",
+    ],
+    uang: [
+      "Biaya administrasi bank",
+      "Provisi (±1% plafon)",
+      "Biaya appraisal (di tahap analisis)",
     ],
     dokumen: [
-      "Formulir aplikasi",
-      "Fotokopi KTP & KK",
-      "Slip gaji/keterangan penghasilan",
-      "Rekening koran/tabungan 3 bulan",
-      "NPWP",
-      "Dokumen objek: SHM, IMB, PPJB (sesuai status)",
+      { kelompok: "identitas", nama: "KTP & KK calon debitur dan pasangan" },
+      { kelompok: "identitas", nama: "Buku nikah (bila menikah)" },
+      { kelompok: "penghasilan", nama: "Slip gaji / bukti penghasilan 3 bulan" },
+      { kelompok: "penghasilan", nama: "Bukti usaha + laporan keuangan (bila wiraswasta)" },
+      { kelompok: "keuangan", nama: "Rekening koran 3 bulan" },
+      { kelompok: "keuangan", nama: "NPWP" },
+      { kelompok: "properti", nama: "PPJB / SP2 unit" },
+      { kelompok: "properti", nama: "SHM / IMB / denah (sesuai status)" },
     ],
-    estimasiWaktu: "1–3 hari untuk kelengkapan berkas",
-    biayaTerkait: ["Biaya administrasi bank", "Provisi (sekitar 1% plafon)"],
-    tips: [
-      "Pastikan seluruh dokumen difotokopi/discan dalam satu paket rapi; bank menghargai kelengkapan.",
-      "Usahakan melakukan pengajuan tidak bersamaan dengan permohonan kredit besar lain (rasio utang berpengaruh).",
-      "Bila wiraswasta, siapkan SIUP/NIB, laporan keuangan, dan bukti usaha 6–12 bulan.",
+    perhatikan: [
+      "Ketidaksesuaian data antar berkas adalah penyebab umum penolakan atau koreksi berulang.",
+      "Jangan sembunyikan penghasilan demi plafon naik — verifikasi akan menolak.",
+      "Mengajukan ke banyak bank sekaligus menambah catatan di SLIK.",
     ],
-    kesalahanUmum: [
-      "Data penghasilan disembunyikan supaya plafon naik — bisa berujung analisis ditolak di tahap verifikasi.",
-      "Menyerahkan berkas setengah jadi lalu menunda-nunda — proses molor dan unit bisa lepas.",
-      "Tidak menyimpan salinan aplikasi dan bukti terima berkas.",
+    hasilTahap: [
+      "Berkas lengkap (5 kelompok) dan konsisten",
+      "Pengajuan masuk + bukti terima dari bank",
+      "Estimasi waktu proses diketahui",
     ],
-    perbedaanSubsidi:
-      "Bank penyalur subsidi memvalidasi penghasilan terhadap batas MBR; komersial lebih fleksibel tapi analisis kredit lebih ketat proporsional plafon.",
+    siapLanjut:
+      "Berkas sudah diterima bank? Cicilan menunggu giliran analisis kredit dan penilaian unit.",
   },
   {
     nomor: 6,
-    slug: "tahap-6-analisis-kredit-dan-appraisal",
-    judul: "Proses Analisis Kredit & Penilaian Properti (Appraisal)",
-    judulSingkat: "Analisis kredit & appraisal",
+    slug: "06-analisis-appraisal",
+    judul: "Analisis Bank & Appraisal",
+    judulSingkat: "Analisis bank & appraisal",
     ringkasan:
-      "Bank menilai kelayakan debitur dan properti. Cek berita dan tanggapi permintaan data tambahan dengan cepat.",
-    fakta: { nilai: "1–3 minggu", label: "Analisis kredit + appraisal" },
-    penjelasan: [
-      "Bank melakukan analisis kredit: mengecek BI Checking (SLIK), rasio pendapatan terhadap angsuran, stabilitas pekerjaan, dan riwayat pembayaran. Hasilnya menentukan persetujuan atau penolakan.",
-      "Secara paralel, bank melakukan appraisal properti — penilaian fisik dan lokasi oleh surveyor untuk memastikan unit bernilai wajar sesuai harga pengajuan (LTV).",
-      "Segala temuan (harga di atas appraisal, sertifikat belum balik nama, catatan kredit lama) umumnya bisa ditindaklanjuti dengan dokumen tambahan; jangan panik, tanyakan solusinya ke bank.",
-      "Setelah acc, bank menerbitkan surat persetujuan kredit (SP3K) berisi plafon, bunga, tenor, dan syarat. Baca sampai selesai sebelum lanjut ke akad.",
+      "Bank menilai kelayakan kreditmu dan menilai wajar-tidaknya harga unit. Responsif terhadap permintaan data tambahan.",
+    estimasiWaktu: "1–3 minggu",
+    fakta: {
+      nilai: "1–3 minggu",
+      label: "Proses analisis kredit + appraisal",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Mendapat hasil analisis bank (SP3K) dan penilaian unit yang wajar.",
+    siapkanIni: [
+      "Nomor pengajuan / referensi dari bank",
+      "Berkas cadangan tambahan yang mungkin diminta",
     ],
-    dokumen: ["Surat persetujuan kredit (SP3K)", "Dokumen tambahan sesuai permintaan bank"],
-    estimasiWaktu: "1–3 minggu (analisis + appraisal)",
-    biayaTerkait: ["Biaya appraisal (dibebankan bank/borrower tergantung kebijakan)"],
-    tips: [
-      "Responsif terhadap pertanyaan bank; ketepatan tanggapan mempercepat proses.",
-      "Tenang jika hasil BI Checking ada catatan kecil — diskusikan dengan pihak bank.",
-      "Minta salinan hasil appraisal dari bank bila memungkinkan untuk referensi.",
+    lakukan: [
+      "Biarkan bank memeriksa SLIK, rasio pendapatan, stabilitas kerja, dan riwayat pembayaranmu.",
+      "Jadwalkan appraisal unit — surveyor menilai fisik dan lokasi untuk memastikan harga wajar (LTV).",
+      "Tanggapi cepat setiap permintaan dokumen tambahan dari bank.",
+      "Setelah disetujui, baca SP3K sampai tuntas: plafon, bunga, tenor, dan syarat.",
     ],
-    kesalahanUmum: [
-      "Mengajukan ke banyak bank sekaligus tanpa strategi — bisa bikin riwayat pengajuan banyak di SLIK.",
-      "Menyetujui bunga/floating tanpa memahami level yang ditawarkan di SP3K.",
-      "Menganggap 'acc kredit' berarti proses selesai; akad dan balik nama masih menunggu.",
+    uang: ["Biaya appraisal (kebijakan bank / borrower, tergantung bank)"],
+    dokumen: [
+      { kelompok: "akad", nama: "Surat persetujuan kredit (SP3K)" },
+      { kelompok: "keuangan", nama: "Dokumen tambahan sesuai permintaan bank" },
     ],
-    perbedaanSubsidi:
-      "Subsidi: appraisal sekaligus cek harga terhadap plafon zona. Komersial: appraisal bebas mengacu pasar; nilai pembiayaan dihitung dari LTV terhadap hasil appraisal.",
+    perhatikan: [
+      "Hasil SLIK yang kurang bersih bukan akhir segalanya — diskusikan solusinya dengan bank.",
+      "Harga unit di atas hasil appraisal biasanya dilanjutkan dengan negosiasi DP tambahan.",
+      "'Acc kredit' belum berarti selesai: akad dan serah terima masih menunggu.",
+    ],
+    hasilTahap: [
+      "SP3K terbit dan terbaca seluruhnya",
+      "Hasil appraisal jelas (nilai wajar unit)",
+      "Jadwal akad disepakati",
+    ],
+    siapLanjut:
+      "SP3K sudah di tangan dan kamu paham seluruh isinya? Saatnya akad di notaris.",
   },
   {
     nomor: 7,
-    slug: "tahap-7-akad-kredit-dan-serah-terima",
-    judul: "Akad Kredit, Penandatanganan & Serah Terima Kunci",
-    judulSingkat: "Akad & serah terima",
+    slug: "07-akad",
+    judul: "Persetujuan & Akad Kredit",
+    judulSingkat: "Akad kredit",
     ringkasan:
-      "Tahap finalisasi: akad kredit di notaris, balik nama sertifikat, dan terima unit lengkap dengan kunci dan dokumen.",
-    fakta: { nilai: "1–4 minggu", label: "Proses akad sampai kunci" },
-    penjelasan: [
-      "Di hadapan notaris/PPAT, kamu menandatangani akad kredit (syariah: akad murabahah) serta PPJB/AJB dengan pengembang. Di sinilah hak dan kewajiban dikunci secara hukum.",
-      "Bank membayarkan plafon kredit ke pengembang/penjual. Kamu mulai memegang cicilan sejak akad, dan pengembang menyerahkan unit beserta kunci serta dokumen (sertifikat, IMB, SHGB/SHM, bukti PBB).",
-      "Urutan legalitas: untuk rumah baru umumnya PPJB dulu (di akad), lalu AJB + balik nama sertifikat setelahnya — ikuti arahan notaris agar proses balik nama tidak berlarut-larut.",
-      "Periksa semua dokumen serah terima: sertifikat, denah sesuai, kunci, dan kelengkapan rumah. Buat berita acara serah terima (BAST) sebagai bukti.",
+      "Tandatangani akad kredit di notaris/PPAT, bank mencairkan plafon, dan kewajibanmu dimulai.",
+    estimasiWaktu: "1–4 minggu (kesiapan pengembang & notaris)",
+    fakta: {
+      nilai: "Di hadapan notaris",
+      label: "Akad kredit + PPJB/AJB tanda-tangan & hakik wajib",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Akad kredit ditandatangani; plafon dicairkan ke pengembang; cicilan pertamamu berjalan bulan depan.",
+    siapkanIni: [
+      "SP3K dari bank",
+      "Dana untuk biaya akad & pajak",
+      "Identitas asli (KTP, KK, buku nikah)",
     ],
-    dokumen: ["KTP", "KK", "Buku nikah", "SP3K", "PPJB/SP2", "Identitas saksi", "Dana untuk biaya akad & pajak"],
-    estimasiWaktu: "1–4 minggu (tergantung kesiapan pengembang & notaris)",
-    biayaTerkait: [
-      "Biaya notaris/PPAT",
-      "BPHTB (5% × (harga − NPOPTKP))",
+    lakukan: [
+      "Jadwalkan akad di notaris/PPAT bersama pengembang dan bank.",
+      "Baca dan minta penjelasan setiap pasal sebelum menandatangani akad kredit dan PPJB/AJB.",
+      "Bank mencairkan plafon ke pengembang — pastikan rinciannya sesuai SP3K.",
+      "Bayar biaya akad, BPHTB, dan balik nama sesuai rincian notaris.",
+      "Ambil salinan seluruh dokumen akad.",
+    ],
+    uang: [
+      "Biaya notaris/PPAT (±0,5–2% nilai transaksi)",
+      "BPHTB: 5% × (harga − NPOPTKP)",
       "Biaya balik nama & sertifikat",
-      "Biaya akad & asuransi",
+      "Biaya akad & asuransi (jiwa + kebakaran)",
     ],
-    tips: [
-      "Hadir dengan seluruh identitas asli dan bawa uang lebih karena biaya akad bisa bervariasi.",
-      "Minta penjelasan notaris atas setiap pasal yang kamu tandatangani — jangan malu bertanya.",
-      "Catat semua nomor dokumen dan jadwal serah terima kunci.",
+    dokumen: [
+      { kelompok: "identitas", nama: "KTP & KK asli calon debitur dan pasangan" },
+      { kelompok: "akad", nama: "Buku nikah" },
+      { kelompok: "akad", nama: "SP3K" },
+      { kelompok: "akad", nama: "PPJB / SP2 unit" },
+      { kelompok: "akad", nama: "Identitas saksi" },
+      { kelompok: "akad", nama: "Dana biaya akad & pajak" },
     ],
-    kesalahanUmum: [
-      "Tidak membaca akad sampai selesai lalu menyesal atas klausul biaya/adendum.",
-      "Lupa mengecek BAST & kelengkapan rumah sebelum terima kunci.",
-      "Menunda pengurusan balik nama — sertifikat atas nama pengembang bisa menyusahkan kemudian.",
+    perhatikan: [
+      "Baca akad sampai selesai — pasal biaya dan adendum sering menyesatkan bila dilewati.",
+      "Biaya akad bervariasi; minta rincian tertulis notaris sebelum hari-H.",
+      "Urus balik nama segera setelah akad, jangan ditunda-tunda.",
     ],
-    perbedaanSubsidi:
-      "Subsidi: ada kewajiban jual kepada MBR & pengecekan data debitur FLPP. Komersial: tanpa verifikasi MBR, proses akad murni kesepakatan bank-pengembang-debitur.",
+    hasilTahap: [
+      "Akad kredit & PPJB/AJB ditandatangani",
+      "Plafon dicairkan ke pengembang sesuai SP3K",
+      "Biaya akad, BPHTB, dan balik nama terbayar",
+      "Salinan seluruh dokumen akad dipegang",
+    ],
+    siapLanjut:
+      "Akad beres? Kini giliran serah terima unit — dan kuncinya.",
   },
   {
     nomor: 8,
-    slug: "tahap-8-setelah-akad-cicilan-dan-strategi",
-    judul: "Setelah Akad: Kelola Cicilan & Rencana Pemeliharaan",
-    judulSingkat: "Kelola cicilan & rumah",
+    slug: "08-kunci",
+    judul: "Serah Terima & Kunci",
+    judulSingkat: "Serah terima & kunci",
     ringkasan:
-      "Bayar cicilan tepat waktu, sisihkan dana pemeliharaan, dan rancang strategi pelunasan atau take-over bila perlu.",
-    fakta: { nilai: "1–3%", label: "Dana perawatan rumah tiap tahun" },
-    penjelasan: [
-      "Mulai periode cicilan bulanan. Utamakan membayar sesuai jatuh tempo untuk menjaga riwayat SLIK tetap bersih.",
-      "Sisihkan dana perawatan tahunan (±1–3% nilai rumah) untuk renovasi kecil, perbaikan atap, plafon, dan PSU yang rusak.",
-      "Evaluasi opsi keuangan jangka panjang: pelunasan dipercepat sebagian/seluruh (bila tanpa penalti), take over ke bank dengan bunga lebih rendah, atau refinancing saat nilai rumah naik.",
-      "Jaga asuransi rumah tetap aktif, dan pertimbangkan asuransi jiwa kredit sehingga keluarga tidak terbebani bila terjadi risiko.",
+      "Terima unit sesuai janji, periksa kelengkapannya, tanda tangani BAST, dan kunci di tangan.",
+    estimasiWaktu: "1–2 minggu (setelah akad)",
+    fakta: {
+      nilai: "🔑",
+      label: "Garis akhir — kunci di tangan",
+      terakhirDicek: "2026-09-01",
+    },
+    tujuan:
+      "Kunci unit di tangan, seluruh dokumen serah terima lengkap, dan cicilan bulanan resmi berjalan.",
+    siapkanIni: [
+      "Salinan akad & bukti pelunasan biaya ke pengembang",
+      "Jadwal serah terima yang disepakati",
     ],
-    dokumen: ["Buku tabungan/autodebet cicilan", "Polis asuransi", "Bukti pembayaran PBB/retribusi"],
-    estimasiWaktu: "Jangka panjang (selama tenor), evaluasi 1–2 tahun sekali",
-    biayaTerkait: [
-      "Biaya PBB tahunan",
-      "Iuran lingkungan/RTRW",
-      "Asuransi rumah",
-      "Biaya perawatan tak terduga",
+    lakukan: [
+      "Periksa unit terhadap denah dan spesifikasi yang dijanjikan (luas, finishing, PSU).",
+      "Pastikan kunci, kelengkapan rumah, dan dokumen (sertifikat, IMB, SHGB/SHM, bukti PBB) diserahkan.",
+      "Buat dan tandatangani berita acara serah terima (BAST).",
+      "Atur pembayaran cicilan mulai bulan pertama (autodebet direkomendasikan).",
     ],
-    tips: [
-      "Buat reminder jatuh tempo dan sisihkan pos angsuran di hari gajian.",
-      "Kalau dapat THR atau bonus tahunan, pertimbangkan melunasi sebagian pokok (bila bebas penalti) untuk memangkas total bunga.",
-      "Urus balik nama SHGB→SHM bila memenuhi syarat; jual-beli di kemudian hari jauh lebih mudah.",
+    uang: ["Iuran lingkungan / PBB tahun pertama", "Biaya pindahan & keperluan awal hunian"],
+    dokumen: [
+      { kelompok: "properti", nama: "Sertifikat / SHGB-SHM, IMB, bukti PBB" },
+      { kelompok: "akad", nama: "Berita acara serah terima (BAST)" },
+      { kelompok: "keuangan", nama: "Buku tabungan / autodebet cicilan" },
     ],
-    kesalahanUmum: [
-      "Telat bayar di bulan-bulan awal — denda menumpuk dan riwayat SLIK langsung tercatat negatif.",
-      "Menganggap rumah tidak butuh perawatan sampai ada kerusakan besar.",
-      "Tidak membandingkan bunga bank lain selama bertahun-tahun; take-over bisa menghemat puluhan hingga ratusan juta rupiah total bunga.",
+    perhatikan: [
+      "Jangan tanda tangan BAST sebelum unit benar-benar sesuai janji.",
+      "Kunci tanpa dokumen = rumah tapi tanpa identitas; pastikan sertifikat & IMB ikut diserahkan.",
+      "Mulai cicilan tepat waktu — riwayat pembayaran tercatat di SLIK.",
     ],
-    perbedaanSubsidi:
-      "Subsidi: ada aturan ketat soal jual sebelum masa tertentu. Komersial: bebas dijual/disewakan (tetap periksa klausul bank).",
+    hasilTahap: [
+      "Unit terperiksa dan sesuai spesifikasi",
+      "Kunci + seluruh dokumen serah terima diterima",
+      "BAST ditandatangani",
+      "Cicilan bulanan tersiapkan (autodebet)",
+    ],
+    siapLanjut:
+      "Kunci di tangan, dokumen lengkap, cicilan berjalan — kamu resmi pemilik rumah.",
   },
 ];
+
+/**
+ * KONTEN SEKUNDER — setelah kunci di tangan (bukan tahap ke-9).
+ * Dipakai di hub /perjalanan & footer sebagai pengingat jangka panjang.
+ */
+export const setelahKunci = {
+  judul: "Setelah Kunci",
+  ringkasan:
+    "Cicilan masih berjalan hingga puluhan tahun. Kelola tiga hal ini agar rumah tidak menjadi beban.",
+  poin: [
+    {
+      judul: "Bayar cicilan tepat waktu",
+      teks: "Utamakan angsuran di hari gajian supaya riwayat SLIK tetap bersih. Autodebet menghindarkan lupa bayar.",
+    },
+    {
+      judul: "Sisihkan dana perawatan",
+      teks: "Anggaran ±1–3% nilai rumah per tahun untuk perbaikan atap, plafon, dan PSU. Rumah yang dirawat tetap berharga.",
+    },
+    {
+      judul: "Evaluasi bunga berkala",
+      teks: "Setiap 1–2 tahun bandingkan bunga bank. Pelunasan sebagian (bila bebas penalti) atau take-over bisa memangkas total bunga puluhan juta.",
+    },
+    {
+      judul: "Jaga asuransi tetap aktif",
+      teks: "Asuransi jiwa kredit membuat keluarga tidak terbebani bila terjadi risiko. Jangan biarkan polis mati.",
+    },
+  ],
+} as const;

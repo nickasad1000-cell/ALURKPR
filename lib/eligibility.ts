@@ -4,8 +4,9 @@ export type ZonaFlpp = 1 | 2 | 3 | 4;
 
 /**
  * Batas penghasilan MBR untuk KPR FLPP (rumah tapak) per zona wilayah.
- * Rujukan: Permen Perumahan dan Kawasan Permukiman (PKP) No. 5 Tahun 2025
- * sebagaimana dipublikasikan BP Tapera. Angka di bawah memakai batas untuk
+ * Rujukan: Permen Perumahan dan Kawasan Permukiman (PKP) No. 5/2025 jo.
+ * No. 11/2025 jo. No. 1 Tahun 2026 (perubahan kedua), sebagaimana
+ * dipublikasikan BP Tapera. Angka di bawah memakai batas untuk
  * pemohon BELUM KAWIN; pemohon kawin/peserta Tapera umumnya lebih tinggi
  * (zona 1: 10 jt, zona 2: 11 jt, zona 3: 12 jt, zona 4/Jabodetabek: 14 jt).
  */

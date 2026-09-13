@@ -269,7 +269,7 @@ export function PlannerDp() {
               <Wallet className="size-4" aria-hidden="true" />
               Hitung angsuran
             </Link>
-            <Link href="/mampu-beli" className={btnSecondary}>
+            <Link href="/kalkulator?mode=income" className={btnSecondary}>
               Cek kemampuan beli
             </Link>
           </div>

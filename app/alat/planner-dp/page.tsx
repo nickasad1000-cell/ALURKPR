@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { PlannerDp } from "@/components/planner-dp";
 import { Container, SectionHeading } from "@/components/ui";
 
@@ -6,13 +8,20 @@ export const metadata: Metadata = {
   title: "Planner Tabungan DP Rumah",
   description:
     "Rencanakan tabungan uang muka (DP) rumah: berapa lama menabung dengan setoran tertentu, atau berapa setoran per bulan agar DP tercapai dalam waktu yang kamu tentukan.",
-  alternates: { canonical: "/planner-dp" },
+  alternates: { canonical: "/alat/planner-dp" },
 };
 
 export default function PlannerDpPage() {
   return (
     <section className="py-12 sm:py-16">
       <Container>
+        <Link
+          href="/alat"
+          className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-deep"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Semua alat
+        </Link>
         <SectionHeading
           as="h1"
           eyebrow="Menabung dulu"

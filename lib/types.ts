@@ -1,6 +1,31 @@
 export type FaktaTahap = {
   nilai: string;
   label: string;
+  /** Contoh sumber resmi (dokumen negara / situs resmi). */
+  sumber?: string;
+  /** Tanggal data terakhir diverifikasi (YYYY-MM-DD). */
+  terakhirDicek?: string;
+};
+
+/** Kelompok master dokumen pengajuan KPR (PRD §52). */
+export type KelompokDokumen =
+  | "identitas"
+  | "penghasilan"
+  | "keuangan"
+  | "properti"
+  | "akad";
+
+export type DokumenTahap = {
+  kelompok: KelompokDokumen;
+  nama: string;
+};
+
+export const KELOMPOK_DOKUMEN_LABEL: Record<KelompokDokumen, string> = {
+  identitas: "Identitas",
+  penghasilan: "Penghasilan",
+  keuangan: "Keuangan",
+  properti: "Properti",
+  akad: "Akad",
 };
 
 export type Tahap = {
@@ -9,14 +34,26 @@ export type Tahap = {
   judul: string;
   judulSingkat: string;
   ringkasan: string;
-  fakta?: FaktaTahap;
-  penjelasan: string[];
-  dokumen: string[];
   estimasiWaktu: string;
-  biayaTerkait: string[];
-  tips: string[];
-  kesalahanUmum: string[];
-  perbedaanSubsidi: string;
+  fakta?: FaktaTahap;
+  /** TUJUAN — satu keputusan yang dicapai di tahap ini. */
+  tujuan: string;
+  /** SIAPKAN INI — prasyarat sebelum lanjut. */
+  siapkanIni: string[];
+  /** LAKUKAN — urutan aksi. */
+  lakukan: string[];
+  /** UANG — pos biaya yang muncul di tahap ini. */
+  uang: string[];
+  /** DOKUMEN — dari master 5 kelompok. */
+  dokumen: DokumenTahap[];
+  /** PERLU DIPERHATIKAN — hal yang sering salah / red flag. */
+  perhatikan: string[];
+  /** HASIL TAHAP — checklist yang harus terpenuhi. */
+  hasilTahap: string[];
+  /** SIAP LANJUT? — self-check satu layar. */
+  siapLanjut: string;
+  /** Berapa lama menunggu antar langkah (opsional, teks bebas). */
+  menunggu?: string;
 };
 
 export type BankRate = {
@@ -42,7 +79,7 @@ export type KelayakanInput = {
   belumPernahSubsidi: boolean;
   hargaUnit: number;
   dewasaAtauMenikah: boolean;
-  /** Zona wilayah FLPP (Permen PKP No. 5 Tahun 2025): 1-4. */
+  /** Zona wilayah FLPP (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026): 1-4. */
   zona: 1 | 2 | 3 | 4;
 };
 

@@ -76,15 +76,18 @@ export function KalkulatorWithDp({ rates }: { rates: BankRate[] }) {
   // Gunakan has !== null agar ?dp=0 tetap dihormati (0 adalah DP yang sah).
   const parsed = raw !== null ? Number(raw) : NaN;
   const initialDp = Number.isFinite(parsed) ? Math.min(50, Math.max(0, parsed)) : 10;
-  return <Kalkulator rates={rates} initialDp={initialDp} />;
+  const initialMode = searchParams.get("mode") === "income" ? "penghasilan" : "harga";
+  return <Kalkulator rates={rates} initialDp={initialDp} initialMode={initialMode} />;
 }
 
 export function Kalkulator({
   rates,
   initialDp = 10,
+  initialMode = "harga",
 }: {
   rates: BankRate[];
   initialDp?: number;
+  initialMode?: "harga" | "penghasilan";
 }) {
   const pilihan = useMemo(() => buatPilihan(rates), [rates]);
   const [harga, setHarga] = useState(240_000_000);
@@ -96,7 +99,7 @@ export function Kalkulator({
   const [bankId, setBankId] = useState(pilihan[0].id);
   const [lihatBiaya, setLihatBiaya] = useState(false);
   const [lihatAmortisasi, setLihatAmortisasi] = useState(false);
-  const [mode, setMode] = useState<"harga" | "penghasilan">("harga");
+  const [mode, setMode] = useState<"harga" | "penghasilan">(initialMode);
   const [penghasilan, setPenghasilan] = useState("8000000");
   const [cicilanLain, setCicilanLain] = useState("0");
   const [dbr, setDbr] = useState(30);
@@ -641,7 +644,7 @@ export function Kalkulator({
             {mode === "harga" ? (
               <>
                 Belum tahu kisaran kemampuannya?{" "}
-                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
+                <Link href="/kalkulator?mode=income" className="font-bold text-primary hover:text-primary-deep">
                   Cek dulu kemampuan beli
                 </Link>
                 .
@@ -649,7 +652,7 @@ export function Kalkulator({
             ) : (
               <>
                 Mau lihat perhitungan kemampuan yang lebih lengkap?{" "}
-                <Link href="/mampu-beli" className="font-bold text-primary hover:text-primary-deep">
+                <Link href="/kalkulator?mode=income" className="font-bold text-primary hover:text-primary-deep">
                   Buka halaman Kemampuan beli
                 </Link>
                 .

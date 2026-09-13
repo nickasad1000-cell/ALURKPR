@@ -47,7 +47,7 @@ export function KelayakanForm() {
     <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Cek kelayakan KPR subsidi</h2>
       <p className="mt-1 text-sm text-ink-soft">
-        Mengacu aturan FLPP terbaru (Permen PKP No. 5 Tahun 2025) — indikatif.
+        Mengacu aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026) — indikatif.
       </p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -216,7 +216,7 @@ export function KelayakanForm() {
                 label="Tanya strategi lainnya"
                 pesan={`Halo, saya belum lolos kelayakan subsidi. Ada cara menabung/persiapan lain sebaiknya? Saya ingin konsultasi.`}
               />
-              <Link href="/panduan/tahap-1-cek-keuangan-dan-kelayakan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
+              <Link href="/perjalanan/01-keuangan" className="mt-1 text-center text-sm font-bold text-primary hover:text-primary-deep">
                 Baca langkah memperbaiki kelayakan
               </Link>
             </div>

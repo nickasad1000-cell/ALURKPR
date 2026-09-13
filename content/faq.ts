@@ -14,7 +14,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Siapa yang berhak mengajukan KPR subsidi FLPP?",
     jawaban:
-      "Warga Negara Indonesia, usia minimal 21 tahun atau sudah menikah, belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai Permen PKP No. 5 Tahun 2025. Cek zona lokasimu di cek kelayakan, lalu konfirmasi ke BP Tapera atau bank penyalur.",
+      "Warga Negara Indonesia, usia minimal 21 tahun atau sudah menikah, belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026). Cek zona lokasimu di cek kelayakan, lalu konfirmasi ke BP Tapera atau bank penyalur.",
   },
   {
     pertanyaan: "Berapa bunga KPR subsidi FLPP dan berapa tenornya?",
@@ -62,14 +62,14 @@ export const faq: FaqItem[] = [
       "Tidak. KPR subsidi FLPP hanya untuk rumah pertama dan ada kewajiban menempati sendiri. Membeli rumah kedua/sewakan lewat subsidi melanggar aturan dan bisa memicu penalti/pengembalian subsidi.",
   },
   {
-    pertanyaan: "Apa itu SiKumbang dan SiKasep?",
+    pertanyaan: "Apa itu Tapera Mobile?",
     jawaban:
-      "SiKumbang adalah portal BP Tapera berisi data pengembang dan stok rumah subsidi; SiKasep aplikasi untuk calon debitur mencari rumah dan memantau pengajuan subsidi. Dua-duanya jalur resmi — kalau pengembang mengklaim proyeknya subsidi, cek dulu di sana.",
+      "Tapera Mobile adalah aplikasi resmi BP Tapera untuk program rumah subsidi: calon debitur mencari rumah dan memantau status pengajuan FLPP, sekaligus memuat data pengembang dan stok rumah subsidi. Kalau pengembang mengklaim proyeknya subsidi, cek dulu di sana.",
   },
   {
     pertanyaan: "Siapa yang mengelola program KPR subsidi (FLPP) sekarang?",
     jawaban:
-      "Sejak 2025 pengelolaan FLPP dipegang BP Tapera, dengan payung kebijakan Kementerian Perumahan dan Kawasan Permukiman (PKP). Jadi sumber informasi terkini adalah situs BP Tapera (termasuk portal SiKumbang), bukan lagi kanal lama Kementerian PUPR.",
+      "Sejak 2025 pengelolaan FLPP dipegang BP Tapera, dengan payung kebijakan Kementerian Perumahan dan Kawasan Permukiman (PKP). Jadi sumber informasi terkini adalah situs resmi BP Tapera dan aplikasi Tapera Mobile, bukan lagi kanal lama Kementerian PUPR.",
   },
   {
     pertanyaan: "Kalkulator di situs ini bisa dipercaya?",

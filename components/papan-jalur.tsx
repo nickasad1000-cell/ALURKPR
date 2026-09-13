@@ -16,16 +16,11 @@ import {
 import { tahapKpr } from "@/content/tahap";
 import { PelatTahap } from "@/components/blueprint-icons";
 import {
-  koordinatJalur,
-  koordinatToken,
   urutanPapan,
 } from "@/lib/papan-jalur";
 
 const KOLOM = 2;
 const TOTAL = tahapKpr.length;
-const POIN_JALUR = koordinatJalur(KOLOM, TOTAL);
-const POLYLINE = POIN_JALUR.map((p) => `${p.x},${p.y}`).join(" ");
-const POSISI = tahapKpr.map((_, i) => koordinatToken(i, KOLOM, TOTAL));
 const pad = (n: number) => String(n).padStart(2, "0");
 const DELAY_AUTO = 2400;
 
@@ -149,7 +144,7 @@ function Tile({
               <Clock className="size-3" aria-hidden="true" />
               {t.estimasiWaktu}
             </span>
-            {t.biayaTerkait.map((b) => (
+            {t.uang.map((b) => (
               <span key={b} className="rounded-full border border-line bg-surface px-2.5 py-1 text-[11px] font-semibold text-ink-soft">
                 {b}
               </span>
@@ -159,25 +154,20 @@ function Tile({
           {t.dokumen.length > 0 && (
             <ul className="mt-4 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
               {t.dokumen.map((d) => (
-                <li key={d} className="flex items-start gap-2 text-sm text-ink-soft">
+                <li key={`${d.kelompok}::${d.nama}`} className="flex items-start gap-2 text-sm text-ink-soft">
                   <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-                  {d}
+                  {d.nama}
                 </li>
               ))}
             </ul>
           )}
 
-          <p className="mt-4 border-l-2 border-accent/50 pl-3 text-[13px] leading-relaxed text-ink-soft">
-            <span className="font-bold text-ink">Skema subsidi: </span>
-            {t.perbedaanSubsidi}
-          </p>
-
           <div className="mt-5">
             <Link
-              href={`/panduan/${t.slug}`}
+              href={`/perjalanan/${t.slug}`}
               className="inline-flex items-center gap-1.5 rounded-[2px] border border-primary/30 bg-surface px-4 py-2 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white focus-visible:ring-2 focus-visible:ring-primary"
             >
-              Detail lengkap di panduan
+              Detail lengkap di Perjalanan
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
@@ -235,10 +225,8 @@ export function PapanJalur() {
     toggle(i);
   };
 
-  const p = POSISI[kunci];
   const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
   const selesai = kunci === TOTAL - 1;
-  const tokenTersembunyi = terbuka.size > 0;
 
   const fokuskanStepper = (i: number) => {
     setKunci(i);

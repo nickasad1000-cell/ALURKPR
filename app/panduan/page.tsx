@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { tahapKpr } from "@/content/tahap";
 import { panduanArtikel } from "@/content/panduan";
 import { Container, SectionHeading } from "@/components/ui";
 import { DaftarPanduan } from "@/components/daftar-panduan";
@@ -7,7 +6,7 @@ import { DaftarPanduan } from "@/components/daftar-panduan";
 export const metadata: Metadata = {
   title: "Panduan KPR",
   description:
-    "Panduan 8 tahap membeli rumah dengan KPR ditambah artikel mendalam tentang subsidi FLPP, KPR komersial, biaya awal, dan manajemen keuangan.",
+    "Artikel mendalam tentang subsidi FLPP, KPR komersial, biaya awal, dan manajemen keuangan. Ikuti 8 tahap KPR di halaman Perjalanan.",
   alternates: { canonical: "/panduan" },
 };
 
@@ -27,7 +26,7 @@ export default function PanduanPage() {
 
       <section className="mt-14">
         <Container>
-          <DaftarPanduan tahap={tahapKpr} artikel={panduanArtikel} />
+          <DaftarPanduan artikel={panduanArtikel} />
         </Container>
       </section>
     </>

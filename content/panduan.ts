@@ -25,9 +25,9 @@ export const panduanArtikel: PanduanArtikel[] = [
       "FLPP adalah program subsidi pembiayaan perumahan dari pemerintah untuk Masyarakat Berpenghasilan Rendah (MBR) dengan bunga rendah dan DP ringan.",
     isi: [
       "FLPP (Fasilitas Likuiditas Pembiayaan Perumahan) adalah skema subsidi pemerintah berupa dana murah yang diteruskan bank penyalur untuk KPR MBR. Praktisnya kamu menikmati bunga rendah — saat ini sekitar 5% flat — dengan DP ringan, dan tenor hingga 20 tahun.",
-      "Sasaran program ini rumah tangga MBR: penghasilan di bawah batas yang berlaku — untuk rumah tapak, Rp8,5–14 juta/bulan tergantung zona wilayah dan status pernikahan (Permen PKP No. 5 Tahun 2025). Syarat lain: usia minimal 21 tahun atau sudah menikah, belum pernah punya rumah, dan belum pernah menerima subsidi perumahan pemerintah.",
+      "Sasaran program ini rumah tangga MBR: penghasilan di bawah batas yang berlaku — untuk rumah tapak, Rp8,5–14 juta/bulan tergantung zona wilayah dan status pernikahan (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026). Syarat lain: usia minimal 21 tahun atau sudah menikah, belum pernah punya rumah, dan belum pernah menerima subsidi perumahan pemerintah.",
       "Harga unit juga dibatasi plafon per zona: bervariasi antara Rp166 hingga Rp240 juta untuk rumah tapak tergantung wilayah (mengacu ketetapan terbaru). Rumah yang bisa dibeli harus termasuk unit perumahan terdaftar penerima FLPP.",
-      "Alur pengajuan: pilih pengembang mitra FLPP → booking unit → pengembang memasukkan datamu ke sistem resmi BP Tapera (SiKumbang) → bank penyalur memproses kredit → akad → serah terima. Verifikasi MBR adalah pintu masuknya, jadi pastikan datamu bersih dan konsisten — statusnya bisa kamu pantau di aplikasi SiKasep.",
+      "Alur pengajuan: pilih pengembang mitra FLPP → booking unit → pengembang memasukkan datamu ke sistem resmi BP Tapera → bank penyalur memproses kredit → akad → serah terima. Verifikasi MBR adalah pintu masuknya, jadi pastikan datamu bersih dan konsisten — statusnya bisa kamu pantau di aplikasi Tapera Mobile.",
       "Catat kelebihan: bunga rendah, DP ringan, dan ada perlindungan tenor panjang. Kekurangan: pilihan unit dan lokasi terbatas pada proyek terdaftar, serta ada kewajiban tinggal sendiri dan larangan kuat menjual dalam jangka waktu tertentu.",
       "Angka bunga, plafon, dan batas penghasilan bisa berubah mengikuti kebijakan. Selalu cek informasi resmi BP Tapera dan bank penyalur sebelum mengajukan.",
     ],
@@ -62,7 +62,7 @@ export const panduanArtikel: PanduanArtikel[] = [
       "KPR komersial menang di fleksibilitas: siapapun bisa mengajukan, harga bebas, lokasi bebas, rumah ke-2/3 pun boleh. Konsekuensinya bunga berbasis pasar — di awal murah, di belakang bisa naik — dan DP umumnya lebih besar (mulai 10–20% atau lebih).",
       "Simpelnya: kalau penghasilan dan target harga dalam koridor MBR, subsidi jelas lebih hemat. Kalau penghasilan di atas batas, menginginkan rumah lebih besar/lokasi lebih bebas, atau ini bukan rumah pertama — komersial.",
       "Ada zona abu-abu: penghasilanmu pas di atas batas MBR namun ingin rumah subsidi — ini tidak diperbolehkan dan verifikasi akan menolak. Sebaliknya, pemilik status MBR tetap boleh mengajukan komersial.",
-      "Jalankan simulasi di kalkulator situs ini untuk sisi bunga + tenor, lalu bandingkan total bayar (bunga total + DP + biaya). Angka total bayarlah yang jujur membandingkan kedua skema.",
+      "Jalankan simulasi di kalkulator situs ini untuk sisi bunga + tenor, lalu bandingkan total bayar (bunga total + DP + biaya). Angka total bayarlah yang tepat dipakai untuk membandingkan kedua skema.",
     ],
   },
   {

@@ -37,7 +37,7 @@ describe("cekKelayakan", () => {
     expect(r.layak).toBe(true);
   });
 
-  it("batas zona mengikuti tabel Permen PKP No. 5 Tahun 2025", () => {
+  it("batas zona mengikuti tabel aturan FLPP terbaru (Permen PKP No. 1 Tahun 2026)", () => {
     expect(BATAS_PENGHASILAN_PER_ZONA[1].belumKawin).toBe(8_500_000);
     expect(BATAS_PENGHASILAN_PER_ZONA[2].belumKawin).toBe(9_000_000);
     expect(BATAS_PENGHASILAN_PER_ZONA[3].belumKawin).toBe(10_500_000);

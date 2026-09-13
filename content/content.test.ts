@@ -21,15 +21,41 @@ describe("content/tahap", () => {
   it("semua field wajib terisi", () => {
     for (const t of tahapKpr) {
       expect(t.judul.trim().length).toBeGreaterThan(0);
+      expect(t.judulSingkat.trim().length).toBeGreaterThan(0);
       expect(t.ringkasan.trim().length).toBeGreaterThan(0);
-      expect(t.penjelasan.length).toBeGreaterThan(0);
-      expect(t.dokumen.length).toBeGreaterThan(0);
       expect(t.estimasiWaktu.trim().length).toBeGreaterThan(0);
-      expect(t.biayaTerkait.length).toBeGreaterThan(0);
-      expect(t.tips.length).toBeGreaterThan(0);
-      expect(t.kesalahanUmum.length).toBeGreaterThan(0);
-      expect(t.perbedaanSubsidi.trim().length).toBeGreaterThan(0);
+      expect(t.tujuan.trim().length).toBeGreaterThan(0);
+      expect(t.siapkanIni.length).toBeGreaterThan(0);
+      expect(t.lakukan.length).toBeGreaterThan(0);
+      expect(t.uang.length).toBeGreaterThan(0);
+      expect(t.dokumen.length).toBeGreaterThan(0);
+      expect(t.perhatikan.length).toBeGreaterThan(0);
+      expect(t.hasilTahap.length).toBeGreaterThan(0);
+      expect(t.siapLanjut.trim().length).toBeGreaterThan(0);
     }
+  });
+
+  it("dokumen memakai kelompok master yang dikenal", () => {
+    const dikenal = new Set([
+      "identitas",
+      "penghasilan",
+      "keuangan",
+      "properti",
+      "akad",
+    ]);
+    for (const t of tahapKpr) {
+      for (const d of t.dokumen) {
+        expect(dikenal.has(d.kelompok)).toBe(true);
+        expect(d.nama.trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("tahap 1 tidak memakai kelompok akad, tahap 8 mencapai kunci", () => {
+    const t1 = tahapKpr[0];
+    expect(t1.dokumen.some((d) => d.kelompok === "akad")).toBe(false);
+    expect(tahapKpr[7].slug).toBe("08-kunci");
+    expect(tahapKpr[7].siapLanjut.toLowerCase()).toContain("kunci");
   });
 
   it("fakta (opsional) terisi benar dan pasangan nilai+label unik antar tahap", () => {
