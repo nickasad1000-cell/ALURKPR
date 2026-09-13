@@ -91,6 +91,17 @@ describe("cekKelayakan", () => {
     ).toBe(false);
   });
 
+  it("zona 1 → hasil memuat peringatan konflik sumber", () => {
+    const r = cekKelayakan(lolosSemua);
+    expect(r.peringatan.length).toBeGreaterThan(0);
+    expect(r.peringatan[0]).toContain("Konflik sumber resmi");
+  });
+
+  it("zona 2 → tanpa peringatan konflik", () => {
+    const r = cekKelayakan({ ...lolosSemua, zona: 2 });
+    expect(r.peringatan).toEqual([]);
+  });
+
   it("beberapa pelanggaran sekaligus → beberapa alasan", () => {
     const r = cekKelayakan({
       ...lolosSemua,

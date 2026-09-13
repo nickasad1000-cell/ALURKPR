@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   CircleDot,
+  Clock,
   FileText,
   KeyRound,
   ListChecks,
@@ -103,6 +104,14 @@ export function PerjalananDetail({ tahap }: { tahap: Tahap }) {
       </header>
 
       <div className="mx-auto mt-10 max-w-3xl space-y-5">
+        <section className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-7">
+          <h2 className="flex items-center gap-2.5 font-display text-xl font-semibold">
+            <Clock className="size-5 text-accent-ink" aria-hidden="true" />
+            Kalau hanya 2 menit
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink">{tahap.duaMenit}</p>
+        </section>
+
         <section className="rounded-3xl border border-line bg-surface p-7">
           <h2 className="flex items-center gap-2.5 font-display text-xl font-semibold">
             <Target className="size-5 text-primary" aria-hidden="true" />

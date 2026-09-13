@@ -32,8 +32,9 @@ describe("hargaMaksUntukZona", () => {
     expect(hargaMaksUntukZona(1)).toBe(166_000_000);
     expect(hargaMaksUntukZona(5)).toBe(240_000_000);
   });
-  it("zona tidak dikenal → fallback 166jt", () => {
-    expect(hargaMaksUntukZona(undefined)).toBe(166_000_000);
+  it("zona tidak dikenal → error runtime", () => {
+    // @ts-expect-error -- memang sengaja memasukkan zona di luar 1..5
+    expect(() => hargaMaksUntukZona(99)).toThrow();
   });
 });
 

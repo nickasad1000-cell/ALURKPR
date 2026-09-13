@@ -57,8 +57,6 @@ export const OPSI_ZONA_HARGA: { nilai: ZonaHarga; label: string }[] =
     label: `Zona harga ${z.zona} — ${z.label} (maks Rp${z.maks.toLocaleString("id-ID")})`,
   }));
 
-export function hargaMaksUntukZona(z: ZonaHarga | undefined): number {
-  return (
-    HARGA_SUBSIDI_PER_ZONA.find((x) => x.zona === z)?.maks ?? 166_000_000
-  );
+export function hargaMaksUntukZona(z: ZonaHarga): number {
+  return HARGA_SUBSIDI_PER_ZONA.find((x) => x.zona === z)!.maks;
 }

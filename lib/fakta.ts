@@ -18,7 +18,7 @@ export const FAKTA = {
   bungaFlpp: {
     nama: "Suku bunga FLPP",
     nilai: "5",
-    unit: "% flat/tahun (20 th)",
+    unit: "% flat/tahun (s.d. 40 th)",
     sumber: "Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026",
     dicek: "2026-08-06",
     status: "resmi",

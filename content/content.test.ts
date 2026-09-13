@@ -24,6 +24,7 @@ describe("content/tahap", () => {
       expect(t.judulSingkat.trim().length).toBeGreaterThan(0);
       expect(t.ringkasan.trim().length).toBeGreaterThan(0);
       expect(t.estimasiWaktu.trim().length).toBeGreaterThan(0);
+      expect(t.duaMenit.trim().length).toBeGreaterThan(0);
       expect(t.tujuan.trim().length).toBeGreaterThan(0);
       expect(t.siapkanIni.length).toBeGreaterThan(0);
       expect(t.lakukan.length).toBeGreaterThan(0);

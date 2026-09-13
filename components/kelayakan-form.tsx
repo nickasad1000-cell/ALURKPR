@@ -166,7 +166,7 @@ export function KelayakanForm() {
         {[
           {
             id: "dewasa",
-            label: "Saya berusia ≥ 21 tahun atau sudah menikah",
+            label: "Saya memenuhi syarat usia sesuai aturan skema (cek ulang ke bank penyalur)",
             value: dewasaAtauMenikah,
             set: setDewasaAtauMenikah,
           },
@@ -211,6 +211,16 @@ export function KelayakanForm() {
 
       {hasil ? (
         <div role="alert" className={`mt-6 rounded-2xl border p-5 ${hasil.layak ? "border-primary/30 bg-primary-soft" : "border-accent/40 bg-accent-soft/60"}`}>
+          {hasil.peringatan.length > 0 ? (
+            <ul className="mb-4 space-y-1.5 rounded-xl border border-accent/40 bg-accent-soft/60 p-3 text-sm text-accent-ink">
+              {hasil.peringatan.map((p) => (
+                <li key={p} className="flex items-start gap-2">
+                  <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           <div className="flex items-center gap-2.5">
             {hasil.layak ? (
               <CheckCircle2 className="size-6 text-primary" aria-hidden="true" />

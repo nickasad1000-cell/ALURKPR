@@ -1,5 +1,6 @@
 import type { KelayakanInput, KelayakanResult, SyaratCheck } from "./types";
 import { hargaMaksUntukZona } from "./zona";
+import { peringatanSumber } from "./sumber";
 
 export type ZonaFlpp = 1 | 2 | 3 | 4;
 
@@ -59,11 +60,11 @@ export function cekKelayakan(input: KelayakanInput): KelayakanResult {
 
   const syarat: SyaratCheck[] = [
     {
-      label: "Usia minimal 21 tahun atau sudah menikah",
+      label: "Usia sesuai aturan skema — perlu dicek ulang ke bank penyalur",
       lolos: input.dewasaAtauMenikah,
       catatan: input.dewasaAtauMenikah
         ? undefined
-        : "Pemohon harus berusia ≥ 21 tahun atau sudah menikah.",
+        : "Syarat usia mengikuti aturan terbaru skema ini — konfirmasi ke bank penyalur.",
     },
     {
       label: "Belum pernah memiliki rumah",
@@ -104,5 +105,10 @@ export function cekKelayakan(input: KelayakanInput): KelayakanResult {
     .filter((s) => !s.lolos)
     .map((s) => s.catatan ?? `Tidak memenuhi: ${s.label}`);
 
-  return { layak: alasan.length === 0, alasan, syarat };
+  return {
+    layak: alasan.length === 0,
+    alasan,
+    syarat,
+    peringatan: peringatanSumber(`flpp.batas-penghasilan.zona${input.zona}`),
+  };
 }

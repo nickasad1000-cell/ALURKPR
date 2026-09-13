@@ -9,6 +9,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Tahu penghasilan bersih, cicilan maksimal yang sehat, dan posisi keuanganmu sebelum langkah lainnya.",
     estimasiWaktu: "1–2 minggu",
+    duaMenit:
+      "Hitung penghasilan bersih bulanan, lalu cek sisa setelah tagihan tetap — angsuran rumah nanti idealnya tidak lebih dari 30% penghasilan bersih.",
     fakta: {
       nilai: "30–40%",
       label: "Batas cicilan sehat dari penghasilan bersih",
@@ -26,7 +28,7 @@ export const tahapKpr: Tahap[] = [
       "Hitung penghasilan bersih bulanan dan total tagihan tetap (utang, kartu kredit, langganan).",
       "Pastikan calon angsuran tidak lebih dari 30–40% penghasilan bersih.",
       "Targetkan dana darurat 3–6 bulan pengeluaran sebelum akad.",
-      "Kalau membidik KPR subsidi (FLPP): cek syarat MBR — usia minimal 21 tahun atau sudah menikah, belum punya rumah, dan belum pernah menerima subsidi.",
+      "Kalau membidik KPR subsidi (FLPP): cek syarat MBR — belum punya rumah, belum pernah menerima subsidi, dan pastikan syarat usia di aturan terbaru (perlu dicek ulang ke bank penyalur).",
     ],
     uang: ["Tidak ada uang keluar — modal utamanya waktu dan data"],
     dokumen: [
@@ -58,6 +60,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Ubah angka cicilan maksimal jadi rentang harga rumah yang realistis, lengkap dengan target tipe dan lokasi.",
     estimasiWaktu: "2–6 minggu",
+    duaMenit:
+      "Masukkan penghasilanmu ke kalkulator untuk dapat plafon & angsuran maksimal, lalu tetapkan DP plus buffer biaya awal (±10%).",
     fakta: {
       nilai: "±Rp166 jt",
       label: "Zona Jawa · indikatif (harga unit FLPP)",
@@ -103,6 +107,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Satu keputusan besar: subsidi FLPP atau komersial. Bandingkan bunga, DP, dan syarat sebelum memilih.",
     estimasiWaktu: "1–2 minggu",
+    duaMenit:
+      "Putuskan satu jalur: cek dulu status MBR & plafon zona subsidi — kalau penghasilan/unit di atasnya, otomatis komersial.",
     fakta: {
       nilai: "5%",
       label: "Bunga flat FLPP (indikatif) vs floating komersial",
@@ -146,6 +152,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Jelajahi calon rumah, verifikasi legalitasnya, lalu kunci unit dengan booking fee — sebelum mengeluarkan uang besar.",
     estimasiWaktu: "2–6 minggu",
+    duaMenit:
+      "Kunjungi 3–5 unit, cek legalitas (SHM/IMB) dan keanggotaan FLPP, lalu tanyakan klausul refund SP2 sebelum bayar booking fee.",
     fakta: {
       nilai: "±Rp100rb–1jt",
       label: "Kisaran booking fee untuk mengunci unit",
@@ -197,6 +205,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Lengkapi seluruh dokumen pengajuan, siapkan dana awal, lalu serahkan permohonan ke bank penyalur.",
     estimasiWaktu: "1–2 minggu (kelengkapan berkas)",
+    duaMenit:
+      "Rapikan 5 kelompok dokumen dengan data yang konsisten antar berkas — ketidaksesuaian data adalah penyebab utama penolakan.",
     fakta: {
       nilai: "5 kelompok",
       label: "Master dokumen: identitas · penghasilan · keuangan · properti · akad",
@@ -251,6 +261,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Bank menilai kelayakan kreditmu dan menilai wajar-tidaknya harga unit. Responsif terhadap permintaan data tambahan.",
     estimasiWaktu: "1–3 minggu",
+    duaMenit:
+      "Jawab cepat setiap permintaan data tambahan bank, dan begitu SP3K keluar — baca seluruh plafon, bunga, tenor, dan syaratnya.",
     fakta: {
       nilai: "1–3 minggu",
       label: "Proses analisis kredit + appraisal",
@@ -294,6 +306,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Tandatangani akad kredit di notaris/PPAT, bank mencairkan plafon, dan kewajibanmu dimulai.",
     estimasiWaktu: "1–4 minggu (kesiapan pengembang & notaris)",
+    duaMenit:
+      "Baca akad sampai selesai, minta rincian biaya notaris & pajak tertulis sebelum hari-H, lalu jadwalkan akad di notaris/PPAT.",
     fakta: {
       nilai: "Di hadapan notaris",
       label: "Akad kredit + PPJB/AJB tanda-tangan & hakik wajib",
@@ -349,6 +363,8 @@ export const tahapKpr: Tahap[] = [
     ringkasan:
       "Terima unit sesuai janji, periksa kelengkapannya, tanda tangani BAST, dan kunci di tangan.",
     estimasiWaktu: "1–2 minggu (setelah akad)",
+    duaMenit:
+      "Periksa unit sesuai denah, pastikan kunci plus sertifikat & IMB ikut diserahkan, baru tanda tangani BAST.",
     fakta: {
       nilai: "🔑",
       label: "Garis akhir — kunci di tangan",

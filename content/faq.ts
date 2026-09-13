@@ -14,12 +14,12 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Siapa yang berhak mengajukan KPR subsidi FLPP?",
     jawaban:
-      "Warga Negara Indonesia, usia minimal 21 tahun atau sudah menikah, belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026). Cek zona lokasimu di cek kelayakan, lalu konfirmasi ke BP Tapera atau bank penyalur.",
+      "Warga Negara Indonesia, usia sesuai aturan skema (perlu dicek ulang ke bank penyalur), belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026). Konfirmasi batas zonamu ke BP Tapera atau bank penyalur.",
   },
   {
     pertanyaan: "Berapa bunga KPR subsidi FLPP dan berapa tenornya?",
     jawaban:
-      "Saat ini bunga FLPP sekitar 5% flat per tahun dengan tenor hingga 20 tahun. Bunga flat dihitung dari plafon awal, jadi angsuran relatif stabil. Nilai bisa disesuaikan pemerintah sewaktu-waktu.",
+      "Saat ini bunga FLPP sekitar 5% flat per tahun; tenor rumah tapak maksimal 40 tahun (Kepmen 1722/KPTS/M/2026). Bunga flat dihitung dari plafon awal, jadi angsuran relatif stabil. Nilai bisa disesuaikan pemerintah sewaktu-waktu.",
   },
   {
     pertanyaan: "Berapa DP minimum untuk KPR?",

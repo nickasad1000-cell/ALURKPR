@@ -35,6 +35,8 @@ export type Tahap = {
   judulSingkat: string;
   ringkasan: string;
   estimasiWaktu: string;
+  /** Ringkasan pemakaian cepat: satu keputusan utama bila waktu terbatas. */
+  duaMenit: string;
   fakta?: FaktaTahap;
   /** TUJUAN — satu keputusan yang dicapai di tahap ini. */
   tujuan: string;
@@ -99,4 +101,6 @@ export type KelayakanResult = {
   layak: boolean;
   alasan: string[];
   syarat: SyaratCheck[];
+  /** Peringatan provensi/konflik sumber — ditampilkan sebagai warning kuning. */
+  peringatan: string[];
 };

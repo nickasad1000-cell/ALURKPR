@@ -144,7 +144,7 @@ function AngkaPerkiraan() {
       </div>
       <p className="mt-1 text-xs leading-relaxed text-ink-soft">
         Penghasilan 8 juta/bulan, FLPP {FAKTA.bungaFlpp.nilai}% flat, DP{" "}
-        {FAKTA.dpFlpp.nilai}%, tenor 20 tahun, tanpa cicilan lain.
+        {FAKTA.dpFlpp.nilai}%, tenor 20 tahun (asumsi), tanpa cicilan lain.
       </p>
       <dl className="mt-6 space-y-5">
         <div className="flex items-start justify-between gap-4">
@@ -162,7 +162,7 @@ function AngkaPerkiraan() {
             <p className="font-display text-2xl font-semibold text-primary">
               {formatRupiah(PERKIRAAN.hargaMaksimal)}
             </p>
-            <p className="text-xs text-ink-soft">maksimal, FLPP 5% flat · 20 th</p>
+            <p className="text-xs text-ink-soft">maksimal, FLPP 5% flat · tenor 20 th (asumsi)</p>
           </dd>
         </div>
         <div className="flex items-start justify-between gap-4">
