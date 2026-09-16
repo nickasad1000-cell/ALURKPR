@@ -180,7 +180,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <p className="text-sm font-bold text-ink-soft">Simulasi contoh</p>
                 <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary-deep">
-                  FLPP 5% · 20 th
+                  FLPP 5% · 20 th (asumsi)
                 </span>
               </div>
               <div className="mt-6">

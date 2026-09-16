@@ -96,6 +96,50 @@ export function totalPembayaran(
 }
 
 /**
+ * Angsuran bulanan dengan skema FLAT (bunga dihitung dari plafon awal,
+ * bukan sisa pokok). Dipakai sebagian produk subsidi (mis. FLPP yang
+ * ditawarkan bank sebagai flat). Rumus: pokok/n + plafon×rate/12.
+ */
+export function angsuranFlat(
+  plafon: number,
+  rateYearlyPct: number,
+  tenorYears: number,
+): number {
+  const n = tenorYears * 12;
+  if (n <= 0 || plafon <= 0) return 0;
+  const bunga = (plafon * rateYearlyPct) / 100 / 12;
+  return Math.round(plafon / n + bunga);
+}
+
+/** Tabel amortisasi flat per bulan: pokok tetap, bunga tetap dari plafon awal. */
+export function jadwalFlat(
+  plafon: number,
+  rateYearlyPct: number,
+  tenorYears: number,
+): BarisAmortisasi[] {
+  const n = tenorYears * 12;
+  const angsuran = angsuranFlat(plafon, rateYearlyPct, tenorYears);
+  const pokokTetap = n > 0 && plafon > 0 ? Math.round(plafon / n) : 0;
+  const bunga = Math.round((plafon * rateYearlyPct) / 100 / 12);
+  let saldo = plafon;
+  const rows: BarisAmortisasi[] = [];
+  for (let i = 1; i <= n; i++) {
+    saldo = Math.max(0, saldo - pokokTetap);
+    rows.push({ bulan: i, angsuran, pokok: pokokTetap, bunga, saldo });
+  }
+  return rows;
+}
+
+/** Total yang dibayar selama tenor dengan skema flat. */
+export function totalPembayaranFlat(
+  plafon: number,
+  rateYearlyPct: number,
+  tenorYears: number,
+): number {
+  return angsuranFlat(plafon, rateYearlyPct, tenorYears) * tenorYears * 12;
+}
+
+/**
  * Total pembayaran untuk skema dua lapis (fixed lalu floating), sesuai
  * praktik bank: angsuran fixed berjalan `fixedYears`, lalu SISA POKOK
  * dijadwalkan ulang pada bunga floating atas sisa tenor.
@@ -165,6 +209,8 @@ export type InputKemampuanBeli = {
   dpPersen: number;
   tenorTahun: number;
   bungaTahunanPersen: number;
+  /** "anuitas" (default) atau "flat". Mempengaruhi inverse di hargaMaksimalMampu. */
+  skema?: "anuitas" | "flat";
 };
 
 export type HasilKemampuanBeli = {
@@ -181,6 +227,8 @@ export type HasilKemampuanBeli = {
  *
  *   angsuran = P·r·(1+r)^n / ((1+r)^n − 1)
  *   => P = angsuran·((1+r)^n − 1) / (r·(1+r)^n)
+ *
+ * Untuk skema "flat" memakai inverse flat: P = angsuran / (1/n + r).
  *
  * Lengkapnya harga = plafon/(1 − dp%).
  */
@@ -207,6 +255,13 @@ export function hargaMaksimalMampu(
       plafonMaksimal: plafon,
       hargaMaksimal: Math.round(plafon / dpFaktor),
     };
+  }
+
+  // Skema flat: angsuran = P/n + P×r  =>  P = angsuran / (1/n + r).
+  if (input.skema === "flat") {
+    const plafon = Math.round(angsuranMaksimal / (1 / n + r));
+    const harga = Math.round(plafon / dpFaktor);
+    return { angsuranMaksimal, plafonMaksimal: plafon, hargaMaksimal: harga };
   }
 
   const pow = Math.pow(1 + r, n);

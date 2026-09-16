@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const syaratUmum = [
   "WNI dengan KTP & Kartu Keluarga aktif",
-  "Usia minimal 21 tahun atau sudah menikah",
+  "Usia sesuai aturan skema — perlu dicek ulang ke bank penyalur",
   "Belum pernah memiliki rumah (khusus subsidi)",
   "Belum pernah menerima subsidi perumahan (khusus subsidi)",
   "Penghasilan stabil & berada dalam batas skema",
@@ -84,7 +84,9 @@ export default async function SyaratPage() {
           />
           <div className="mt-10">
             <BandingKanBank
-              banks={rates.length > 0 ? rates : seedBankRates}
+              banks={rates.data.length > 0 ? rates.data : seedBankRates}
+              dariSeed={rates.sumber === "seed"}
+              dicekSeed={rates.dicek}
             />
           </div>
         </Container>

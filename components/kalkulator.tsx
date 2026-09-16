@@ -35,12 +35,12 @@ type PilihanBank = {
 function buatPilihan(rates: BankRate[]): PilihanBank[] {
   const flpp: PilihanBank = {
     id: "flpp",
-    label: "FLPP · KPR Subsidi — 5% flat · 20 tahun",
+    label: "FLPP · KPR Subsidi — 5% flat · s.d. 40 tahun",
     kprType: "subsidi",
     fixedRate: 5,
-    fixedYears: 20,
+    fixedYears: 40,
     floatingRate: null,
-    maxTenor: 20,
+    maxTenor: 40,
     minDp: 1,
   };
   const komersial = rates.map((r) => ({
@@ -64,7 +64,7 @@ const HARGA_STEP = 1_000_000;
 const DP_MIN = 0;
 const DP_MAX = 50;
 const TENOR_MIN = 5;
-const TENOR_MAX = 30;
+const TENOR_MAX = 40;
 
 function clampInt(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, Math.round(n)));
@@ -460,7 +460,7 @@ export function Kalkulator({
           />
           <div className="mt-1 flex justify-between text-[11px] font-semibold text-ink-soft">
             <span>5 th</span>
-            <span>30 th</span>
+            <span>40 th</span>
           </div>
           {tenorTerpotong ? (
             <p className="mt-2 text-xs font-semibold text-accent-ink">

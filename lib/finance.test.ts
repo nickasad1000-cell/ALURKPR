@@ -1,17 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
   angsuranBulanan,
+  angsuranFlat,
   biayaAwal,
   biayaBeliKumulatif,
   biayaSewaKumulatif,
   bulanUntukMenabung,
   hargaMaksimalMampu,
   jadwalAmortisasi,
+  jadwalFlat,
   plafondMaksimal,
   tabunganBulananUntuk,
   tahunImpas,
   totalPembayaran,
   totalPembayaranBertahap,
+  totalPembayaranFlat,
 } from "./finance";
 
 describe("plafondMaksimal", () => {
@@ -91,6 +94,43 @@ describe("biayaAwal", () => {
   });
 });
 
+describe("angsuranFlat", () => {
+  it("bunga 0% → plafon dibagi jumlah bulan", () => {
+    expect(angsuranFlat(120_000_000, 0, 10)).toBe(1_000_000);
+  });
+  it("flat lebih besar dari anuitas untuk plafon & bunga sama", () => {
+    const flat = angsuranFlat(240_000_000, 5, 20);
+    const anuitas = angsuranBulanan(240_000_000, 5, 20);
+    expect(flat).toBeGreaterThan(anuitas);
+  });
+  it("input tidak valid → 0", () => {
+    expect(angsuranFlat(0, 5, 20)).toBe(0);
+    expect(angsuranFlat(100_000_000, 5, 0)).toBe(0);
+  });
+});
+
+describe("jadwalFlat", () => {
+  it("pokok tetap, bunga tetap, saldo berakhir 0", () => {
+    const rows = jadwalFlat(240_000_000, 5, 20);
+    expect(rows).toHaveLength(240);
+    const pokokBulan1 = rows[0].pokok;
+    const bungaBulan1 = rows[0].bunga;
+    for (const r of rows) {
+      expect(r.pokok).toBe(pokokBulan1);
+      expect(r.bunga).toBe(bungaBulan1);
+    }
+    expect(rows[239].saldo).toBe(0);
+  });
+});
+
+describe("totalPembayaranFlat", () => {
+  it("= angsuran flat × bulan", () => {
+    expect(totalPembayaranFlat(240_000_000, 5, 20)).toBe(
+      angsuranFlat(240_000_000, 5, 20) * 240,
+    );
+  });
+});
+
 describe("hargaMaksimalMampu (reverse)", () => {
   it("10jt/bln, DBR 40%, DP 10%, 20th, 7% → plafon sesuai angsuran", () => {
     const h = hargaMaksimalMampu({
@@ -143,6 +183,36 @@ describe("hargaMaksimalMampu (reverse)", () => {
     // Angsuran maks 4jt/bln × 120 bulan = 480jt plafon = harga (DP 0%)
     expect(h.plafonMaksimal).toBe(4_000_000 * 120);
     expect(h.hargaMaksimal).toBe(4_000_000 * 120);
+  });
+  it("skema flat: angsuran balik harus mendekati angsuran maksimal", () => {
+    const h = hargaMaksimalMampu({
+      penghasilanBulanan: 10_000_000,
+      cicilanLainBulanan: 0,
+      dbrPersen: 40,
+      dpPersen: 10,
+      tenorTahun: 20,
+      bungaTahunanPersen: 5,
+      skema: "flat",
+    });
+    expect(h.angsuranMaksimal).toBe(4_000_000);
+    // Inverse flat harus menghasilkan angsuran ≈ 4jt (toleransi pembulatan).
+    const ulang = angsuranFlat(h.plafonMaksimal, 5, 20);
+    expect(Math.abs(ulang - 4_000_000)).toBeLessThan(2_000);
+  });
+  it("skema flat menghasilkan plafon lebih rendah daripada anuitas (bunga sama)", () => {
+    // Flat membebankan bunga atas plafon penuh sepanjang tenor → untuk
+    // angsuran yang sama, plafon yang mampu dibeli lebih kecil daripada anuitas.
+    const args = {
+      penghasilanBulanan: 10_000_000,
+      cicilanLainBulanan: 0,
+      dbrPersen: 40,
+      dpPersen: 10,
+      tenorTahun: 20,
+      bungaTahunanPersen: 5,
+    };
+    const flat = hargaMaksimalMampu({ ...args, skema: "flat" });
+    const anuitas = hargaMaksimalMampu(args);
+    expect(flat.plafonMaksimal).toBeLessThan(anuitas.plafonMaksimal);
   });
 });
 

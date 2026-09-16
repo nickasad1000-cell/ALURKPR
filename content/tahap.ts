@@ -12,7 +12,7 @@ export const tahapKpr: Tahap[] = [
     penjelasan: [
       "Langkah pertama justru bukan mencari rumah, melainkan bersiap dari sisi finansial dan administrasi. Cek batas cicilan sehat: idealnya angsuran tidak lebih dari 30–40% penghasilan bersih bulanan.",
       "Hitung dana yang sudah terkumpul: uang muka (DP), biaya awal (BPHTB, provisi, administrasi, notaris, asuransi), plus dana darurat minimal 3–6 bulan pengeluaran.",
-      "Jika kamu menargetkan KPR subsidi (FLPP), pastikan memenuhi persyaratan MBR: usia minimal 21 tahun atau sudah menikah, belum punya rumah, belum pernah menerima subsidi, dan penghasilan pokok sesuai batas yang berlaku.",
+      "Jika kamu menargetkan KPR subsidi (FLPP), pastikan memenuhi persyaratan MBR: syarat usia sesuai aturan terbaru (perlu dicek ulang ke bank penyalur), belum punya rumah, belum pernah menerima subsidi, dan penghasilan pokok sesuai batas yang berlaku.",
       "Gunakan cek kelayakan di situs ini untuk simulasi cepat. Kalau belum lolos, kamu masih punya waktu untuk menabung lebih banyak atau menurunkan target harga rumah.",
     ],
     dokumen: ["KTP", "Kartu Keluarga", "Slip gaji / keterangan penghasilan 3 bulan terakhir"],
@@ -50,7 +50,7 @@ export const tahapKpr: Tahap[] = [
     biayaTerkait: ["Transportasi survei", "Opsional: jasa konsultan properti"],
     tips: [
       "Cek peta rawan banjir dan akses jalan di musim hujan — kelihatan murah sekarang bisa mahal kemudian.",
-      "Pastikan pengembang terdaftar dan proyeknya tercatat di sistem resmi (untuk rumah subsidi: cek di SiKumbang, portal proyek BP Tapera).",
+      "Pastikan pengembang terdaftar dan proyeknya tercatat di sistem resmi (untuk rumah subsidi: cek di portal BP Tapera).",
       "Tanyakan progress PSU dan jadwal serah terima sebelum menandatangani PPJB.",
     ],
     kesalahanUmum: [
@@ -103,7 +103,7 @@ export const tahapKpr: Tahap[] = [
       "Pra-persetujuan kredit (pre-approval) adalah penilaian awal bank atas kemampuan kreditmu. Ini memberi 'harga diri' saat bernegosiasi dan mempercepat proses ketika unit sudah ditemukan.",
       "Saat unit ditemukan, kamu membayar booking fee (fee wajib, umumnya mulai ratusan ribu hingga jutaan) untuk mengunci unit. Booking fee biasanya dapat menjadi bagian dari DP jika deal selesai.",
       "Perhatikan ketentuan refund booking fee pada SP2 (surat pemesanan) — sekecil apa pun, pastikan tertulis hitam di atas putih.",
-      "Untuk rumah subsidi, pengembang memasukkan datamu ke sistem FLPP; status pemesanan dan hasil verifikasi awal bisa kamu pantau lewat aplikasi resmi SiKasep (atau tanyakan ke bank penyalur).",
+      "Untuk rumah subsidi, pengembang memasukkan datamu ke sistem FLPP; status pemesanan dan hasil verifikasi awal bisa kamu pantau lewat aplikasi resmi Tapera Mobile (atau tanyakan ke bank penyalur).",
     ],
     dokumen: ["KTP", "KK", "Slip gaji", "Rekening koran 3 bulan", "NPWP", "Buku nikah (jika menikah)"],
     estimasiWaktu: "1–2 hari untuk booking; pre-approval 3–7 hari kerja",

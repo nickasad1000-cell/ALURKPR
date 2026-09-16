@@ -1,13 +1,15 @@
 import type { KelayakanInput, KelayakanResult, SyaratCheck } from "./types";
+import { hargaMaksUntukZona } from "./zona";
+import { peringatanSumber } from "./sumber";
 
 export type ZonaFlpp = 1 | 2 | 3 | 4;
 
 /**
  * Batas penghasilan MBR untuk KPR FLPP (rumah tapak) per zona wilayah.
- * Rujukan: Permen Perumahan dan Kawasan Permukiman (PKP) No. 5 Tahun 2025
- * sebagaimana dipublikasikan BP Tapera. Angka di bawah memakai batas untuk
- * pemohon BELUM KAWIN; pemohon kawin/peserta Tapera umumnya lebih tinggi
- * (zona 1: 10 jt, zona 2: 11 jt, zona 3: 12 jt, zona 4/Jabodetabek: 14 jt).
+ * Rujukan: Permen Perumahan dan Kawasan Permukiman (PKP) No. 5/2025 jo.
+ * No. 11/2025 jo. No. 1 Tahun 2026 (perubahan kedua), sebagaimana
+ * dipublikasikan BP Tapera. Pemohon yang KAWIN memakai batas lebih tinggi;
+ * peserta Tapera umumnya masuk ke baris yang sama dengan yang kawin.
  */
 export const BATAS_PENGHASILAN_PER_ZONA: Record<
   ZonaFlpp,
@@ -42,9 +44,6 @@ export const OPSI_ZONA: { nilai: ZonaFlpp; label: string }[] = (
   label: `Zona ${z} — ${BATAS_PENGHASILAN_PER_ZONA[z].wilayah}`,
 }));
 
-/** Plafon harga rumah tapak subsidi — batas terendah antar-zona. */
-export const HARGA_MAKS_TAPAK_DEFAULT = 166_000_000;
-
 function formatJuta(n: number): string {
   const juta = n / 1_000_000;
   return `${Number.isInteger(juta) ? juta : juta.toFixed(1).replace(".", ",")} jt`;
@@ -52,14 +51,20 @@ function formatJuta(n: number): string {
 
 export function cekKelayakan(input: KelayakanInput): KelayakanResult {
   const batas = BATAS_PENGHASILAN_PER_ZONA[input.zona];
+  const batasPenghasilan =
+    input.statusKeluarga === "kawin" ? batas.kawin : batas.belumKawin;
+  const hargaMaks = hargaMaksUntukZona(input.zonaHarga);
+
+  const labelStatus =
+    input.statusKeluarga === "kawin" ? "sudah menikah" : "belum kawin";
 
   const syarat: SyaratCheck[] = [
     {
-      label: "Usia minimal 21 tahun atau sudah menikah",
+      label: "Usia sesuai aturan skema — perlu dicek ulang ke bank penyalur",
       lolos: input.dewasaAtauMenikah,
       catatan: input.dewasaAtauMenikah
         ? undefined
-        : "Pemohon harus berusia ≥ 21 tahun atau sudah menikah.",
+        : "Syarat usia mengikuti aturan terbaru skema ini — konfirmasi ke bank penyalur.",
     },
     {
       label: "Belum pernah memiliki rumah",
@@ -76,21 +81,22 @@ export function cekKelayakan(input: KelayakanInput): KelayakanResult {
         : "Centang ini bila belum pernah menerima subsidi FLPP — hanya diberikan satu kali seumur hidup.",
     },
     {
-      label: `Penghasilan maksimal Rp${formatJuta(batas.belumKawin)}/bulan (Zona ${input.zona}, belum kawin)`,
-      lolos: input.penghasilan <= batas.belumKawin,
+      label: `Penghasilan maksimal Rp${formatJuta(batasPenghasilan)}/bulan (Zona ${input.zona}, ${labelStatus})`,
+      lolos: input.penghasilan <= batasPenghasilan,
       catatan:
-        input.penghasilan > batas.belumKawin
-          ? input.penghasilan <= batas.kawin
+        input.penghasilan > batasPenghasilan
+          ? input.statusKeluarga === "belum-kawin" &&
+            input.penghasilan <= batas.kawin
             ? `Masih bisa lolos bila kamu sudah menikah — batas zona ini untuk yang kawin Rp${formatJuta(batas.kawin)}/bulan.`
             : "Penghasilan melebihi batas MBR zona ini — pertimbangkan KPR komersial."
           : undefined,
     },
     {
-      label: `Harga unit ≤ Rp166 juta (batas terendah antar-zona; di zona lain bisa lebih tinggi)`,
-      lolos: input.hargaUnit <= HARGA_MAKS_TAPAK_DEFAULT,
+      label: `Harga unit ≤ Rp${formatJuta(hargaMaks)} (Zona harga ${input.zonaHarga})`,
+      lolos: input.hargaUnit <= hargaMaks,
       catatan:
-        input.hargaUnit > HARGA_MAKS_TAPAK_DEFAULT
-          ? "Harga melebihi plafon subsidi terbawah — cek plafon resmi untuk zona lokasi unitmu di situs BP Tapera."
+        input.hargaUnit > hargaMaks
+          ? `Harga melebihi plafon subsidi zona ini — cek plafon resmi (Kepmen 1722/KPTS/M/2026) di situs BP Tapera.`
           : undefined,
     },
   ];
@@ -99,5 +105,10 @@ export function cekKelayakan(input: KelayakanInput): KelayakanResult {
     .filter((s) => !s.lolos)
     .map((s) => s.catatan ?? `Tidak memenuhi: ${s.label}`);
 
-  return { layak: alasan.length === 0, alasan, syarat };
+  return {
+    layak: alasan.length === 0,
+    alasan,
+    syarat,
+    peringatan: peringatanSumber(`flpp.batas-penghasilan.zona${input.zona}`),
+  };
 }
