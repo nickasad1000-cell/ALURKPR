@@ -173,7 +173,7 @@ export function peringatanSumber(kunci: string): string[] {
       )
       .join(" VS ");
     return [
-      `Konflik sumber resmi: ${list}. Diambil dari sumber tertinggi (Permen) tapi perlu dikonfirmasi ke BP Tapera / bank penyalur sebelum pengajukan.`,
+      `Konflik sumber resmi: ${list}. Diambil dari sumber tertinggi (Permen) tapi perlu dikonfirmasi ke BP Tapera / bank penyalur sebelum pengajuan.`,
     ];
   }
   if (status === "usang") {

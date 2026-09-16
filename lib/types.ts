@@ -52,7 +52,7 @@ export type KelayakanInput = {
   belumPernahSubsidi: boolean;
   hargaUnit: number;
   dewasaAtauMenikah: boolean;
-  /** Status keluarga — menentukan batas penghasilan MBR (Permen PKP No. 5/2025 jo. No. 1/2026). */
+  /** Status keluarga — menentukan batas penghasilan MBR (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026). */
   statusKeluarga: StatusKeluarga;
   /** Zona wilayah FLPP (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026): 1-4. */
   zona: 1 | 2 | 3 | 4;

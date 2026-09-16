@@ -62,7 +62,7 @@ export const panduanArtikel: PanduanArtikel[] = [
       "KPR komersial menang di fleksibilitas: siapapun bisa mengajukan, harga bebas, lokasi bebas, rumah ke-2/3 pun boleh. Konsekuensinya bunga berbasis pasar — di awal murah, di belakang bisa naik — dan DP umumnya lebih besar (mulai 10–20% atau lebih).",
       "Simpelnya: kalau penghasilan dan target harga dalam koridor MBR, subsidi jelas lebih hemat. Kalau penghasilan di atas batas, menginginkan rumah lebih besar/lokasi lebih bebas, atau ini bukan rumah pertama — komersial.",
       "Ada zona abu-abu: penghasilanmu pas di atas batas MBR namun ingin rumah subsidi — ini tidak diperbolehkan dan verifikasi akan menolak. Sebaliknya, pemilik status MBR tetap boleh mengajukan komersial.",
-      "Jalankan simulasi di kalkulator situs ini untuk sisi bunga + tenor, lalu bandingkan total bayar (bunga total + DP + biaya). Angka total bayarlah yang jujur membandingkan kedua skema.",
+      "Jalankan simulasi di kalkulator situs ini untuk sisi bunga + tenor, lalu bandingkan total bayar (bunga total + DP + biaya). Angka total bayar itulah pembanding yang adil untuk kedua skema.",
     ],
   },
   {

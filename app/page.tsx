@@ -15,20 +15,27 @@ import {
   angsuranBulanan,
   formatRupiah,
 } from "@/lib/finance";
+import { FAKTA } from "@/lib/fakta";
+import { HARGA_SUBSIDI_PER_ZONA, hargaMaksUntukZona } from "@/lib/zona";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary, btnTertiary } from "@/components/ui";
 import { ProfilKamu } from "@/components/profil-kamu";
 import { AlurJalur } from "@/components/alur-jalur";
 import { BlokDemografis } from "@/components/blok-demografis";
+import { CatatanSumber } from "@/components/catatan-sumber";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const HERO_HARGA = 166_000_000;
-const HERO_DP = 1;
+const HERO_HARGA = hargaMaksUntukZona(1);
+const HERO_DP = Number(FAKTA.dpFlpp.nilai);
 const HERO_TENOR = 20;
+const HARGA_MIN_JT =
+  Math.min(...HARGA_SUBSIDI_PER_ZONA.map((z) => z.maks)) / 1_000_000;
+const HARGA_MAX_JT =
+  Math.max(...HARGA_SUBSIDI_PER_ZONA.map((z) => z.maks)) / 1_000_000;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
-const heroAngsuran = angsuranBulanan(heroPlafon, 5, HERO_TENOR);
+const heroAngsuran = angsuranBulanan(heroPlafon, Number(FAKTA.bungaFlpp.nilai), HERO_TENOR);
 
 const fitur = [
   {
@@ -38,7 +45,7 @@ const fitur = [
   },
   {
     icon: Calculator,
-    judul: "Simulasi jujur",
+    judul: "Simulasi transparan",
     teks: "Lihat angsuran, total bayar, dan bunga keseluruhan — bukan cuma promo bunga tahun pertama.",
   },
   {
@@ -49,7 +56,7 @@ const fitur = [
   {
     icon: ShieldCheck,
     judul: "Dibuat untuk orang awam",
-    teks: "Istilah berat dijelaskan dengan bahasa sehari-hari, supaya kamu selevel paham dengan petugas bank.",
+    teks: "Istilah berat dijelaskan dengan bahasa sehari-hari, supaya kamu paham istilah yang sama dengan petugas bank.",
   },
 ];
 
@@ -117,11 +124,11 @@ export default function Home() {
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-ink-soft">
               <li className="flex items-center gap-1.5">
                 <Percent className="size-4 text-primary" aria-hidden="true" />
-                Bunga FLPP ± 5% flat
+                Bunga FLPP ± {FAKTA.bungaFlpp.nilai}% flat
               </li>
               <li className="flex items-center gap-1.5">
                 <Wallet className="size-4 text-primary" aria-hidden="true" />
-                DP mulai 1%
+                DP mulai {FAKTA.dpFlpp.nilai}%
               </li>
               <li className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-4 text-primary" aria-hidden="true" />
@@ -130,9 +137,16 @@ export default function Home() {
             </ul>
             <p className="mt-6 rounded-xl border border-line bg-surface px-4 py-3 text-sm leading-relaxed text-ink-soft">
               <span className="font-bold text-ink">Harga subsidi berganti tiap tahun kalender.</span>{" "}
-              Batas FLPP saat ini <span className="font-bold text-primary">Rp166–240 jt</span>{" "}
+              Batas FLPP saat ini{" "}
+              <span className="font-bold text-primary">
+                Rp{HARGA_MIN_JT}–{HARGA_MAX_JT} jt
+              </span>{" "}
               (bervariasi sesuai zona / wilayah) — cocokkan dulu dengan budget-mu sebelum memilih rumah.
             </p>
+            <CatatanSumber
+              className="mt-3"
+              fakta={[FAKTA.hargaSubsidiZona, FAKTA.bungaFlpp]}
+            />
           </div>
 
           {/* Kartu simulasi hero */}
@@ -180,7 +194,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <p className="text-sm font-bold text-ink-soft">Simulasi contoh</p>
                 <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary-deep">
-                  FLPP 5% · 20 th (asumsi)
+                  FLPP {FAKTA.bungaFlpp.nilai}% · {HERO_TENOR} th (asumsi)
                 </span>
               </div>
               <div className="mt-6">

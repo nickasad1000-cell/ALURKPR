@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { getBankRates, seedBankRates } from "@/lib/bank-rates";
+import { FAKTA } from "@/lib/fakta";
 import { KelayakanForm } from "@/components/kelayakan-form";
 import { BandingKanBank } from "@/components/banding-kan-bank";
+import { CatatanSumber } from "@/components/catatan-sumber";
 import { Container, SectionHeading } from "@/components/ui";
 
 export const revalidate = 3600;
@@ -59,11 +61,13 @@ export default async function SyaratPage() {
               </ul>
             </div>
             <div className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-6 text-sm leading-relaxed text-ink-soft">
-              Angka yang dipakai alat ini mengacu aturan FLPP terbaru
-              (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026) dan bisa
-              diperbarui pemerintah.
-              Hasil di sini bukan keputusan resmi — gunakan sebagai panduan,
-              lalu konfirmasi ke bank penyalur & situs resmi BP Tapera.
+              Angka yang dipakai alat ini bisa diperbarui pemerintah. Hasil di
+              sini bukan keputusan resmi — gunakan sebagai panduan, lalu
+              konfirmasi ke bank penyalur & situs resmi BP Tapera.
+              <CatatanSumber
+                className="mt-3"
+                fakta={[FAKTA.bungaFlpp, FAKTA.hargaSubsidiZona]}
+              />
               <a
                 href="/faq"
                 className="mt-3 inline-flex items-center gap-1.5 font-bold text-accent-ink"

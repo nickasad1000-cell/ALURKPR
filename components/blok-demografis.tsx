@@ -11,8 +11,11 @@ import {
   Clock,
   Ban,
 } from "lucide-react";
+import { FAKTA } from "@/lib/fakta";
+import { hargaMaksUntukZona } from "@/lib/zona";
+import { CatatanSumber } from "@/components/catatan-sumber";
 
-const HARGA_SUBSIDI = 166_000_000;
+const HARGA_SUBSIDI = hargaMaksUntukZona(1);
 const rupiah = new Intl.NumberFormat("id-ID", {
   style: "currency",
   currency: "IDR",
@@ -28,13 +31,13 @@ const fakta: {
 }[] = [
   {
     icon: Users,
-    nilai: "21–58",
+    nilai: "Sesuai skema",
     label: "Usia pemohon",
-    catatan: "Minimal 21, maksimal 58 tahun saat pengajuan.",
+    catatan: "Batas usia mengikuti aturan terbaru — konfirmasi ke bank penyalur.",
   },
   {
     icon: Percent,
-    nilai: "5%",
+    nilai: `${FAKTA.bungaFlpp.nilai}%`,
     label: "Bunga KPR subsidi",
     catatan: "Flat sampai lunas (FLPP).",
   },
@@ -46,19 +49,19 @@ const fakta: {
   },
   {
     icon: Wallet,
-    nilai: "1%",
+    nilai: `${FAKTA.dpFlpp.nilai}%`,
     label: "DP subsidi (mulai)",
     catatan: `≈ ${rupiah.format(Math.round(HARGA_SUBSIDI * 0.01))} dari harga subsidi.`,
   },
   {
     icon: CalendarDays,
-    nilai: "10–20",
+    nilai: "10–40",
     label: "Tenor subsidi",
-    catatan: "Pilihan 10, 15, atau 20 tahun. Komersial ikut ketentuan bank.",
+    catatan: "Pilihan 10–40 tahun. Komersial ikut ketentuan bank.",
   },
   {
     icon: HomeIcon,
-    nilai: "166 jt",
+    nilai: `${HARGA_SUBSIDI / 1_000_000} jt`,
     label: "Harga rumah subsidi",
     catatan: "Mengikuti ketetapan pemerintah tahun berjalan.",
     sorot: true,
@@ -197,6 +200,10 @@ export function BlokDemografis() {
             indikatif — selalu verifikasi angka resmi ke bank penyalur dan
             BP Tapera sebelum pengajuan.
           </p>
+          <CatatanSumber
+            className="mt-3"
+            fakta={[FAKTA.bungaFlpp, FAKTA.hargaSubsidiZona]}
+          />
         </div>
       </div>
     </div>
