@@ -3,14 +3,19 @@
  * yang tampil di antarmuka. Tiap data punya riwayat sumber, status,
  * dan mekanisme deteksi konflik antar publikasi resmi.
  *
+ * Peran modul (jangan tumpang tindih):
+ * - `lib/fakta.ts`  → nilai yang DITAMPILKAN ke pengguna + sumber/checkedAt-nya.
+ * - `lib/sumber.ts` → registry keputusan provenance (konflik/usang/hilang) yang
+ *   dipakai mesin kelayakan untuk memberi peringatan. Bukan sumber angka UI.
+ *
  * Kebijakan konflik (P0):
  * - SOURCE FOUND    → gunakan, tampilkan sumber
  * - SOURCE CONFLICT → flag untuk resolusi manusia, jangan silent pick
- * - SOURCE MISSING  → jangan fabricate
+ * - SOURCE MISSING  → jangan fabricate (kembalikan "hilang")
  * - DATA STALE      → tandai usang bila checked_at > 90 hari
  */
 
-export type StatusSumber = "aktif" | "konflik" | "usang";
+export type StatusSumber = "aktif" | "konflik" | "usang" | "hilang";
 
 export type TipeSumber =
   | "KEPMEN"
@@ -144,13 +149,17 @@ function hariSejak(dicek: string): number {
 }
 
 /**
- * Deteksi konflik: bila ada >1 entri aktif dengan nilai berbeda
- * untuk kunci yang sama → status "konflik".
+ * Deteksi status provenance:
+ * - tak ada entri sama sekali            → "hilang" (SOURCE MISSING, jangan fabricate)
+ * - >1 entri aktif dengan nilai berbeda  → "konflik"
+ * - satu entri aktif tapi dicek >90 hari → "usang"
+ * - selain itu                           → "aktif"
  */
 export function detectConflict(kunci: string): StatusSumber {
-  const entri = entriSumber(kunci).filter((e) => e.status === "aktif");
-  // SOURCE MISSING → jangan fabricate: tak ada data, tak ada konflik/stale.
-  if (entri.length === 0) return "aktif";
+  const semua = entriSumber(kunci);
+  if (semua.length === 0) return "hilang";
+  const entri = semua.filter((e) => e.status === "aktif");
+  if (entri.length === 0) return "hilang";
   const nilaiSet = new Set(entri.map((e) => e.nilai));
   if (nilaiSet.size > 1) return "konflik";
   if (hariSejak(entri[0].dicek) > STALE_HARI) return "usang";

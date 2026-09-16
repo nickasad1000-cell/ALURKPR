@@ -1,3 +1,11 @@
+/**
+ * Tingkat kepastian angka yang ditampilkan.
+ * - "resmi"     → diatur regulasi/dokumen resmi (wajib disertai sumber).
+ * - "indikatif" → praktik pasar/lapangan, bisa berubah.
+ * - "estimasi"  → perkiraan kasar, bukan janji.
+ */
+export type StatusFaktaTahap = "resmi" | "indikatif" | "estimasi";
+
 export type FaktaTahap = {
   nilai: string;
   label: string;
@@ -5,6 +13,8 @@ export type FaktaTahap = {
   sumber?: string;
   /** Tanggal data terakhir diverifikasi (YYYY-MM-DD). */
   terakhirDicek?: string;
+  /** Tingkat kepastian angka (default: "estimasi"). */
+  status?: StatusFaktaTahap;
 };
 
 export type Tahap = {

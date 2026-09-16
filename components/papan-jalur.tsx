@@ -15,19 +15,26 @@ import {
 } from "lucide-react";
 import { tahapKpr } from "@/content/tahap";
 import { PelatTahap } from "@/components/blueprint-icons";
-import {
-  koordinatJalur,
-  koordinatToken,
-  urutanPapan,
-} from "@/lib/papan-jalur";
+import { urutanPapan } from "@/lib/papan-jalur";
+import type { StatusFaktaTahap } from "@/lib/types";
 
 const KOLOM = 2;
 const TOTAL = tahapKpr.length;
-const POIN_JALUR = koordinatJalur(KOLOM, TOTAL);
-const POLYLINE = POIN_JALUR.map((p) => `${p.x},${p.y}`).join(" ");
-const POSISI = tahapKpr.map((_, i) => koordinatToken(i, KOLOM, TOTAL));
 const pad = (n: number) => String(n).padStart(2, "0");
 const DELAY_AUTO = 2400;
+
+const LABEL_STATUS: Record<StatusFaktaTahap, string> = {
+  resmi: "Angka resmi",
+  indikatif: "Angka indikatif",
+  estimasi: "Estimasi praktik lapangan",
+};
+
+const tanggalId = (iso: string) =>
+  new Date(`${iso}T00:00:00`).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
 const navBtn =
   "inline-flex min-h-11 items-center gap-2 rounded-[2px] border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:border-primary/40 hover:text-primary disabled:pointer-events-none disabled:opacity-40";
@@ -139,6 +146,13 @@ function Tile({
               <p className="mt-1 text-[11px] uppercase leading-tight tracking-[0.14em] text-ink-soft">
                 {t.fakta.label}
               </p>
+              <p className="mt-2 text-[10px] font-semibold uppercase leading-tight tracking-[0.1em] text-ink-soft/70">
+                {t.fakta.sumber
+                  ? `Sumber: ${t.fakta.sumber}${
+                      t.fakta.terakhirDicek ? ` · dicek ${tanggalId(t.fakta.terakhirDicek)}` : ""
+                    }`
+                  : LABEL_STATUS[t.fakta.status ?? "estimasi"]}
+              </p>
             </div>
           )}
 
@@ -235,10 +249,8 @@ export function PapanJalur() {
     toggle(i);
   };
 
-  const p = POSISI[kunci];
   const progres = TOTAL > 1 ? kunci / (TOTAL - 1) : 1;
   const selesai = kunci === TOTAL - 1;
-  const tokenTersembunyi = terbuka.size > 0;
 
   const fokuskanStepper = (i: number) => {
     setKunci(i);

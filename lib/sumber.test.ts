@@ -24,6 +24,11 @@ describe("detectConflict", () => {
   it("zona 2 → aktif (tanpa konflik publikasi)", () => {
     expect(detectConflict("flpp.batas-penghasilan.zona2")).toBe("aktif");
   });
+  it("kunci tak dikenal → hilang (SOURCE MISSING, bukan 'aktif')", () => {
+    expect(detectConflict("flpp.batas-penghasilan.zona99")).toBe(
+      "hilang" satisfies StatusSumber,
+    );
+  });
 });
 
 describe("peringatanSumber", () => {

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import {
   angsuranBulanan,
+  biayaAwal,
   formatRupiah,
 } from "@/lib/finance";
 import { FAKTA } from "@/lib/fakta";
@@ -36,6 +37,9 @@ const HARGA_MAX_JT =
   Math.max(...HARGA_SUBSIDI_PER_ZONA.map((z) => z.maks)) / 1_000_000;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
 const heroAngsuran = angsuranBulanan(heroPlafon, Number(FAKTA.bungaFlpp.nilai), HERO_TENOR);
+const heroBiayaAwalJt = (
+  biayaAwal(HERO_HARGA, HERO_DP).total / 1_000_000
+).toLocaleString("id-ID", { maximumFractionDigits: 1 });
 
 const fitur = [
   {
@@ -228,7 +232,7 @@ export default function Home() {
                   Yang dibayar di muka cuma booking fee ±Rp100 rb–1 jt untuk
                   mengunci unit.
                 </span>{" "}
-                DP dan biaya akad (±Rp11,5 jt pada contoh ini) baru dibayar
+                DP dan biaya akad (±Rp{heroBiayaAwalJt} jt pada contoh ini) baru dibayar
                 saat proses lanjut —{" "}
                 <Link
                   href="/panduan/dp-dan-biaya-initial-kpr"

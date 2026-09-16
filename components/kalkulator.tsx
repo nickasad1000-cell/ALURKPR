@@ -16,7 +16,9 @@ import {
   totalPembayaranBertahap,
 } from "@/lib/finance";
 import { track } from "@/lib/analytics";
+import { FAKTA } from "@/lib/fakta";
 import { btnSecondary, inputCls } from "./ui";
+import { CatatanSumber } from "./catatan-sumber";
 import { WhatsAppButton } from "./whatsapp-button";
 
 const btnSecondaryClass = btnSecondary;
@@ -621,6 +623,10 @@ export function Kalkulator({
           Nilai aktual (bunga, LTV, provisi, asuransi, bebannya) ditetapkan bank
           saat akad — jadikan ini acuan awal untuk bernegosiasi, bukan janji
           final.
+          <CatatanSumber
+            className="mt-3 border-t border-line/60 pt-3"
+            fakta={[FAKTA.bungaFlpp, FAKTA.dpFlpp]}
+          />
         </div>
 
         <div className="rounded-3xl border border-primary/25 bg-primary-soft/60 p-6">
