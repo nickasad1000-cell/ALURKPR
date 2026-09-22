@@ -61,8 +61,7 @@ export default async function SyaratPage() {
               </ul>
             </div>
             <div className="rounded-3xl border border-accent/40 bg-accent-soft/60 p-6 text-sm leading-relaxed text-ink-soft">
-              Angka yang dipakai alat ini bisa diperbarui pemerintah. Hasil di
-              sini bukan keputusan resmi — gunakan sebagai panduan, lalu
+              Angka bisa diperbarui pemerintah — jadikan ini panduan, lalu
               konfirmasi ke bank penyalur & situs resmi BP Tapera.
               <CatatanSumber
                 className="mt-3"

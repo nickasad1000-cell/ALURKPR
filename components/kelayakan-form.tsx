@@ -54,7 +54,7 @@ export function KelayakanForm() {
     <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-surface p-7 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Cek kelayakan KPR subsidi</h2>
       <p className="mt-1 text-sm text-ink-soft">
-        Mengacu aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1/2026) — indikatif.
+        Mengacu ketentuan FLPP terbaru — bersifat indikatif.
       </p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">

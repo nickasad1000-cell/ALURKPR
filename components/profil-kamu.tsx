@@ -146,7 +146,8 @@ export function ProfilKamu() {
   const rekomendasi = buildRekomendasi(profil);
 
   useEffect(() => {
-    if (step < stepCount) questionRef.current?.focus();
+    if (step < stepCount)
+      questionRef.current?.focus({ preventScroll: true });
   }, [step]);
 
   const pilih = (k: keyof Profil, v: string) => {

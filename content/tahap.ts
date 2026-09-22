@@ -72,7 +72,7 @@ export const tahapKpr: Tahap[] = [
       nilai: "5%",
       label: "Flat hingga lunas · skema FLPP",
       status: "resmi",
-      sumber: "Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026",
+      sumber: "Permen PKP No. 5/2025 jo. No. 1/2026",
       terakhirDicek: "2026-08-06",
     },
     penjelasan: [

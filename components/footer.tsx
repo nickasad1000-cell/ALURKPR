@@ -34,7 +34,7 @@ export function Footer() {
   return (
     <footer className="mt-28 border-t border-line bg-surface">
       <Container className="py-14">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1.5fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-soft">
@@ -87,13 +87,6 @@ export function Footer() {
 
         <div className="mt-12 border-t border-line pt-6">
           <p className="text-xs leading-relaxed text-ink-soft">{DISCLOSURE}</p>
-          <p className="mt-3 text-xs leading-relaxed text-ink-soft">
-            Suku bunga, plafon, dan persyaratan di situs ini bersifat indikatif
-            dan dapat berubah mengikuti kebijakan BP Tapera, Kementerian
-            Perumahan dan Kawasan Permukiman (PKP), maupun keputusan bank.
-            Selalu konfirmasi angka resmi ke BP Tapera dan bank penyalur
-            sebelum pengajuan.
-          </p>
           <p className="mt-3 text-xs text-ink-soft">
             © {new Date().getFullYear()} AlurKPR · {BRAND_NAME}
           </p>

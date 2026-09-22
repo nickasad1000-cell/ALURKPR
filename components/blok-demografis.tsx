@@ -115,23 +115,16 @@ export function BlokDemografis() {
       <Crosshair className="bottom-3 left-3" />
       <Crosshair className="bottom-3 right-3" />
 
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div>
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-              Demografis & fakta
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Ringkasan Aturan KPR
-            </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
-            Ringkasan angka yang berlaku umum di lapangan — cocokkan dengan
-            kondisi dan skema pilihanmu.
+      <div>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
+            Demografis & fakta
           </p>
-        </div>
-        <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft/70 sm:block">
-          <p>Referensi cepat</p>
-          <p>Ringkasan</p>
-        </div>
+          <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+            Ringkasan Aturan KPR
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            Angka umum di lapangan — cocokkan dengan kondisi dan skema pilihanmu.
+          </p>
       </div>
 
       <MotionConfig reducedMotion="user">
@@ -194,11 +187,8 @@ export function BlokDemografis() {
         </div>
         <div className="bg-paper p-5">
           <p className="text-xs leading-relaxed text-ink-soft">
-            Angka usia, bunga, DP, dan tenor mengacu ketentuan program FLPP
-            (dikelola BP Tapera) per peraturan terbaru. Harga rumah subsidi
-            mengikuti ketetapan pemerintah tahun berjalan. Semua bersifat
-            indikatif — selalu verifikasi angka resmi ke bank penyalur dan
-            BP Tapera sebelum pengajuan.
+            Angka mengacu ketentuan FLPP (BP Tapera) peraturan terbaru dan
+            harga subsidi 2026 — bersifat indikatif, verifikasi ke bank penyalur.
           </p>
           <CatatanSumber
             className="mt-3"

@@ -30,4 +30,4 @@ export const WA_PESAN_UMUM =
   "Halo, saya dari situs AlurKPR ingin bertanya soal KPR / perumahan.";
 
 export const DISCLOSURE =
-  "AlurKPR adalah proyek edukasi independen yang dikelola oleh Syahfalah Group (pengembang properti di Lumajang). Situs ini tidak menjual produk keuangan, tidak menerima komisi dari bank, dan seluruh angka bersifat indikatif. Keputusan kredit final ada di bank penyalur."; 
+  "Edukasi independen oleh Syahfalah Group — tidak menjual produk keuangan dan tidak menerima komisi bank. Angka di situs ini indikatif dan dapat berubah; keputusan kredit final ada di bank penyalur."; 

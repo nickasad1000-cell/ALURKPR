@@ -13,8 +13,9 @@ export function CatatanSumber({ fakta, className = "" }: Props) {
     >
       <Info className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden="true" />
       <p>
-        {fakta.map((f) => (
-          <span key={f.nama} className="block">
+        {fakta.map((f, i) => (
+          <span key={f.nama}>
+            {i > 0 ? " · " : null}
             {sumberFakta(f)}
           </span>
         ))}

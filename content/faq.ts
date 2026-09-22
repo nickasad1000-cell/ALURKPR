@@ -14,7 +14,7 @@ export const faq: FaqItem[] = [
   {
     pertanyaan: "Siapa yang berhak mengajukan KPR subsidi FLPP?",
     jawaban:
-"Warga Negara Indonesia, usia sesuai aturan skema (perlu dicek ulang ke bank penyalur), belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 11/2025 jo. No. 1 Tahun 2026). Konfirmasi batas zonamu ke BP Tapera atau bank penyalur.",
+"Warga Negara Indonesia, usia sesuai aturan skema (perlu dicek ulang ke bank penyalur), belum pernah memiliki rumah, belum pernah menerima subsidi perumahan, dan penghasilan di bawah batas MBR. Batasnya berbeda per zona wilayah: Rp8,5–14 juta/bulan (belum kawin–kawin) sesuai aturan FLPP terbaru (Permen PKP No. 5/2025 jo. No. 1/2026). Konfirmasi batas zonamu ke BP Tapera atau bank penyalur.",
   },
   {
     pertanyaan: "Berapa bunga KPR subsidi FLPP dan berapa tenornya?",
