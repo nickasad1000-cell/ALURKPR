@@ -242,10 +242,7 @@ export default function Home() {
                 </Link>
                 .
               </p>
-              <Link
-                href="/kalkulator"
-                className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-sm font-bold text-white transition hover:bg-primary-deep"
-              >
+              <Link href="/kalkulator" className={`${btnSecondary} mt-7 w-full`}>
                 Simulasikan milikmu
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
@@ -352,19 +349,24 @@ export default function Home() {
                 skema KPR-mu — subsidi atau komersial — lengkap dengan rekomendasi
                 langkah berikutnya.
               </p>
-              <Link
-                href="/profil-kamu"
-                className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-white shadow-sm transition hover:bg-primary-deep"
-              >
-                Kenali profil KPR-mu
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <p className="mt-3 text-xs text-ink-soft">
-                Tanpa daftar akun, tanpa data pribadi yang diminta.
+              <p className="mt-5 inline-flex items-start gap-2 rounded-2xl bg-primary-soft/60 px-4 py-3 text-sm leading-relaxed text-primary-deep">
+                <CheckCircle2 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                Kuisnya bisa langsung diisi di sini — tanpa daftar akun, tanpa
+                data pribadi yang diminta.
               </p>
             </div>
             <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
               <ProfilKamu />
+              <p className="mt-6 border-t border-line pt-4 text-center text-xs leading-relaxed text-ink-soft">
+                Butuh versi layar penuh?{" "}
+                <Link
+                  href="/profil-kamu"
+                  className="font-bold text-primary underline underline-offset-2 hover:text-primary-deep"
+                >
+                  Buka di halaman Profil Kamu
+                </Link>
+                .
+              </p>
             </div>
           </div>
         </Container>

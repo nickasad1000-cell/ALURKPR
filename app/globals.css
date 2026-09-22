@@ -91,6 +91,15 @@ input[type="range"]:focus-visible {
   border-radius: 9999px;
 }
 
+/* Focus ring global — jaring pengaman untuk elemen interaktif
+   yang belum memakai kelas btnFocus (logo, link footer, breadcrumb, card alat).
+   :where() berspesifisitas 0 sehingga utilitas Tailwind tetap menang. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
+
 @media print {
   header,
   footer,
