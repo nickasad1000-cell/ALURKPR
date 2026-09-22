@@ -91,7 +91,7 @@ function Tile({
         <Tanda className="bottom-2 right-2" />
 
         {aktif && !buka ? (
-          <span className="absolute right-2 top-2 z-10 inline-block rounded-sm bg-accent px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-white">
+          <span className="absolute right-2 top-2 z-10 inline-block rounded-sm border border-accent/50 bg-accent-soft px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-accent-ink">
             kamu&nbsp;di&nbsp;sini
           </span>
         ) : null}
@@ -103,7 +103,7 @@ function Tile({
         <div className="flex items-center gap-3 pt-5">
           <PelatTahap index={i} />
           <div className="min-w-0">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft/70">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft">
               Tahap {t.nomor}
             </p>
             <h3 id={`tile-${t.nomor}`} className="mt-0.5 font-display text-base font-semibold leading-snug text-ink sm:text-lg">
@@ -146,7 +146,7 @@ function Tile({
               <p className="mt-1 text-[11px] uppercase leading-tight tracking-[0.14em] text-ink-soft">
                 {t.fakta.label}
               </p>
-              <p className="mt-2 text-[10px] font-semibold uppercase leading-tight tracking-[0.1em] text-ink-soft/70">
+              <p className="mt-2 text-[10px] font-semibold uppercase leading-tight tracking-[0.1em] text-ink-soft">
                 {t.fakta.sumber
                   ? `Sumber: ${t.fakta.sumber}${
                       t.fakta.terakhirDicek ? ` · dicek ${tanggalId(t.fakta.terakhirDicek)}` : ""
@@ -340,8 +340,8 @@ export function PapanJalur() {
               }}
               tabIndex={kunci === i ? 0 : -1}
               aria-current={kunci === i ? "step" : undefined}
-              aria-label={`Menuju tahap ${t.nomor}: ${t.judulSingkat}`}
-              className={`grid size-8 place-items-center rounded-[2px] border font-mono text-[10px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:size-9 ${
+              aria-label={`${pad(t.nomor)} — Menuju tahap ${t.nomor}: ${t.judulSingkat}`}
+              className={`grid size-11 place-items-center rounded-[2px] border font-mono text-[10px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:size-9 ${
                 kunci === i
                   ? "border-primary bg-primary text-white shadow-sm"
                   : "border-line bg-paper text-ink-soft hover:border-primary/40 hover:text-primary"

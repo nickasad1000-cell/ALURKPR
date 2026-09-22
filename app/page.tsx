@@ -2,13 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import {
   ArrowRight,
-  BookOpen,
   Calculator,
   CheckCircle2,
-  Home as HomeIcon,
-  Landmark,
+  MessageCircle,
+  Minus,
   Percent,
-  ShieldCheck,
+  Plus,
   Wallet,
 } from "lucide-react";
 import {
@@ -17,12 +16,15 @@ import {
   formatRupiah,
 } from "@/lib/finance";
 import { FAKTA } from "@/lib/fakta";
-import { HARGA_SUBSIDI_PER_ZONA, hargaMaksUntukZona } from "@/lib/zona";
+import { hargaMaksUntukZona } from "@/lib/zona";
+import { faq } from "@/content/faq";
+import { WA_PESAN_UMUM } from "@/lib/brand";
 import { Container, Eyebrow, SectionHeading, btnPrimary, btnSecondary, btnTertiary } from "@/components/ui";
 import { ProfilKamu } from "@/components/profil-kamu";
 import { AlurJalur } from "@/components/alur-jalur";
 import { BlokDemografis } from "@/components/blok-demografis";
-import { CatatanSumber } from "@/components/catatan-sumber";
+import { GaleriRumah } from "@/components/galeri-rumah";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -31,38 +33,11 @@ export const metadata: Metadata = {
 const HERO_HARGA = hargaMaksUntukZona(1);
 const HERO_DP = Number(FAKTA.dpFlpp.nilai);
 const HERO_TENOR = 20;
-const HARGA_MIN_JT =
-  Math.min(...HARGA_SUBSIDI_PER_ZONA.map((z) => z.maks)) / 1_000_000;
-const HARGA_MAX_JT =
-  Math.max(...HARGA_SUBSIDI_PER_ZONA.map((z) => z.maks)) / 1_000_000;
 const heroPlafon = Math.round(HERO_HARGA * (1 - HERO_DP / 100));
 const heroAngsuran = angsuranBulanan(heroPlafon, Number(FAKTA.bungaFlpp.nilai), HERO_TENOR);
 const heroBiayaAwalJt = (
   biayaAwal(HERO_HARGA, HERO_DP).total / 1_000_000
 ).toLocaleString("id-ID", { maximumFractionDigits: 1 });
-
-const fitur = [
-  {
-    icon: BookOpen,
-    judul: "Panduan bertahap",
-    teks: "8 tahap dari cek keuangan sampai kunci di tangan, lengkap dengan dokumen & estimasi waktu.",
-  },
-  {
-    icon: Calculator,
-    judul: "Simulasi transparan",
-    teks: "Lihat angsuran, total bayar, dan bunga keseluruhan — bukan cuma promo bunga tahun pertama.",
-  },
-  {
-    icon: Landmark,
-    judul: "Bandingkan bank",
-    teks: "Perbandingan subsidi FLPP vs komersial dan bunga indikatif beberapa bank penyalur.",
-  },
-  {
-    icon: ShieldCheck,
-    judul: "Dibuat untuk orang awam",
-    teks: "Istilah berat dijelaskan dengan bahasa sehari-hari, supaya kamu paham istilah yang sama dengan petugas bank.",
-  },
-];
 
 export default function Home() {
   return (
@@ -139,18 +114,18 @@ export default function Home() {
                 Gratis digunakan
               </li>
             </ul>
-            <p className="mt-6 rounded-xl border border-line bg-surface px-4 py-3 text-sm leading-relaxed text-ink-soft">
-              <span className="font-bold text-ink">Harga subsidi berganti tiap tahun kalender.</span>{" "}
-              Batas FLPP saat ini{" "}
-              <span className="font-bold text-primary">
-                Rp{HARGA_MIN_JT}–{HARGA_MAX_JT} jt
-              </span>{" "}
-              (bervariasi sesuai zona / wilayah) — cocokkan dulu dengan budget-mu sebelum memilih rumah.
+            <p className="mt-5 text-sm text-ink-soft">
+              Atau kalau masih bingung dari mana mulai,{" "}
+              <WhatsAppLink
+                source="hero"
+                pesan={WA_PESAN_UMUM}
+                className="inline-flex items-center gap-1 font-bold text-primary underline underline-offset-4 transition hover:text-primary-deep"
+              >
+                <MessageCircle className="size-4" aria-hidden="true" />
+                tanya langsung di WhatsApp
+              </WhatsAppLink>
+              .
             </p>
-            <CatatanSumber
-              className="mt-3"
-              fakta={[FAKTA.hargaSubsidiZona, FAKTA.bungaFlpp]}
-            />
           </div>
 
           {/* Kartu simulasi hero */}
@@ -189,7 +164,7 @@ export default function Home() {
               <div className="mb-4 flex items-center gap-1.5" aria-hidden="true">
                 <span className="h-2 w-px bg-primary/40" />
                 <span className="h-px flex-1 bg-primary/20" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft/70">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">
                   Spec-01
                 </span>
                 <span className="h-px w-6 bg-primary/20" />
@@ -251,108 +226,19 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Fitur */}
-      <section className="border-y border-line bg-surface">
-        <Container className="py-12 sm:py-16">
-          <SectionHeading
-            eyebrow="Kenapa AlurKPR"
-            title="Beda dari artikel KPR lainnya"
-          />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {fitur.map((f) => (
-              <div key={f.judul} className="rounded-3xl border border-line bg-paper p-6">
-                <f.icon className="size-6 text-primary" aria-hidden="true" />
-                <h3 className="mt-4 font-display text-base font-semibold">
-                  {f.judul}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                  {f.teks}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Alat perencanaan */}
-      <section className="mt-20 sm:mt-28">
-        <Container>
-          <SectionHeading
-            eyebrow="Kalkulator & alat bantu"
-            title="Lima alat yang paling sering dipakai"
-            description="Coba sesuai urutanmu: tahu kemampuan beli, bandingkan sewa vs beli, kumpulkan DP, hitung angsuran, lalu temukan skema yang cocok."
-          />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {[
-              {
-                href: "/mampu-beli",
-                icon: Percent,
-                judul: "Kemampuan beli",
-                teks: "Hitung harga rumah yang mampu kamu beli dari penghasilan.",
-              },
-              {
-                href: "/planner-dp",
-                icon: Wallet,
-                judul: "Planner tabungan DP",
-                teks: "Beres waktu menabung DP dan setoran bulanan yang dibutuhkan.",
-              },
-              {
-                href: "/sewa-vs-beli",
-                icon: HomeIcon,
-                judul: "Sewa vs beli",
-                teks: "Kapan membeli mulai lebih murah daripada menyewa.",
-              },
-              {
-                href: "/kalkulator",
-                icon: Calculator,
-                judul: "Kalkulator KPR",
-                teks: "Simulasi angsuran, total bayar, dan biaya awal — dari harga rumah atau penghasilanmu.",
-              },
-              {
-                href: "/profil-kamu",
-                icon: Landmark,
-                judul: "Profil Kamu",
-                teks: "Rekomendasi skema subsidi atau komersial dalam 5 pertanyaan.",
-              },
-            ].map((t) => (
-              <Link
-                key={t.href}
-                href={t.href}
-                className="group flex flex-col rounded-3xl border border-line bg-surface p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
-              >
-                <t.icon className="size-6 text-primary" aria-hidden="true" />
-                <h3 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
-                  {t.judul}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{t.teks}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
-                  Buka alat
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ProfilKamu — rekomendasi personal, diletakkan setelah alat */}
+      {/* Alur pengajuan KPR — diagram alur 8 tahap */}
+      <AlurJalur />
       <section className="mt-20 sm:mt-28">
         <Container>
           <div className="grid gap-10 rounded-[2.5rem] border border-line bg-surface p-7 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
               <Eyebrow>Rekomendasi personal</Eyebrow>
               <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                Subsidi atau komersial? Biar tidak menebak-nebak.
+                Subsidi atau komersial?
               </h2>
               <p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">
-                5 pertanyaan singkat cukup untuk mengenali kecenderungan
-                skema KPR-mu — subsidi atau komersial — lengkap dengan rekomendasi
-                langkah berikutnya.
-              </p>
-              <p className="mt-5 inline-flex items-start gap-2 rounded-2xl bg-primary-soft/60 px-4 py-3 text-sm leading-relaxed text-primary-deep">
-                <CheckCircle2 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                Kuisnya bisa langsung diisi di sini — tanpa daftar akun, tanpa
-                data pribadi yang diminta.
+                5 pertanyaan untuk tahu skema KPR yang cocok — subsidi atau
+                komersial — plus langkah berikutnya.
               </p>
             </div>
             <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
@@ -379,6 +265,48 @@ export default function Home() {
       <section className="mt-20 sm:mt-28">
         <Container>
           <BlokDemografis />
+        </Container>
+      </section>
+
+      {/* Galeri rumah nyata dari pengembang */}
+      <GaleriRumah />
+
+      {/* Tanya populer */}
+      <section className="mt-20 sm:mt-28">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <SectionHeading
+              eyebrow="FAQ"
+              title="Pertanyaan yang paling sering muncul"
+              description="Jawaban singkat; rincian lebih lanjut di halaman FAQ."
+            />
+            <div className="space-y-3">
+              {faq.slice(0, 3).map((f) => (
+                <details
+                  key={f.pertanyaan}
+                  className="group rounded-3xl border border-line bg-surface px-6 py-5 shadow-sm open:border-primary/40 sm:px-7"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                    <h3 className="font-display text-base font-semibold leading-snug sm:text-lg">
+                      {f.pertanyaan}
+                    </h3>
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full border border-line text-ink-soft transition group-open:hidden">
+                      <Plus className="size-4" aria-hidden="true" />
+                    </span>
+                    <span className="hidden size-7 shrink-0 place-items-center rounded-full border border-primary bg-primary-soft text-primary transition group-open:grid">
+                      <Minus className="size-4" aria-hidden="true" />
+                    </span>
+                  </summary>
+                  <p className="mt-4 text-sm leading-relaxed text-ink-soft sm:text-base">
+                    {f.jawaban}
+                  </p>
+                </details>
+              ))}
+              <Link href="/faq" className={btnSecondary}>
+                Lihat semua pertanyaan di halaman FAQ
+              </Link>
+            </div>
+          </div>
         </Container>
       </section>
 

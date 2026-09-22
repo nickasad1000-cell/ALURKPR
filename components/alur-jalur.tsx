@@ -41,7 +41,7 @@ export function AlurJalur() {
             </p>
           </div>
           {/* Label gambar teknik */}
-          <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft/70 sm:block">
+          <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft sm:block">
             <p>Dwg No. KPR-08</p>
             <p>Skala: NTS</p>
           </div>
@@ -62,15 +62,15 @@ export function AlurJalur() {
           <div className="mt-10 border border-line bg-paper text-[10px] uppercase tracking-[0.18em] text-ink-soft">
             <div className="grid grid-cols-2 divide-x divide-line sm:grid-cols-3">
               <div className="p-3">
-                <p className="text-ink-soft/70">Proyek</p>
+                <p className="text-ink-soft">Proyek</p>
                 <p className="mt-0.5 font-bold text-ink">AlurKPR</p>
               </div>
               <div className="p-3">
-                <p className="text-ink-soft/70">Gambar</p>
+                <p className="text-ink-soft">Gambar</p>
                 <p className="mt-0.5 font-bold text-ink">Jalur KPR 8 Tahap</p>
               </div>
               <div className="border-t border-line p-3 sm:border-t-0">
-                <p className="text-ink-soft/70">Status</p>
+                <p className="text-ink-soft">Status</p>
                 <p className="mt-0.5 font-bold text-primary">Disetujui</p>
               </div>
             </div>

@@ -178,7 +178,7 @@ export function BlokDemografis() {
       {/* Catatan spesifikasi */}
       <div className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-[auto_1fr]">
         <div className="bg-paper p-5 sm:w-44">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft/70">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft">
             Catatan
           </p>
           <p className="mt-1 text-sm font-bold text-primary-deep">

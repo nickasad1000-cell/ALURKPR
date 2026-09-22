@@ -12,11 +12,18 @@ export const WHATSAPP_DISPLAY = "+62 813-3337-2016";
 export const ALAMAT =
   "Jl. Bondoyudo Nomor 55, Gambiran, Lumajang, Jawa Timur";
 
-/** Katalog foto rumah (public/images/*.webp). */
-export const GALERI_RUMAH = Array.from({ length: 12 }, (_, i) => ({
-  src: `/images/gallery-${String(i + 1).padStart(2, "0")}-720.webp`,
-  alt: `Foto rumah & interior hunian Syahfalah Group, Gambiran Lumajang (${i + 1}/${12})`,
-}));
+/** Katalog foto rumah asli (public/images/gallery-01..09-720.webp). */
+export const GALERI_RUMAH = [
+  { src: "/images/gallery-01-720.webp", alt: "Fasad depan rumah tipe contoh hunian Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-02-720.webp", alt: "Gerbang masuk kawasan perumahan Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-03-720.webp", srcLg: "/images/gallery-03-1080.webp", alt: "Halaman rumah hunian Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-04-720.webp", srcLg: "/images/gallery-04-1080.webp", alt: "Ruang tamu hunian tipe contoh Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-05-720.webp", srcLg: "/images/gallery-05-1080.webp", alt: "Ruang keluarga hunian tipe contoh Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-06-720.webp", alt: "Dapur rumah tipe contoh Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-07-720.webp", srcLg: "/images/gallery-07-1080.webp", alt: "Kamar tidur depan hunian tipe contoh Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-08-720.webp", srcLg: "/images/gallery-08-1080.webp", alt: "Kamar tidur belakang hunian tipe contoh Syahfalah Group, Lumajang" },
+  { src: "/images/gallery-09-720.webp", srcLg: "/images/gallery-09-1080.webp", alt: "Kamar mandi dalam hunian tipe contoh Syahfalah Group, Lumajang" },
+];
 
 /**
  * Membangun deep-link WhatsApp dengan pesan awal.

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { GtagInit } from "@/components/gtag-init";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { SITE_ORIGIN } from "@/lib/site";
 
 const fraunces = Fraunces({
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <GtagInit />
+        <WhatsAppFab />
       </body>
     </html>
   );

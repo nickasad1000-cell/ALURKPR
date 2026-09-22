@@ -6,6 +6,11 @@
  *
  * Dibalik layar: menginjeksi skrip gtag bila NEXT_PUBLIC_GA_MEASUREMENT_ID
  * terpasang; bila tidak, semua panggilan menjadi no-op (aman di dev).
+ *
+ * Skrip gtag dipasang setelah idle (requestIdleCallback) supaya beban eksternal
+ * tidak menghambat render awal (menekan long task & TBT). Event yang masuk
+ * sebelum skrip tiba diantrekan ke dataLayer dan di-replay otomatis oleh
+ * gtag.js saat selesai dimuat — pola GA4 standar.
  */
 
 const GA_ID =
@@ -20,18 +25,12 @@ declare global {
   }
 }
 
-export function ensureGtag(): boolean {
-  if (typeof window === "undefined") return false;
-  if (!GA_ID) return false;
-  if (window.gtag) return true;
+let inisiasi: "belum" | "menunggu" | "terpasang" = "belum";
+let jadwalDibuat = false;
 
-  const w = window as typeof window & { dataLayer?: unknown[] };
-  w.dataLayer = w.dataLayer ?? [];
-  if (!w.gtag) {
-    w.gtag = (...args: unknown[]) => {
-      w.dataLayer!.push(args);
-    };
-  }
+function pasangSkrip() {
+  if (inisiasi === "terpasang") return;
+  inisiasi = "terpasang";
 
   const s = document.createElement("script");
   s.async = true;
@@ -46,6 +45,38 @@ export function ensureGtag(): boolean {
     gtag('config', '${GA_ID}', { anonymize_ip: true });
   `;
   document.head.appendChild(inline);
+}
+
+function jadwalkanPemasangan() {
+  if (jadwalDibuat) return;
+  jadwalDibuat = true;
+
+  const w = window as Window & {
+    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+  };
+  if (typeof w.requestIdleCallback === "function") {
+    w.requestIdleCallback(pasangSkrip, { timeout: 3000 });
+  } else {
+    window.setTimeout(pasangSkrip, 2500);
+  }
+}
+
+export function ensureGtag(): boolean {
+  if (typeof window === "undefined") return false;
+  if (!GA_ID) return false;
+  if (inisiasi === "terpasang") return true;
+
+  // Stub gtag segera: event yang dikirim sebelum skrip tiba tetap masuk
+  // dataLayer dan akan di-replay begitu gtag.js selesai dimuat.
+  const w = window as typeof window & { dataLayer?: unknown[] };
+  w.dataLayer = w.dataLayer ?? [];
+  if (!w.gtag) {
+    w.gtag = (...args: unknown[]) => {
+      w.dataLayer!.push(args);
+    };
+  }
+
+  jadwalkanPemasangan();
   return true;
 }
 
