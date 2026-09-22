@@ -241,7 +241,7 @@ export default function Home() {
                 komersial — plus langkah berikutnya.
               </p>
             </div>
-            <div className="rounded-3xl border border-line bg-paper p-6 sm:p-8">
+            <div className="rounded-3xl bg-paper p-6 sm:p-8">
               <ProfilKamu />
               <p className="mt-6 border-t border-line pt-4 text-center text-xs leading-relaxed text-ink-soft">
                 Butuh versi layar penuh?{" "}
@@ -257,9 +257,6 @@ export default function Home() {
           </div>
         </Container>
       </section>
-
-      {/* Jalur pengajuan KPR — diagram alur 8 tahap */}
-      <AlurJalur />
 
       {/* Demografis & fakta KPR */}
       <section className="mt-20 sm:mt-28">

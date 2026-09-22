@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { FAKTA } from "@/lib/fakta";
 import { hargaMaksUntukZona } from "@/lib/zona";
-import { CatatanSumber } from "@/components/catatan-sumber";
+import { Eyebrow } from "@/components/ui";
 
 const HARGA_SUBSIDI = hargaMaksUntukZona(1);
 const rupiah = new Intl.NumberFormat("id-ID", {
@@ -116,15 +116,13 @@ export function BlokDemografis() {
       <Crosshair className="bottom-3 right-3" />
 
       <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-            Demografis & fakta
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Ringkasan Aturan KPR
-          </h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
-            Angka umum di lapangan — cocokkan dengan kondisi dan skema pilihanmu.
-          </p>
+        <Eyebrow>Demografis & fakta</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+          Ringkasan Aturan KPR
+        </h2>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
+          Angka umum di lapangan — cocokkan dengan kondisi dan skema pilihanmu.
+        </p>
       </div>
 
       <MotionConfig reducedMotion="user">
@@ -175,27 +173,6 @@ export function BlokDemografis() {
       </motion.dl>
       </MotionConfig>
 
-      {/* Catatan spesifikasi */}
-      <div className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-[auto_1fr]">
-        <div className="bg-paper p-5 sm:w-44">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft">
-            Catatan
-          </p>
-          <p className="mt-1 text-sm font-bold text-primary-deep">
-            Sumber & asumsi
-          </p>
-        </div>
-        <div className="bg-paper p-5">
-          <p className="text-xs leading-relaxed text-ink-soft">
-            Angka mengacu ketentuan FLPP (BP Tapera) peraturan terbaru dan
-            harga subsidi 2026 — bersifat indikatif, verifikasi ke bank penyalur.
-          </p>
-          <CatatanSumber
-            className="mt-3"
-            fakta={[FAKTA.bungaFlpp, FAKTA.hargaSubsidiZona]}
-          />
-        </div>
       </div>
-    </div>
   );
 }

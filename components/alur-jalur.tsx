@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Container, btnSecondary } from "@/components/ui";
+import { Container, Eyebrow, btnSecondary } from "@/components/ui";
 import { PapanJalur } from "@/components/papan-jalur";
 
 function Crosshair({ className = "" }: { className?: string }) {
@@ -36,9 +36,7 @@ export function AlurJalur() {
         {/* Header lembar gambar */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">
-              Alur pengajuan KPR
-            </p>
+            <Eyebrow>Alur pengajuan KPR</Eyebrow>
           </div>
           {/* Label gambar teknik */}
           <div className="hidden text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-ink-soft sm:block">
